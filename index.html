@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlos & Doris | Nuestra Boda</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Configuración de colores personalizados -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        terracotta: {
+                            light: '#e8b4a3',
+                            DEFAULT: '#c15b43', // Color principal terracota
+                            dark: '#9a432e',
+                        },
+                        sand: '#fdfbf7', // Fondo crema suave
+                        sage: '#8da399', // Verde para acentos naturales
+                        charcoal: '#333333',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        script: ['Great Vibes', 'cursive'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        heading: ['Cinzel', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos personalizados y animaciones */
+        body {
+            background-color: #fdfbf7;
+            overflow-x: hidden;
+        }
+
+        /* Pantalla de Bienvenida (Overlay) */
+        #welcome-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: #fdfbf7;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+        
+        #welcome-overlay.hidden-overlay {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            will-change: opacity, visibility;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Animación para el botón de música */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(193, 91, 67, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(193, 91, 67, 0); }
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(193, 91, 67, 0); }
+        }
+        .music-playing {
+            animation: pulse-ring 2s infinite;
+        }
+        
+        /* Botón personalizado */
+        .btn-terra {
+            transition: all 0.3s ease;
+        }
+        .btn-terra:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(193, 91, 67, 0.3);
+        }
+    </style>
+</head>
+<body class="text-charcoal font-sans antialiased selection:bg-terracotta selection:text-white">
+
+    <!-- ELEMENTO DE AUDIO MP3 -->
+    <!-- IMPORTANTE: Asegúrate de que el archivo 'cancion.mp3' esté en la misma carpeta -->
+    <audio id="weddingMusic" loop preload="auto">
+        <source src="cancion.mp3" type="audio/mpeg">
+        <!-- Respaldo por si el navegador no soporta mp3 (raro hoy en día) -->
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- PANTALLA DE BIENVENIDA (Clic para iniciar música) -->
+    <div id="welcome-overlay">
+        <div class="text-center p-8 animate-pulse">
+            <div class="font-script text-6xl md:text-8xl text-terracotta mb-4">C & D</div>
+            <p class="font-heading uppercase tracking-[0.3em] text-gray-500 mb-8 text-sm md:text-base">Nuestra Boda</p>
+            <button onclick="enterSite()" class="bg-terracotta text-white font-heading uppercase tracking-widest py-4 px-10 rounded shadow-xl hover:bg-terracotta-dark transition-all transform hover:scale-105 duration-300">
+                <i class="fas fa-envelope-open-text mr-2"></i> Abrir Invitación
+            </button>
+        </div>
+    </div>
+
+    <!-- Navegación Flotante (Móvil) -->
+    <nav class="fixed top-0 w-full z-50 bg-sand/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="font-script text-3xl text-terracotta">C & D</div>
+                <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-heading">
+                    <a href="#home" class="hover:text-terracotta transition-colors">Inicio</a>
+                    <a href="#details" class="hover:text-terracotta transition-colors">Detalles</a>
+                    <a href="#itinerary" class="hover:text-terracotta transition-colors">Itinerario</a>
+                    <a href="#rsvp" class="hover:text-terracotta transition-colors">Confirmar</a>
+                </div>
+                <!-- Botón menú móvil -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-terracotta focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Menú Móvil -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 p-4">
+            <div class="flex flex-col space-y-4 text-center font-heading text-sm uppercase tracking-widest">
+                <a href="#home" onclick="toggleMobileMenu()" class="block text-gray-700">Inicio</a>
+                <a href="#details" onclick="toggleMobileMenu()" class="block text-gray-700">Detalles</a>
+                <a href="#itinerary" onclick="toggleMobileMenu()" class="block text-gray-700">Itinerario</a>
+                <a href="#rsvp" onclick="toggleMobileMenu()" class="block text-terracotta font-bold">Confirmar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Botón de Música Flotante -->
+    <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-terracotta rounded-full shadow-lg flex items-center justify-center hover:bg-terracotta hover:text-white transition-all duration-300 border border-terracotta/20">
+        <i class="fas fa-play ml-1" id="musicIcon"></i>
+    </button>
+    
+    <!-- Hero Section -->
+    <header id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+        <!-- Imagen de fondo con overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop" 
+                 alt="Pareja Boda" 
+                 class="w-full h-full object-cover object-center brightness-[0.65]">
+        </div>
+
+        <div class="relative z-10 text-white fade-in-section">
+            <p class="text-sm md:text-lg uppercase tracking-[0.3em] mb-4">¡Nos casamos!</p>
+            <h1 class="font-script text-7xl md:text-9xl mb-2 text-terracotta-light drop-shadow-lg">Carlos & Doris</h1>
+            <div class="flex items-center justify-center space-x-4 my-6">
+                <span class="h-px w-12 bg-white/70"></span>
+                <p class="font-heading text-xl md:text-3xl tracking-widest">05 . 06 . 2026</p>
+                <span class="h-px w-12 bg-white/70"></span>
+            </div>
+            <p class="font-sans font-light text-lg mb-8">San Blas - Tehuantepec, Oaxaca</p>
+            <a href="#rsvp" class="inline-block bg-terracotta hover:bg-white hover:text-terracotta text-white font-heading text-xs uppercase tracking-widest py-4 px-10 rounded transition-all duration-300 shadow-lg">
+                Acompañanos
+            </a>
+        </div>
+        
+        <!-- Flecha scroll -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white/70">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </div>
+    </header>
+
+    <!-- Frase / Intro -->
+    <section class="py-20 md:py-32 px-4 bg-sand text-center">
+        <div class="max-w-2xl mx-auto fade-in-section">
+            <i class="fas fa-heart text-terracotta text-2xl mb-6"></i>
+            <h2 class="font-serif text-3xl md:text-4xl text-charcoal mb-8 leading-relaxed italic">
+                "El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección."
+            </h2>
+            <p class="font-sans text-gray-500 leading-relaxed">
+                Estamos inmensamente felices de compartir este día tan especial con nuestras personas favoritas. 
+                Tu presencia es el mejor regalo que podemos recibir.
+            </p>
+            <!-- Divisor decorativo SVG -->
+            <div class="mt-10 text-terracotta opacity-60">
+                <svg viewBox="0 0 24 24" width="40" height="40" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mx-auto"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cuenta Regresiva -->
+    <section class="py-16 bg-terracotta text-white relative">
+        <div class="max-w-4xl mx-auto px-4 text-center fade-in-section">
+            <p class="font-heading uppercase tracking-widest text-sm mb-8 opacity-90">Faltan</p>
+            <div class="grid grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto" id="countdown">
+                <!-- Los valores se llenan con JS -->
+                <div class="bg-white/10 backdrop-blur-sm p-4 rounded-lg">
+                    <span class="block text-3xl md:text-5xl font-serif" id="days">00</span>
+                    <span class="text-xs uppercase tracking-wider opacity-80">Días</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-4 rounded-lg">
+                    <span class="block text-3xl md:text-5xl font-serif" id="hours">00</span>
+                    <span class="text-xs uppercase tracking-wider opacity-80">Hs</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-4 rounded-lg">
+                    <span class="block text-3xl md:text-5xl font-serif" id="minutes">00</span>
+                    <span class="text-xs uppercase tracking-wider opacity-80">Min</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-4 rounded-lg">
+                    <span class="block text-3xl md:text-5xl font-serif" id="seconds">00</span>
+                    <span class="text-xs uppercase tracking-wider opacity-80">Seg</span>
+                </div>
+            </div>
+            <p class="mt-8 font-script text-3xl opacity-90">...para el gran día</p>
+        </div>
+    </section>
+
+    <!-- Detalles (Cuándo & Dónde) -->
+    <section id="details" class="py-24 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 fade-in-section">
+                <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Ubicación</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4">Cuándo & Dónde</h2>
+                <div class="w-20 h-1 bg-terracotta mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Tarjeta Ceremonia -->
+                <div class="text-center fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
+                    <div class="w-16 h-16 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-6 text-terracotta">
+                        <i class="fas fa-church text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-xl mb-2 text-charcoal">Ceremonia Religiosa</h3>
+                    <p class="font-serif text-2xl text-terracotta mb-4">1:00 PM</p>
+                    <p class="text-gray-600 mb-6">Parroquia de Santa Maria<br>Calle Principal #123, Centro</p>
+                    <button onclick="openMap('church')" class="text-xs font-bold uppercase tracking-widest text-terracotta border-b border-terracotta pb-1 hover:text-terracotta-dark transition-colors">
+                        Ver Mapa
+                    </button>
+                </div>
+
+                <!-- Tarjeta Recepción -->
+                <div class="text-center fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
+                    <div class="w-16 h-16 bg-terracotta/10 rounded-full flex items-center justify-center mx-auto mb-6 text-terracotta">
+                        <i class="fas fa-glass-cheers text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-xl mb-2 text-charcoal">Recepción & Fiesta</h3>
+                    <p class="font-serif text-2xl text-terracotta mb-4">3:00 PM</p>
+                    <p class="text-gray-600 mb-6">Salon los Pinos<br>Carretera Federal km 45</p>
+                    <button onclick="openMap('venue')" class="text-xs font-bold uppercase tracking-widest text-terracotta border-b border-terracotta pb-1 hover:text-terracotta-dark transition-colors">
+                        Ver Mapa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Itinerario Vertical -->
+    <section id="itinerary" class="py-20 px-4 bg-sand relative overflow-hidden">
+        <!-- Decoración floral fondo -->
+        <i class="fas fa-leaf absolute -left-10 top-20 text-[200px] text-terracotta/5 rotate-45"></i>
+        
+        <div class="max-w-3xl mx-auto relative z-10">
+            <div class="text-center mb-16 fade-in-section">
+                <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Timeline</span>
+                <h2 class="font-serif text-4xl text-charcoal mt-2">El Gran Día</h2>
+            </div>
+
+            <div class="relative border-l-2 border-terracotta/30 ml-4 md:ml-1/2 space-y-12">
+                <!-- Evento 1 -->
+                <div class="relative pl-8 md:ml-6 fade-in-section">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-terracotta border-2 border-sand"></div>
+                    <div class="md:flex md:justify-between md:items-center w-full">
+                        <span class="font-serif text-2xl text-terracotta block md:w-1/3 md:text-right md:pr-10">1:00 PM</span>
+                        <div class="md:w-2/3">
+                            <h4 class="font-heading text-lg font-bold text-gray-800">Ceremonia</h4>
+                            <p class="text-gray-500 text-sm">El momento de decir "Sí, acepto".</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evento 2 -->
+                <div class="relative pl-8 md:ml-6 fade-in-section">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-terracotta border-2 border-sand"></div>
+                    <div class="md:flex md:justify-between md:items-center w-full">
+                        <span class="font-serif text-2xl text-terracotta block md:w-1/3 md:text-right md:pr-10">3:00 PM</span>
+                        <div class="md:w-2/3">
+                            <h4 class="font-heading text-lg font-bold text-gray-800">Cóctel de Bienvenida</h4>
+                            <p class="text-gray-500 text-sm">Música y bebidas para comenzar.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evento 3 -->
+                <div class="relative pl-8 md:ml-6 fade-in-section">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-terracotta border-2 border-sand"></div>
+                    <div class="md:flex md:justify-between md:items-center w-full">
+                        <span class="font-serif text-2xl text-terracotta block md:w-1/3 md:text-right md:pr-10">7:30 PM</span>
+                        <div class="md:w-2/3">
+                            <h4 class="font-heading text-lg font-bold text-gray-800">Cena</h4>
+                            <p class="text-gray-500 text-sm">Disfrutemos juntos de un delicioso banquete.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evento 4 -->
+                <div class="relative pl-8 md:ml-6 fade-in-section">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-terracotta border-2 border-sand"></div>
+                    <div class="md:flex md:justify-between md:items-center w-full">
+                        <span class="font-serif text-2xl text-terracotta block md:w-1/3 md:text-right md:pr-10">9:00 PM</span>
+                        <div class="md:w-2/3">
+                            <h4 class="font-heading text-lg font-bold text-gray-800">¡Fiesta!</h4>
+                            <p class="text-gray-500 text-sm">A bailar hasta que el cuerpo aguante.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Adicional (Dress Code & Regalos) -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+            <!-- Dress Code -->
+            <div class="bg-sand p-8 rounded-xl text-center fade-in-section">
+                <i class="fas fa-tshirt text-3xl text-terracotta mb-4"></i>
+                <h3 class="font-heading text-xl mb-3">Código de Vestimenta</h3>
+                <p class="font-serif text-lg text-terracotta mb-2 font-bold">Formal / Etiqueta Rigurosa</p>
+                <p class="text-gray-500 text-sm">
+                    Ellas: Vestido largo.<br>
+                    Ellos: Traje azul oscuro.<br>
+                    <span class="text-xs italic mt-2 block">(Reservamos el color blanco para la novia)</span>
+                </p>
+            </div>
+
+            <!-- Regalos -->
+            <div class="bg-sand p-8 rounded-xl text-center fade-in-section">
+                <i class="fas fa-gift text-3xl text-terracotta mb-4"></i>
+                <h3 class="font-heading text-xl mb-3">Mesa de Regalos</h3>
+                <p class="text-gray-500 text-sm mb-4">
+                    Su presencia es nuestro mejor regalo. Si desean tener un detalle con nosotros, ponemos a su disposición:
+                </p>
+                <div class="inline-block bg-white px-6 py-3 rounded shadow-sm border border-gray-100">
+                    <p class="font-serif text-terracotta font-bold">Lluvia de Sobres</p>
+                    <p class="text-xs text-gray-400">Habrá un buzón en la recepción</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería Pequeña (Separador) -->
+    <div class="grid grid-cols-2 md:grid-cols-4 h-48 md:h-64">
+        <img src="https://images.unsplash.com/photo-1511285560982-1356c11d4606?auto=format&fit=crop&q=80" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+        <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+        <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&q=80" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+    </div>
+
+    <!-- RSVP Section -->
+    <section id="rsvp" class="py-24 px-4 bg-terracotta-light/20 relative">
+        <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section relative z-10">
+            <div class="text-center mb-10">
+                <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">RSVP</span>
+                <h2 class="font-serif text-4xl text-charcoal mt-2">Confirma tu Asistencia</h2>
+                <p class="text-gray-500 mt-4">Por favor confirma antes del 1 de Mayo de 2026</p>
+            </div>
+
+            <form id="rsvpForm" class="space-y-6" onsubmit="handleRSVP(event)">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Nombre Completo</label>
+                        <input type="text" required class="w-full bg-sand border-none p-4 rounded focus:ring-2 focus:ring-terracotta outline-none" placeholder="Tu nombre">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Teléfono / WhatsApp</label>
+                        <input type="tel" required class="w-full bg-sand border-none p-4 rounded focus:ring-2 focus:ring-terracotta outline-none" placeholder="55 1234 5678">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">¿Asistirás?</label>
+                    <div class="flex space-x-6 mt-2">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="attendance" value="si" class="text-terracotta focus:ring-terracotta" checked>
+                            <span>¡Sí, ahí estaré!</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="attendance" value="no" class="text-terracotta focus:ring-terracotta">
+                            <span>Lo siento, no podré ir</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Número de invitados (incluyéndote)</label>
+                    <select class="w-full bg-sand border-none p-4 rounded focus:ring-2 focus:ring-terracotta outline-none">
+                        <option>1 Persona</option>
+                        <option>2 Personas</option>
+                        <option>3 Personas</option>
+                        <option>4 Personas</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Mensaje para los novios (Opcional)</label>
+                    <textarea rows="3" class="w-full bg-sand border-none p-4 rounded focus:ring-2 focus:ring-terracotta outline-none" placeholder="Alguna alergia alimentaria o felicitación..."></textarea>
+                </div>
+
+                <div class="text-center pt-4">
+                    <button type="submit" class="btn-terra bg-terracotta text-white font-heading uppercase tracking-widest py-4 px-12 rounded w-full md:w-auto">
+                        Enviar Confirmación
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white py-12 text-center">
+        <h2 class="font-script text-5xl mb-6 text-terracotta-light">C & D</h2>
+        <p class="font-sans text-gray-400 text-sm uppercase tracking-widest mb-8">Esperamos verte ahí</p>
+        <div class="text-xs text-gray-600">
+            &copy; 2026 Carlos & Doris. Diseñado con amor.
+        </div>
+    </footer>
+
+    <!-- Modal de Confirmación (Oculto por defecto) -->
+    <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 hidden opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white p-8 rounded-xl max-w-sm text-center m-4 shadow-2xl transform scale-95 transition-transform duration-300" id="modalContent">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-500">
+                <i class="fas fa-check text-2xl"></i>
+            </div>
+            <h3 class="font-serif text-2xl text-terracotta mb-2">¡Gracias!</h3>
+            <p class="text-gray-500 mb-6">Hemos recibido tu confirmación correctamente.</p>
+            <button onclick="closeModal()" class="bg-terracotta text-white px-6 py-2 rounded hover:bg-terracotta-dark transition-colors">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // --- Lógica de Música (MP3 Nativo) ---
+        const audio = document.getElementById('weddingMusic');
+        const musicBtn = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+
+        // Función llamada por el botón de Bienvenida
+        function enterSite() {
+            const overlay = document.getElementById('welcome-overlay');
+            
+            // Ocultar overlay
+            overlay.classList.add('hidden-overlay');
+            
+            // Mostrar botón flotante
+            musicBtn.classList.remove('hidden');
+
+            // Intentar reproducir música
+            audio.play().then(() => {
+                // Éxito: Cambiar icono a pausa
+                musicIcon.className = "fas fa-pause";
+                musicBtn.classList.add('music-playing');
+            }).catch(error => {
+                console.log("Reproducción bloqueada (puede requerir interacción extra):", error);
+                // Si falla, el usuario aún tiene el botón flotante para activarlo
+            });
+        }
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicIcon.className = "fas fa-pause";
+                musicBtn.classList.add('music-playing');
+            } else {
+                audio.pause();
+                musicIcon.className = "fas fa-play ml-1";
+                musicBtn.classList.remove('music-playing');
+            }
+        }
+
+        // --- Resto de Scripts ---
+
+        // 1. Cuenta Regresiva
+        const weddingDate = new Date("June 05, 2026 13:00:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("countdown").innerHTML = "<div class='text-3xl font-serif col-span-4'>¡Es Hoy!</div>";
+            }
+        }, 1000);
+
+        // 2. Animaciones al hacer Scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Solo animar una vez
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // 3. Menú Móvil
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // 4. Manejo del Formulario (Simulado)
+        function handleRSVP(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            
+            // Simular carga
+            btn.innerText = "Enviando...";
+            btn.disabled = true;
+            btn.classList.add('opacity-75');
+
+            setTimeout(() => {
+                // Mostrar Modal de Éxito
+                const modal = document.getElementById('successModal');
+                const modalContent = document.getElementById('modalContent');
+                
+                modal.classList.remove('hidden');
+                // Pequeño delay para permitir que el display:block se renderice antes de la opacidad
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                }, 10);
+
+                // Resetear form
+                e.target.reset();
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75');
+            }, 1500);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('successModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // 5. Abrir Mapas
+        function openMap(location) {
+            let query = "";
+            if (location === 'church') {
+                query = "Parroquia+Asuncion+Maria"; // Ejemplo
+            } else {
+                query = "Salon+Los+Pinos"; // Ejemplo
+            }
+            window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
+        }
+
+        // Efecto Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+                nav.classList.add('bg-white/95');
+                nav.classList.remove('bg-sand/90');
+            } else {
+                nav.classList.remove('shadow-md');
+                nav.classList.remove('bg-white/95');
+                nav.classList.add('bg-sand/90');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
