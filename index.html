@@ -45,8 +45,12 @@
         @keyframes pulse-ring { 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(193, 91, 67, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(193, 91, 67, 0); } 100% { transform: scale(0.8); } }
         .music-playing { animation: pulse-ring 2s infinite; }
 
-        .nav-link.active { color: #c15b43; font-weight: 600; }
+        /* Estilo activo para el menú */
+        .nav-link.active { color: #c15b43 !important; font-weight: 700; }
         
+        /* Transición suave para el menú móvil */
+        .nav-link { transition: color 0.3s ease; }
+
         /* Modal Transition */
         #successModal { transition: opacity 0.3s ease; }
     </style>
@@ -72,19 +76,19 @@
             <div class="flex justify-between items-center h-16">
                 <div class="font-script text-3xl text-terracotta">C & D</div>
                 <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-heading">
-                    <a href="#home" class="nav-link hover:text-terracotta transition-colors">Inicio</a>
-                    <a href="#details" class="nav-link hover:text-terracotta transition-colors">Detalles</a>
-                    <a href="#itinerary" class="nav-link hover:text-terracotta transition-colors">Itinerario</a>
-                    <a href="#rsvp" class="nav-link hover:text-terracotta transition-colors">Confirmar</a>
+                    <a href="#home" class="nav-link text-gray-600 hover:text-terracotta">Inicio</a>
+                    <a href="#details" class="nav-link text-gray-600 hover:text-terracotta">Detalles</a>
+                    <a href="#itinerary" class="nav-link text-gray-600 hover:text-terracotta">Itinerario</a>
+                    <a href="#rsvp" class="nav-link text-gray-600 hover:text-terracotta">Confirmar</a>
                 </div>
                 <div class="md:hidden"><button onclick="toggleMobileMenu()" class="text-terracotta"><i class="fas fa-bars text-2xl"></i></button></div>
             </div>
         </div>
         <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 p-4 text-center font-heading text-sm uppercase space-y-4 shadow-lg">
-            <a href="#home" onclick="toggleMobileMenu()" class="nav-link block hover:text-terracotta">Inicio</a>
-            <a href="#details" onclick="toggleMobileMenu()" class="nav-link block hover:text-terracotta">Detalles</a>
-            <a href="#itinerary" onclick="toggleMobileMenu()" class="nav-link block hover:text-terracotta">Itinerario</a>
-            <a href="#rsvp" onclick="toggleMobileMenu()" class="nav-link block text-terracotta font-bold">Confirmar</a>
+            <a href="#home" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Inicio</a>
+            <a href="#details" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Detalles</a>
+            <a href="#itinerary" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Itinerario</a>
+            <a href="#rsvp" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Confirmar</a>
         </div>
     </nav>
 
@@ -119,19 +123,21 @@
                 <div class="w-20 h-1 bg-terracotta mx-auto"></div>
             </div>
             <div class="grid md:grid-cols-2 gap-12 text-center">
+                <!-- Tarjeta Ceremonia -->
                 <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
                     <i class="fas fa-church text-4xl text-terracotta mb-4"></i>
                     <h3 class="font-heading text-xl mb-2">Ceremonia</h3>
                     <p class="font-serif text-2xl text-terracotta mb-4">1:00 PM</p>
                     <p class="text-gray-600 mb-6">Parroquia de Santa Maria<br>Calle Principal #123</p>
-                    <button onclick="window.open('https://maps.google.com/?q=Parroquia+Asuncion','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
+                    <button onclick="window.open('https://maps.app.goo.gl/EVPgQESHV9RtaKwz8','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
                 </div>
+                <!-- Tarjeta Recepción -->
                 <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
                     <i class="fas fa-glass-cheers text-4xl text-terracotta mb-4"></i>
                     <h3 class="font-heading text-xl mb-2">Recepción</h3>
                     <p class="font-serif text-2xl text-terracotta mb-4">3:00 PM</p>
                     <p class="text-gray-600 mb-6">Salon los Pinos<br>Carretera Federal km 45</p>
-                    <button onclick="window.open('https://maps.google.com/?q=Salon+Los+Pinos','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
+                    <button onclick="window.open('https://maps.app.goo.gl/d3AY6gjdNXA9y5Xs9','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
                 </div>
             </div>
         </div>
@@ -185,16 +191,19 @@
             <div class="w-full">
                 <div class="text-center mb-10">
                     <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">RSVP</span>
-                    <h2 class="font-serif text-4xl text-charcoal mt-2">Confirma tu Asistencia</h2>
+                    <!-- TITULO CON ID PARA OCULTARLO -->
+                    <h2 id="rsvp-title" class="font-serif text-4xl text-charcoal mt-2">Confirma tu Asistencia</h2>
+                    <!-- MENSAJE DE LÍMITE (Se oculta al confirmar) -->
                     <p id="rsvp-limit-message" class="text-terracotta text-sm font-bold mt-2 hidden"></p>
                 </div>
 
-                <!-- MENSAJE DE ÉXITO (Oculto por defecto) -->
+                <!-- MENSAJE DE ÉXITO FINAL (Se muestra al confirmar) -->
                 <div id="rsvp-success-message" class="hidden text-center py-10">
                     <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce">
                         <i class="fas fa-check text-3xl"></i>
                     </div>
-                    <h3 class="font-serif text-3xl text-terracotta mb-4">¡Gracias por confirmar!</h3>
+                    <!-- TEXTO DINÁMICO DE LUGARES -->
+                    <p id="final-confirmation-text" class="text-terracotta font-serif text-2xl mb-2 font-bold"></p>
                     <p class="text-gray-600 mb-6">Hemos registrado tu respuesta correctamente.</p>
                     <p class="text-sm text-gray-400 uppercase tracking-widest">Nos vemos en la boda</p>
                 </div>
@@ -305,7 +314,7 @@
 
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
+                if (current && link.getAttribute('href').includes(current)) {
                     link.classList.add('active');
                 }
             });
@@ -318,6 +327,9 @@
         // 3. Formulario con Validación y Modal
         const form = document.forms['submit-to-google-sheet'];
         const successMessage = document.getElementById('rsvp-success-message');
+        const limitMessage = document.getElementById('rsvp-limit-message');
+        const rsvpTitle = document.getElementById('rsvp-title'); // Titulo a ocultar
+        const finalText = document.getElementById('final-confirmation-text');
 
         form.addEventListener('submit', e => {
             e.preventDefault();
@@ -331,6 +343,9 @@
                 phoneInput.focus();
                 return; // Detiene el envío
             }
+
+            // Capturar número de invitados seleccionado ANTES de enviar
+            const guestsConfirmed = form.querySelector('select[name="invitados"]').value;
 
             const btn = form.querySelector('button[type="submit"]');
             const originalText = btn.innerText;
@@ -350,8 +365,13 @@
                         modalContent.classList.add('scale-100');
                     }, 10);
 
-                    // 2. OCULTAR FORMULARIO Y MOSTRAR MENSAJE FINAL EN LA SECCIÓN
+                    // 2. ACTUALIZAR TEXTO FINAL (Confirmación dinámica)
+                    finalText.innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
+
+                    // 3. OCULTAR FORM, TITULO Y MENSAJE LÍMITE
                     form.classList.add('hidden');
+                    limitMessage.classList.add('hidden'); 
+                    rsvpTitle.classList.add('hidden'); // Ocultar "Confirma tu Asistencia"
                     successMessage.classList.remove('hidden');
 
                     form.reset();
@@ -409,3 +429,5 @@
     </script>
 </body>
 </html>
+
+
