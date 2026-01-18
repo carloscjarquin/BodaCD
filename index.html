@@ -45,13 +45,8 @@
         @keyframes pulse-ring { 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(193, 91, 67, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(193, 91, 67, 0); } 100% { transform: scale(0.8); } }
         .music-playing { animation: pulse-ring 2s infinite; }
 
-        /* Estilo activo para el menú */
         .nav-link.active { color: #c15b43 !important; font-weight: 700; }
-        
-        /* Transición suave para el menú móvil */
         .nav-link { transition: color 0.3s ease; }
-
-        /* Modal Transition */
         #successModal { transition: opacity 0.3s ease; }
     </style>
 </head>
@@ -123,7 +118,6 @@
                 <div class="w-20 h-1 bg-terracotta mx-auto"></div>
             </div>
             <div class="grid md:grid-cols-2 gap-12 text-center">
-                <!-- Tarjeta Ceremonia -->
                 <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
                     <i class="fas fa-church text-4xl text-terracotta mb-4"></i>
                     <h3 class="font-heading text-xl mb-2">Ceremonia</h3>
@@ -131,7 +125,6 @@
                     <p class="text-gray-600 mb-6">Parroquia de Santa Maria<br>Calle Principal #123</p>
                     <button onclick="window.open('https://maps.app.goo.gl/EVPgQESHV9RtaKwz8','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
                 </div>
-                <!-- Tarjeta Recepción -->
                 <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
                     <i class="fas fa-glass-cheers text-4xl text-terracotta mb-4"></i>
                     <h3 class="font-heading text-xl mb-2">Recepción</h3>
@@ -191,13 +184,13 @@
             <div class="w-full">
                 <div class="text-center mb-10">
                     <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">RSVP</span>
-                    <!-- TITULO CON ID PARA OCULTARLO -->
+                    <!-- TITULO (Se oculta al confirmar) -->
                     <h2 id="rsvp-title" class="font-serif text-4xl text-charcoal mt-2">Confirma tu Asistencia</h2>
                     <!-- MENSAJE DE LÍMITE (Se oculta al confirmar) -->
                     <p id="rsvp-limit-message" class="text-terracotta text-sm font-bold mt-2 hidden"></p>
                 </div>
 
-                <!-- MENSAJE DE ÉXITO FINAL (Se muestra al confirmar o si ya confirmó) -->
+                <!-- MENSAJE DE ÉXITO FINAL (Se muestra al confirmar) -->
                 <div id="rsvp-success-message" class="hidden text-center py-10">
                     <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce">
                         <i class="fas fa-check text-3xl"></i>
@@ -322,81 +315,126 @@
             else { nav.classList.remove('shadow-md', 'bg-white/95'); nav.classList.add('bg-sand/90'); }
         });
 
-        // 3. Formulario con Validación, Modal y LocalStorage
+        // 3. Formulario, Validación, Modal y Seguridad LocalStorage
         const form = document.forms['submit-to-google-sheet'];
         const successMessage = document.getElementById('rsvp-success-message');
         const limitMessage = document.getElementById('rsvp-limit-message');
         const rsvpTitle = document.getElementById('rsvp-title'); 
         const finalText = document.getElementById('final-confirmation-text');
 
-        // FUNCIÓN: Verificar si ya confirmó al cargar la página
-        function checkPreviousConfirmation() {
-            const alreadyConfirmed = localStorage.getItem('rsvpConfirmed');
-            const count = localStorage.getItem('rsvpGuestCount');
-
-            if (alreadyConfirmed === 'true') {
-                form.classList.add('hidden');
-                limitMessage.classList.add('hidden');
-                rsvpTitle.classList.add('hidden');
-                
-                finalText.innerText = "Ya has confirmado " + (count ? count : "") + " lugares";
-                successMessage.classList.remove('hidden');
-            }
-        }
-
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-
-            const phoneInput = form.querySelector('input[name="telefono"]');
-            const phoneVal = phoneInput.value.replace(/\D/g, ''); 
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nombre = urlParams.get('nombre');
+            const pases = urlParams.get('pases');
             
-            if (phoneVal.length !== 10) {
-                alert("Por favor, ingresa un número de teléfono válido de 10 dígitos.");
-                phoneInput.focus();
-                return;
+            // 1. GENERAR LLAVE ÚNICA DE LOCALSTORAGE (vinculada al nombre)
+            // Si no hay nombre, usa 'generic'
+            const storageKey = 'rsvp_conf_' + (nombre ? encodeURIComponent(nombre) : 'generic');
+
+            // 2. VERIFICAR SI ESTE INVITADO YA CONFIRMÓ
+            const storedData = localStorage.getItem(storageKey);
+
+            if (storedData) {
+                // --- YA CONFIRMÓ ---
+                const data = JSON.parse(storedData);
+                
+                // Ocultar form y títulos
+                form.classList.add('hidden');
+                rsvpTitle.classList.add('hidden');
+                limitMessage.classList.add('hidden'); // Asegurar que no salga
+                
+                // Mostrar mensaje éxito
+                finalText.innerText = "Ya has confirmado " + data.count + (data.count == 1 ? " lugar" : " lugares");
+                successMessage.classList.remove('hidden');
+
+                // Saludo personalizado (opcional)
+                if (nombre) {
+                    document.getElementById('welcome-guest-name').innerText = "¡Hola de nuevo, " + nombre + "!";
+                    document.getElementById('welcome-guest-name').classList.remove('hidden');
+                }
+
+            } else {
+                // --- NO HA CONFIRMADO (Mostrar Formulario) ---
+                
+                if (nombre) {
+                    document.getElementById('welcome-guest-name').innerText = "¡Hola, " + nombre + "!";
+                    document.getElementById('welcome-guest-name').classList.remove('hidden');
+                    document.getElementById('rsvp-name').value = nombre;
+                }
+
+                if (pases) {
+                    const select = document.getElementById('rsvp-guests');
+                    const max = parseInt(pases);
+                    select.innerHTML = '';
+                    for (let i = 1; i <= max; i++) {
+                        let opt = document.createElement("option");
+                        opt.value = i;
+                        opt.text = i + (i === 1 ? " Persona" : " Personas");
+                        select.appendChild(opt);
+                    }
+                    select.value = max;
+                    
+                    // Solo mostramos el límite si el formulario está visible
+                    limitMessage.innerText = `Tienes ${max} lugares reservados.`;
+                    limitMessage.classList.remove('hidden');
+                }
             }
 
-            const guestsConfirmed = form.querySelector('select[name="invitados"]').value;
-            const btn = form.querySelector('button[type="submit"]');
-            const originalText = btn.innerText;
-            btn.innerText = "Enviando...";
-            btn.disabled = true;
+            // Manejo del Envío
+            form.addEventListener('submit', e => {
+                e.preventDefault();
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    // 1. GUARDAR EN LOCALSTORAGE
-                    localStorage.setItem('rsvpConfirmed', 'true');
-                    localStorage.setItem('rsvpGuestCount', guestsConfirmed);
+                const phoneInput = form.querySelector('input[name="telefono"]');
+                const phoneVal = phoneInput.value.replace(/\D/g, ''); 
+                
+                if (phoneVal.length !== 10) {
+                    alert("Por favor, ingresa un número de teléfono válido de 10 dígitos.");
+                    phoneInput.focus();
+                    return;
+                }
 
-                    // 2. MOSTRAR MODAL
-                    const modal = document.getElementById('successModal');
-                    const modalContent = document.getElementById('modalContent');
-                    modal.classList.remove('hidden');
-                    
-                    setTimeout(() => {
-                        modal.classList.remove('opacity-0', 'pointer-events-none');
-                        modalContent.classList.remove('scale-95');
-                        modalContent.classList.add('scale-100');
-                    }, 10);
+                const guestsConfirmed = form.querySelector('select[name="invitados"]').value;
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn.innerText;
+                btn.innerText = "Enviando...";
+                btn.disabled = true;
 
-                    // 3. UI UPDATES
-                    finalText.innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
-                    
-                    form.classList.add('hidden');
-                    limitMessage.classList.add('hidden'); 
-                    rsvpTitle.classList.add('hidden');
-                    successMessage.classList.remove('hidden');
+                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                    .then(response => {
+                        // 1. GUARDAR EN LOCALSTORAGE CON LA LLAVE ESPECÍFICA
+                        const dataToSave = { confirmed: true, count: guestsConfirmed };
+                        localStorage.setItem(storageKey, JSON.stringify(dataToSave));
 
-                    form.reset();
-                    btn.innerText = originalText;
-                    btn.disabled = false;
-                })
-                .catch(error => {
-                    alert("Hubo un error al enviar. Por favor intenta de nuevo.");
-                    btn.innerText = originalText;
-                    btn.disabled = false;
-                });
-        });
+                        // 2. MOSTRAR MODAL
+                        const modal = document.getElementById('successModal');
+                        const modalContent = document.getElementById('modalContent');
+                        modal.classList.remove('hidden');
+                        
+                        setTimeout(() => {
+                            modal.classList.remove('opacity-0', 'pointer-events-none');
+                            modalContent.classList.remove('scale-95');
+                            modalContent.classList.add('scale-100');
+                        }, 10);
+
+                        // 3. UI UPDATES
+                        finalText.innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
+                        
+                        form.classList.add('hidden');
+                        limitMessage.classList.add('hidden'); 
+                        rsvpTitle.classList.add('hidden');
+                        successMessage.classList.remove('hidden');
+
+                        form.reset();
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                    })
+                    .catch(error => {
+                        alert("Hubo un error al enviar. Por favor intenta de nuevo.");
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                    });
+            });
+        };
 
         function closeModal() {
             const modal = document.getElementById('successModal');
@@ -407,34 +445,6 @@
             setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
 
-        window.onload = function() {
-            // Chequeo de seguridad al inicio
-            checkPreviousConfirmation();
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const nombre = urlParams.get('nombre');
-            const pases = urlParams.get('pases');
-            if (nombre) {
-                document.getElementById('welcome-guest-name').innerText = "¡Hola, " + nombre + "!";
-                document.getElementById('welcome-guest-name').classList.remove('hidden');
-                document.getElementById('rsvp-name').value = nombre;
-            }
-            if (pases) {
-                const select = document.getElementById('rsvp-guests');
-                const max = parseInt(pases);
-                select.innerHTML = '';
-                for (let i = 1; i <= max; i++) {
-                    let opt = document.createElement("option");
-                    opt.value = i;
-                    opt.text = i + (i === 1 ? " Persona" : " Personas");
-                    select.appendChild(opt);
-                }
-                select.value = max;
-                document.getElementById('rsvp-limit-message').innerText = `Tienes ${max} lugares reservados.`;
-                document.getElementById('rsvp-limit-message').classList.remove('hidden');
-            }
-        };
-
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
         
         const observer = new IntersectionObserver((entries) => {
@@ -444,3 +454,5 @@
     </script>
 </body>
 </html>
+
+
