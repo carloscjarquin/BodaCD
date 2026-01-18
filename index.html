@@ -197,7 +197,7 @@
                     <p id="rsvp-limit-message" class="text-terracotta text-sm font-bold mt-2 hidden"></p>
                 </div>
 
-                <!-- MENSAJE DE ÉXITO FINAL (Se muestra al confirmar) -->
+                <!-- MENSAJE DE ÉXITO FINAL (Se muestra al confirmar o si ya confirmó) -->
                 <div id="rsvp-success-message" class="hidden text-center py-10">
                     <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce">
                         <i class="fas fa-check text-3xl"></i>
@@ -277,7 +277,6 @@
             const playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
-                    // ÉXITO: Cambiar icono a PAUSA inmediatamente
                     musicIcon.className = "fas fa-pause";
                     musicBtn.classList.add('music-playing');
                 }).catch(error => {
@@ -304,7 +303,6 @@
 
         window.addEventListener('scroll', () => {
             let current = '';
-            // Ajuste de offset para detectar mejor la sección
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 if (pageYOffset >= (sectionTop - 300)) {
@@ -324,29 +322,41 @@
             else { nav.classList.remove('shadow-md', 'bg-white/95'); nav.classList.add('bg-sand/90'); }
         });
 
-        // 3. Formulario con Validación y Modal
+        // 3. Formulario con Validación, Modal y LocalStorage
         const form = document.forms['submit-to-google-sheet'];
         const successMessage = document.getElementById('rsvp-success-message');
         const limitMessage = document.getElementById('rsvp-limit-message');
-        const rsvpTitle = document.getElementById('rsvp-title'); // Titulo a ocultar
+        const rsvpTitle = document.getElementById('rsvp-title'); 
         const finalText = document.getElementById('final-confirmation-text');
+
+        // FUNCIÓN: Verificar si ya confirmó al cargar la página
+        function checkPreviousConfirmation() {
+            const alreadyConfirmed = localStorage.getItem('rsvpConfirmed');
+            const count = localStorage.getItem('rsvpGuestCount');
+
+            if (alreadyConfirmed === 'true') {
+                form.classList.add('hidden');
+                limitMessage.classList.add('hidden');
+                rsvpTitle.classList.add('hidden');
+                
+                finalText.innerText = "Ya has confirmado " + (count ? count : "") + " lugares";
+                successMessage.classList.remove('hidden');
+            }
+        }
 
         form.addEventListener('submit', e => {
             e.preventDefault();
 
-            // VALIDACIÓN TELÉFONO (10 Dígitos exactos)
             const phoneInput = form.querySelector('input[name="telefono"]');
-            const phoneVal = phoneInput.value.replace(/\D/g, ''); // Quitar lo que no sea número
+            const phoneVal = phoneInput.value.replace(/\D/g, ''); 
             
             if (phoneVal.length !== 10) {
                 alert("Por favor, ingresa un número de teléfono válido de 10 dígitos.");
                 phoneInput.focus();
-                return; // Detiene el envío
+                return;
             }
 
-            // Capturar número de invitados seleccionado ANTES de enviar
             const guestsConfirmed = form.querySelector('select[name="invitados"]').value;
-
             const btn = form.querySelector('button[type="submit"]');
             const originalText = btn.innerText;
             btn.innerText = "Enviando...";
@@ -354,7 +364,11 @@
 
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
-                    // 1. MOSTRAR MODAL (Feedback Inmediato)
+                    // 1. GUARDAR EN LOCALSTORAGE
+                    localStorage.setItem('rsvpConfirmed', 'true');
+                    localStorage.setItem('rsvpGuestCount', guestsConfirmed);
+
+                    // 2. MOSTRAR MODAL
                     const modal = document.getElementById('successModal');
                     const modalContent = document.getElementById('modalContent');
                     modal.classList.remove('hidden');
@@ -365,13 +379,12 @@
                         modalContent.classList.add('scale-100');
                     }, 10);
 
-                    // 2. ACTUALIZAR TEXTO FINAL (Confirmación dinámica)
+                    // 3. UI UPDATES
                     finalText.innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
-
-                    // 3. OCULTAR FORM, TITULO Y MENSAJE LÍMITE
+                    
                     form.classList.add('hidden');
                     limitMessage.classList.add('hidden'); 
-                    rsvpTitle.classList.add('hidden'); // Ocultar "Confirma tu Asistencia"
+                    rsvpTitle.classList.add('hidden');
                     successMessage.classList.remove('hidden');
 
                     form.reset();
@@ -395,6 +408,9 @@
         }
 
         window.onload = function() {
+            // Chequeo de seguridad al inicio
+            checkPreviousConfirmation();
+
             const urlParams = new URLSearchParams(window.location.search);
             const nombre = urlParams.get('nombre');
             const pases = urlParams.get('pases');
@@ -421,7 +437,6 @@
 
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
         
-        // Animaciones Fade In
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.15 });
@@ -429,5 +444,3 @@
     </script>
 </body>
 </html>
-
-
