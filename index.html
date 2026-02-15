@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carlos & Doris | Nuestra Boda</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
@@ -32,31 +35,98 @@
             }
         }
     </script>
-    
-    <style>
-        body { background-color: #fdfbf7; overflow-x: hidden; }
-        
-        #welcome-overlay { position: fixed; inset: 0; background-color: #fdfbf7; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s; }
-        #welcome-overlay.hidden-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
-        
-        .fade-in-section { opacity: 0; transform: translateY(20px); transition: 1s; }
-        .fade-in-section.is-visible { opacity: 1; transform: none; }
-        
-        @keyframes pulse-ring { 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(193, 91, 67, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(193, 91, 67, 0); } 100% { transform: scale(0.8); } }
-        .music-playing { animation: pulse-ring 2s infinite; }
 
-        .nav-link.active { color: #c15b43 !important; font-weight: 700; }
-        .nav-link { transition: color 0.3s ease; }
-        #successModal { transition: opacity 0.3s ease; }
+    <style>
+        body {
+            background-color: #fdfbf7;
+            overflow-x: hidden;
+        }
+
+        #welcome-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: #fdfbf7;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s;
+        }
+
+        #welcome-overlay.hidden-overlay {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 1s;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                box-shadow: 0 0 0 0 rgba(193, 91, 67, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(193, 91, 67, 0);
+            }
+
+            100% {
+                transform: scale(0.8);
+            }
+        }
+
+        .music-playing {
+            animation: pulse-ring 2s infinite;
+        }
+
+        .nav-link.active {
+            color: #c15b43 !important;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+
+        #successModal {
+            transition: opacity 0.3s ease;
+        }
 
         /* Animación de Latido de Corazón */
         @keyframes heartbeat {
-            0% { transform: scale(1); }
-            14% { transform: scale(1.3); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.3); }
-            70% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            14% {
+                transform: scale(1.3);
+            }
+
+            28% {
+                transform: scale(1);
+            }
+
+            42% {
+                transform: scale(1.3);
+            }
+
+            70% {
+                transform: scale(1);
+            }
         }
+
         .animate-heartbeat {
             animation: heartbeat 1.5s linear infinite;
             display: inline-block;
@@ -66,9 +136,12 @@
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
+
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
         }
 
         /* --- ESTILO SELLO DE CERA --- */
@@ -79,17 +152,22 @@
             /* Degradado para dar efecto 3D esférico */
             background: radial-gradient(circle at 30% 30%, #d66d54, #9a432e);
             /* Sombras complejas para simular el relieve de la cera */
-            box-shadow: 
-                0 4px 15px rgba(0,0,0,0.3), /* Sombra caída */
-                inset 0 0 20px rgba(0,0,0,0.3), /* Profundidad interna */
-                0 0 0 4px rgba(154, 67, 46, 0.3), /* Anillo exterior difuso */
-                0 0 0 8px rgba(253, 251, 247, 0.2); /* Borde claro para separar del fondo */
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.3),
+                /* Sombra caída */
+                inset 0 0 20px rgba(0, 0, 0, 0.3),
+                /* Profundidad interna */
+                0 0 0 4px rgba(154, 67, 46, 0.3),
+                /* Anillo exterior difuso */
+                0 0 0 8px rgba(253, 251, 247, 0.2);
+            /* Borde claro para separar del fondo */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote suave */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Efecto rebote suave */
             border: 2px solid #853221;
             position: relative;
         }
@@ -100,34 +178,37 @@
             position: absolute;
             inset: 6px;
             border-radius: 50%;
-            border: 1px dashed rgba(255,255,255,0.3);
+            border: 1px dashed rgba(255, 255, 255, 0.3);
             opacity: 0.7;
         }
 
         .wax-seal-btn:hover {
             transform: scale(1.1) rotate(5deg);
-            box-shadow: 
-                0 10px 25px rgba(0,0,0,0.25),
-                inset 0 0 10px rgba(0,0,0,0.2);
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.25),
+                inset 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
         .wax-seal-btn:active {
             transform: scale(0.95);
         }
-        
+
         .wax-text {
             font-family: 'Great Vibes', cursive;
             font-size: 2rem;
             color: rgba(255, 255, 255, 0.95);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
             transform: rotate(-5deg);
         }
     </style>
 </head>
+
 <body class="text-charcoal font-sans antialiased">
 
     <!-- Audio -->
-    <audio id="weddingMusic" loop preload="auto"><source src="cancion.mp3" type="audio/mpeg"></audio>
+    <audio id="weddingMusic" loop preload="auto">
+        <source src="cancion.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Bienvenida -->
     <div id="welcome-overlay">
@@ -135,12 +216,12 @@
             <p id="welcome-guest-name" class="font-heading text-terracotta text-lg mb-2 hidden"></p>
             <div class="font-script text-6xl md:text-8xl text-terracotta mb-4">C & D</div>
             <p class="font-heading uppercase tracking-widest text-gray-500 mb-12">Nuestra Boda</p>
-            
+
             <!-- BOTÓN TIPO SELLO DE CERA -->
             <div onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación">
                 <span class="wax-text">Abrir</span>
             </div>
-            
+
             <p class="text-xs text-gray-400 mt-6 tracking-wider font-heading">Toca el sello para entrar</p>
         </div>
     </div>
@@ -154,30 +235,44 @@
                     <a href="#home" class="nav-link text-gray-600 hover:text-terracotta">Inicio</a>
                     <a href="#details" class="nav-link text-gray-600 hover:text-terracotta">Ubicación</a>
                     <a href="#dresscode" class="nav-link text-gray-600 hover:text-terracotta">Vestimenta</a>
+                    <a href="#gifts" class="nav-link text-gray-600 hover:text-terracotta">Regalos</a>
                     <a href="#rsvp" class="nav-link text-gray-600 hover:text-terracotta">Confirmar</a>
                 </div>
-                <div class="md:hidden"><button onclick="toggleMobileMenu()" class="text-terracotta"><i class="fas fa-bars text-2xl"></i></button></div>
+                <div class="md:hidden"><button onclick="toggleMobileMenu()" class="text-terracotta"><i
+                            class="fas fa-bars text-2xl"></i></button></div>
             </div>
         </div>
-        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 p-4 text-center font-heading text-sm uppercase space-y-4 shadow-lg">
-            <a href="#home" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Inicio</a>
-            <a href="#details" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Ubicación</a>
-            <a href="#dresscode" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Vestimenta</a>
-            <a href="#rsvp" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Confirmar</a>
+        <div id="mobileMenu"
+            class="hidden md:hidden bg-white border-t border-gray-100 p-4 text-center font-heading text-sm uppercase space-y-4 shadow-lg">
+            <a href="#home" onclick="toggleMobileMenu()"
+                class="nav-link block text-gray-600 hover:text-terracotta">Inicio</a>
+            <a href="#details" onclick="toggleMobileMenu()"
+                class="nav-link block text-gray-600 hover:text-terracotta">Ubicación</a>
+            <a href="#dresscode" onclick="toggleMobileMenu()"
+                class="nav-link block text-gray-600 hover:text-terracotta">Vestimenta</a>
+            <a href="#gifts" onclick="toggleMobileMenu()"
+                class="nav-link block text-gray-600 hover:text-terracotta">Regalos</a>
+            <a href="#rsvp" onclick="toggleMobileMenu()"
+                class="nav-link block text-gray-600 hover:text-terracotta">Confirmar</a>
         </div>
     </nav>
 
     <!-- Música Flotante -->
-    <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-terracotta rounded-full shadow-lg flex items-center justify-center border border-terracotta/20"><i class="fas fa-play ml-1" id="musicIcon"></i></button>
-    
+    <button id="musicToggle" onclick="toggleMusic()"
+        class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-terracotta rounded-full shadow-lg flex items-center justify-center border border-terracotta/20"><i
+            class="fas fa-play ml-1" id="musicIcon"></i></button>
+
     <!-- Hero (Section ID: home) -->
     <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
-        <div class="absolute inset-0 z-0"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover brightness-[0.65]"></div>
+        <div class="absolute inset-0 z-0"><img
+                src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop"
+                class="w-full h-full object-cover brightness-[0.65]"></div>
         <div class="relative z-10 text-white fade-in-section">
             <p class="text-sm uppercase tracking-[0.3em] mb-4">¡Nos casamos!</p>
             <h1 class="font-script text-7xl md:text-9xl text-terracotta-light">Carlos & Doris</h1>
             <p class="font-heading text-xl tracking-widest my-6">05 . 06 . 2026</p>
-            <a href="#rsvp" class="inline-block bg-terracotta text-white font-heading text-xs uppercase tracking-widest py-4 px-10 rounded shadow-lg hover:bg-white hover:text-terracotta transition-all">Acompañanos</a>
+            <a href="#rsvp"
+                class="inline-block bg-terracotta text-white font-heading text-xs uppercase tracking-widest py-4 px-10 rounded shadow-lg hover:bg-white hover:text-terracotta transition-all">Acompañanos</a>
         </div>
     </section>
 
@@ -185,7 +280,8 @@
     <section class="pt-20 pb-10 px-4 bg-sand text-center">
         <div class="max-w-2xl mx-auto fade-in-section">
             <i class="fas fa-heart text-terracotta text-2xl mb-6 animate-heartbeat"></i>
-            <h2 class="font-serif text-3xl italic text-charcoal mb-4">"Dios nos ha bendecido con este amor, y hoy celebramos su promesa de unirnos en matrimonio."</h2>
+            <h2 class="font-serif text-3xl italic text-charcoal mb-4">"Dios nos ha bendecido con este amor, y hoy
+                celebramos su promesa de unirnos en matrimonio."</h2>
         </div>
     </section>
 
@@ -195,33 +291,48 @@
             <div class="flex overflow-x-auto space-x-6 pb-8 snap-x snap-mandatory no-scrollbar px-4 md:justify-center">
                 <!-- Foto 1 (Actualizada con la imagen de la Foto 5) -->
                 <div class="flex-none snap-center">
-                    <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=600&auto=format&fit=crop" alt="Foto Pareja 1" onclick="openLightbox(this.src)" class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=600&auto=format&fit=crop"
+                        alt="Foto Pareja 1" onclick="openLightbox(this.src)"
+                        class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
                 </div>
                 <!-- Foto 2 -->
                 <div class="flex-none snap-center">
-                    <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=600&auto=format&fit=crop" alt="Foto Pareja 2" onclick="openLightbox(this.src)" class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=600&auto=format&fit=crop"
+                        alt="Foto Pareja 2" onclick="openLightbox(this.src)"
+                        class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
                 </div>
                 <!-- Foto 3 -->
                 <div class="flex-none snap-center">
-                    <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=600&auto=format&fit=crop" alt="Foto Pareja 3" onclick="openLightbox(this.src)" class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=600&auto=format&fit=crop"
+                        alt="Foto Pareja 3" onclick="openLightbox(this.src)"
+                        class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
                 </div>
                 <!-- Foto 4 -->
                 <div class="flex-none snap-center">
-                    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=600&auto=format&fit=crop" alt="Foto Pareja 4" onclick="openLightbox(this.src)" class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=600&auto=format&fit=crop"
+                        alt="Foto Pareja 4" onclick="openLightbox(this.src)"
+                        class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
                 </div>
                 <!-- Foto 5 -->
                 <div class="flex-none snap-center">
-                    <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=600&auto=format&fit=crop" alt="Foto Pareja 5" onclick="openLightbox(this.src)" class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=600&auto=format&fit=crop"
+                        alt="Foto Pareja 5" onclick="openLightbox(this.src)"
+                        class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
                 </div>
             </div>
-            <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60 md:hidden">Desliza para ver más</p>
+            <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60 md:hidden">Desliza
+                para ver más</p>
         </div>
     </section>
 
     <!-- Lightbox (Visor de Imágenes) -->
-    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="closeLightbox()">
-        <button class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none">&times;</button>
-        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] rounded shadow-2xl transform scale-95 transition-transform duration-300">
+    <div id="lightbox"
+        class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0"
+        onclick="closeLightbox()">
+        <button
+            class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none">&times;</button>
+        <img id="lightbox-img" src=""
+            class="max-w-full max-h-[90vh] rounded shadow-2xl transform scale-95 transition-transform duration-300">
     </div>
 
     <!-- Detalles (Section ID: details) -->
@@ -237,15 +348,19 @@
                     <i class="fas fa-church text-4xl text-terracotta mb-4"></i>
                     <h3 class="font-heading text-xl mb-2">Ceremonia</h3>
                     <p class="font-serif text-2xl text-terracotta mb-4">1:00 PM</p>
-                    <p class="text-gray-600 mb-6">Parroquia de la Asunsión de María<br>Irribarren Sierra 51, Sta. Maria, 70760 Santo Domingo Tehuantepec, Oax.</p>
-                    <button onclick="window.open('https://maps.app.goo.gl/EVPgQESHV9RtaKwz8','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
+                    <p class="text-gray-600 mb-6">Parroquia de la Asunsión de María<br>Irribarren Sierra 51, Sta. Maria,
+                        70760 Santo Domingo Tehuantepec, Oax.</p>
+                    <button onclick="window.open('https://maps.app.goo.gl/EVPgQESHV9RtaKwz8','_blank')"
+                        class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
                 </div>
                 <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
                     <i class="fas fa-glass-cheers text-4xl text-terracotta mb-4"></i>
                     <h3 class="font-heading text-xl mb-2">Recepción</h3>
                     <p class="font-serif text-2xl text-terracotta mb-4">3:00 PM</p>
-                    <p class="text-gray-600 mb-6">Salon los Pinos<br>C. Reoloteca 26, La Soledad, 70760 Santo Domingo Tehuantepec, Oax.</p>
-                    <button onclick="window.open('https://maps.app.goo.gl/d3AY6gjdNXA9y5Xs9','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
+                    <p class="text-gray-600 mb-6">Salon los Pinos<br>C. Reoloteca 26, La Soledad, 70760 Santo Domingo
+                        Tehuantepec, Oax.</p>
+                    <button onclick="window.open('https://maps.app.goo.gl/d3AY6gjdNXA9y5Xs9','_blank')"
+                        class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
                 </div>
             </div>
         </div>
@@ -256,7 +371,7 @@
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Información</span>
             <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Código de Vestimenta</h2>
-            
+
             <p class="font-sans text-gray-600 text-lg mb-10 italic">
                 El blanco está reservado para la novia,<br>
                 ¡nos encantará verte en otros colores!
@@ -265,24 +380,45 @@
             <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 md:gap-24">
                 <!-- Traje -->
                 <div class="text-center group w-64">
-                    <img src="https://specially.love/elegant/suit.png" alt="Traje" class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <img src="https://specially.love/elegant/suit.png" alt="Traje"
+                        class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
                     <p class="font-heading text-sm mt-4 uppercase tracking-widest text-charcoal">Ellos</p>
                     <p class="text-xs text-gray-500 mt-1 font-sans">Guayabera o filipina, y pantalón de vestir</p>
                 </div>
 
                 <!-- Vestido -->
                 <div class="text-center group w-64">
-                    <img src="https://specially.love/elegant/dress.png" alt="Vestido" class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <img src="https://specially.love/elegant/dress.png" alt="Vestido"
+                        class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
                     <p class="font-heading text-sm mt-4 uppercase tracking-widest text-charcoal">Ellas</p>
-                    <p class="text-xs text-gray-500 mt-1 font-sans leading-relaxed">Traje regional en cualquiera de sus variantes (Traje de galón, coordinado, enagua de olán o rabona)</p>
+                    <p class="text-xs text-gray-500 mt-1 font-sans leading-relaxed">Traje regional en cualquiera de sus
+                        variantes (Traje de galón, coordinado, enagua de olán o rabona)</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Regalos (Section ID: gifts) -->
+    <section id="gifts" class="py-20 px-4 bg-white scroll-mt-20">
+        <div class="max-w-4xl mx-auto text-center fade-in-section">
+            <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Regalos</h2>
+
+            <i class="fas fa-envelope text-4xl text-terracotta mb-6"></i>
+
+            <p class="font-sans text-gray-600 text-lg mb-10 italic max-w-2xl mx-auto leading-relaxed">
+                Su compañía en este día es lo mas importante para nosotros, pero si deseas contribuir al inicio de esta
+                nueva etapa juntos, te lo agredeceremos de corazón.
+            </p>
+
+            <img src="regalo.png" alt="Mesa de Regalos"
+                class="mx-auto mt-8 max-w-full w-64 md:w-80 h-auto object-contain rounded-lg shadow-sm hover:scale-105 transition-transform duration-300">
+        </div>
+    </section>
+
     <!-- RSVP Real (Section ID: rsvp) -->
     <section id="rsvp" class="py-24 px-4 bg-terracotta-light/20 scroll-mt-20">
-        <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
+        <div
+            class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
             <div class="w-full">
                 <div class="text-center mb-10">
                     <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">RSVP</span>
@@ -291,12 +427,14 @@
                 </div>
 
                 <div id="rsvp-success-message" class="hidden text-center py-10">
-                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce">
+                    <div
+                        class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce">
                         <i class="fas fa-check text-3xl"></i>
                     </div>
                     <p id="final-confirmation-text" class="text-terracotta font-serif text-2xl mb-2 font-bold"></p>
                     <p class="text-gray-600 mb-6">Hemos registrado tu respuesta correctamente.</p>
-                    <p class="font-serif text-lg text-charcoal italic mb-6 px-4">"El amor es la razón de este día, y tu presencia lo hará aún más especial."</p>
+                    <p class="font-serif text-lg text-charcoal italic mb-6 px-4">"El amor es la razón de este día, y tu
+                        presencia lo hará aún más especial."</p>
                     <p class="text-sm text-gray-400 uppercase tracking-widest">Nos vemos en la boda</p>
                 </div>
 
@@ -304,29 +442,43 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Nombre</label>
-                            <input type="text" id="rsvp-name" name="nombre" required class="w-full bg-sand p-4 rounded outline-none border border-transparent focus:border-terracotta" placeholder="Tu nombre">
+                            <input type="text" id="rsvp-name" name="nombre" required
+                                class="w-full bg-sand p-4 rounded outline-none border border-transparent focus:border-terracotta"
+                                placeholder="Tu nombre">
                         </div>
                         <div>
-                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Teléfono (10 dígitos)</label>
-                            <input type="tel" name="telefono" id="rsvp-phone" required class="w-full bg-sand p-4 rounded outline-none border border-transparent focus:border-terracotta" placeholder="55 1234 5678" maxlength="10">
+                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Teléfono (10
+                                dígitos)</label>
+                            <input type="tel" name="telefono" id="rsvp-phone" required
+                                class="w-full bg-sand p-4 rounded outline-none border border-transparent focus:border-terracotta"
+                                placeholder="55 1234 5678" maxlength="10">
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">¿Asistirás?</label>
                         <div class="flex space-x-6 mt-2">
-                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="Si" class="text-terracotta focus:ring-terracotta" checked><span>¡Sí, ahí estaré!</span></label>
-                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="No" class="text-terracotta focus:ring-terracotta"><span>Lo siento, no podré ir</span></label>
+                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio"
+                                    name="asistencia" value="Si" class="text-terracotta focus:ring-terracotta"
+                                    checked><span>¡Sí, ahí estaré!</span></label>
+                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio"
+                                    name="asistencia" value="No" class="text-terracotta focus:ring-terracotta"><span>Lo
+                                    siento, no podré ir</span></label>
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Personas</label>
-                        <select id="rsvp-guests" name="invitados" class="w-full bg-sand p-4 rounded outline-none"><option value="1">1 Persona</option></select>
+                        <select id="rsvp-guests" name="invitados" class="w-full bg-sand p-4 rounded outline-none">
+                            <option value="1">1 Persona</option>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Mensaje</label>
-                        <textarea name="mensaje" rows="2" class="w-full bg-sand p-4 rounded outline-none" placeholder="Mensaje..."></textarea>
+                        <textarea name="mensaje" rows="2" class="w-full bg-sand p-4 rounded outline-none"
+                            placeholder="Mensaje..."></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-terracotta text-white font-heading uppercase tracking-widest py-4 rounded hover:bg-terracotta-dark transition-colors">Enviar Confirmación</button>
+                    <button type="submit"
+                        class="w-full bg-terracotta text-white font-heading uppercase tracking-widest py-4 rounded hover:bg-terracotta-dark transition-colors">Enviar
+                        Confirmación</button>
                 </form>
             </div>
         </div>
@@ -336,7 +488,7 @@
     <section class="py-24 bg-terracotta text-white relative">
         <div class="max-w-4xl mx-auto px-4 text-center fade-in-section">
             <h2 class="font-heading text-2xl md:text-3xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
-            
+
             <div class="grid grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto text-charcoal">
                 <div class="bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-lg">
                     <span class="block text-3xl md:text-5xl font-serif text-terracotta" id="days-final">00</span>
@@ -355,7 +507,7 @@
                     <span class="text-xs uppercase tracking-wider opacity-80">Seg</span>
                 </div>
             </div>
-            
+
             <p class="mt-8 font-script text-3xl opacity-90">...el mejor día de nuestras vidas</p>
         </div>
     </section>
@@ -367,12 +519,18 @@
     </footer>
 
     <!-- MODAL DE ÉXITO (Oculto) -->
-    <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 hidden opacity-0 pointer-events-none">
-        <div class="bg-white p-8 rounded-xl max-w-sm text-center m-4 shadow-2xl transform scale-95 transition-transform duration-300" id="modalContent">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-500"><i class="fas fa-check text-2xl"></i></div>
+    <div id="successModal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 hidden opacity-0 pointer-events-none">
+        <div class="bg-white p-8 rounded-xl max-w-sm text-center m-4 shadow-2xl transform scale-95 transition-transform duration-300"
+            id="modalContent">
+            <div
+                class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-500">
+                <i class="fas fa-check text-2xl"></i>
+            </div>
             <h3 class="font-serif text-2xl text-terracotta mb-2">¡Gracias!</h3>
             <p class="text-gray-500 mb-6">Hemos recibido tu confirmación correctamente.</p>
-            <button onclick="closeModal()" class="bg-terracotta text-white px-6 py-2 rounded hover:bg-terracotta-dark transition-colors">Cerrar</button>
+            <button onclick="closeModal()"
+                class="bg-terracotta text-white px-6 py-2 rounded hover:bg-terracotta-dark transition-colors">Cerrar</button>
         </div>
     </div>
 
@@ -392,7 +550,7 @@
         function enterSite() {
             document.getElementById('welcome-overlay').classList.add('hidden-overlay');
             musicBtn.classList.remove('hidden');
-            
+
             const playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
@@ -436,7 +594,7 @@
                     link.classList.add('active');
                 }
             });
-            
+
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) { nav.classList.add('shadow-md', 'bg-white/95'); nav.classList.remove('bg-sand/90'); }
             else { nav.classList.remove('shadow-md', 'bg-white/95'); nav.classList.add('bg-sand/90'); }
@@ -445,7 +603,7 @@
         // 3. Cuenta Regresiva
         const weddingDate = new Date("June 05, 2026 13:00:00").getTime();
 
-        const timer = setInterval(function() {
+        const timer = setInterval(function () {
             const now = new Date().getTime();
             const distance = weddingDate - now;
 
@@ -457,13 +615,13 @@
             // Actualizar elementos
             const dEl = document.getElementById("days-final");
             if (dEl) dEl.innerText = days < 10 ? "0" + days : days;
-            
+
             const hEl = document.getElementById("hours-final");
             if (hEl) hEl.innerText = hours < 10 ? "0" + hours : hours;
-            
+
             const mEl = document.getElementById("minutes-final");
             if (mEl) mEl.innerText = minutes < 10 ? "0" + minutes : minutes;
-            
+
             const sEl = document.getElementById("seconds-final");
             if (sEl) sEl.innerText = seconds < 10 ? "0" + seconds : seconds;
 
@@ -477,14 +635,14 @@
         const form = document.forms['submit-to-google-sheet'];
         const successMessage = document.getElementById('rsvp-success-message');
         const limitMessage = document.getElementById('rsvp-limit-message');
-        const rsvpTitle = document.getElementById('rsvp-title'); 
+        const rsvpTitle = document.getElementById('rsvp-title');
         const finalText = document.getElementById('final-confirmation-text');
 
-        window.onload = function() {
+        window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
             const nombre = urlParams.get('nombre');
             const pases = urlParams.get('pases');
-            
+
             const storageKey = 'rsvp_conf_' + (nombre ? encodeURIComponent(nombre) : 'generic');
             const storedData = localStorage.getItem(storageKey);
 
@@ -492,8 +650,8 @@
                 const data = JSON.parse(storedData);
                 form.classList.add('hidden');
                 rsvpTitle.classList.add('hidden');
-                limitMessage.classList.add('hidden'); 
-                
+                limitMessage.classList.add('hidden');
+
                 finalText.innerText = "Ya has confirmado " + data.count + (data.count == 1 ? " lugar" : " lugares");
                 successMessage.classList.remove('hidden');
 
@@ -527,8 +685,8 @@
                 e.preventDefault();
 
                 const phoneInput = form.querySelector('input[name="telefono"]');
-                const phoneVal = phoneInput.value.replace(/\D/g, ''); 
-                
+                const phoneVal = phoneInput.value.replace(/\D/g, '');
+
                 if (phoneVal.length !== 10) {
                     alert("Por favor, ingresa un número de teléfono válido de 10 dígitos.");
                     phoneInput.focus();
@@ -541,7 +699,7 @@
                 btn.innerText = "Enviando...";
                 btn.disabled = true;
 
-                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                     .then(response => {
                         const dataToSave = { confirmed: true, count: guestsConfirmed };
                         localStorage.setItem(storageKey, JSON.stringify(dataToSave));
@@ -549,7 +707,7 @@
                         const modal = document.getElementById('successModal');
                         const modalContent = document.getElementById('modalContent');
                         modal.classList.remove('hidden');
-                        
+
                         setTimeout(() => {
                             modal.classList.remove('opacity-0', 'pointer-events-none');
                             modalContent.classList.remove('scale-95');
@@ -557,9 +715,9 @@
                         }, 10);
 
                         finalText.innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
-                        
+
                         form.classList.add('hidden');
-                        limitMessage.classList.add('hidden'); 
+                        limitMessage.classList.add('hidden');
                         rsvpTitle.classList.add('hidden');
                         successMessage.classList.remove('hidden');
 
@@ -605,11 +763,12 @@
         }
 
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.15 });
         document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
     </script>
 </body>
+
 </html>
