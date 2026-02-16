@@ -21,6 +21,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Confetti JS -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <!-- Configuración visual -->
     <script>
@@ -207,6 +209,132 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
             transform: rotate(-5deg);
         }
+
+        /* --- DIVISOR PAPEL RASGADO --- */
+        .paper-divider {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .paper-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 50px;
+        }
+
+        .paper-divider .shape-fill {
+            fill: currentColor;
+        }
+
+        /* --- FLIP CLOCK STYLES --- */
+        .flip-clock-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .flip-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .flip-card {
+            position: relative;
+            width: 60px;
+            height: 70px;
+            background-color: #fdfbf7;
+            border-radius: 6px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #c15b43;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            perspective: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .flip-card {
+                width: 80px;
+                height: 100px;
+                font-size: 3.5rem;
+            }
+
+            .flip-clock-container {
+                gap: 1.5rem;
+            }
+        }
+
+        .top,
+        .bottom,
+        .top-flip,
+        .bottom-flip {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            background-color: #fdfbf7;
+            backface-visibility: hidden;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .top,
+        .top-flip {
+            top: 0;
+            align-items: flex-end;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .bottom,
+        .bottom-flip {
+            bottom: 0;
+            align-items: flex-start;
+            border-radius: 0 0 6px 6px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            transform-origin: 50% 0;
+        }
+
+        .top-flip {
+            transform-origin: 50% 100%;
+        }
+
+        /* Animation Classes */
+        .flip-card.flipping .top-flip {
+            animation: flip-top 0.6s ease-in;
+            z-index: 2;
+        }
+
+        .flip-card.flipping .bottom-flip {
+            animation: flip-bottom 0.6s ease-out 0.6s;
+            /* Wait for top to finish? No, overlapping */
+            animation: flip-bottom 0.6s ease-out;
+            z-index: 2;
+        }
+
+        /* Better Keyframes */
+        @keyframes flip-top {
+            100% {
+                transform: rotateX(-90deg);
+            }
+        }
+
+        @keyframes flip-bottom {
+            0% {
+                transform: rotateX(90deg);
+            }
+
+            100% {
+                transform: rotateX(0deg);
+            }
+        }
     </style>
 </head>
 
@@ -271,9 +399,10 @@
 
     <!-- Hero (Section ID: home) -->
     <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
-        <div class="absolute inset-0 z-0"><img
+        <div class="absolute inset-0 z-0"><img id="hero-bg"
                 src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop"
-                class="w-full h-full object-cover brightness-[0.65]"></div>
+                class="w-full h-full object-cover brightness-[0.65] transition-transform duration-75 will-change-transform">
+        </div>
         <div class="relative z-10 text-white fade-in-section">
             <p class="text-sm uppercase tracking-[0.3em] mb-4">¡Nos casamos!</p>
             <h1 class="font-script text-7xl md:text-9xl text-terracotta-light">Carlos & Doris</h1>
@@ -293,7 +422,7 @@
     </section>
 
     <!-- Galería de Imágenes -->
-    <section class="pb-20 px-4 bg-sand">
+    <section class="pb-20 px-4 bg-sand relative">
         <div class="max-w-7xl mx-auto fade-in-section">
             <div class="flex overflow-x-auto space-x-6 pb-8 snap-x snap-mandatory no-scrollbar px-4 md:justify-center">
                 <!-- Foto 1 (Actualizada con la imagen de la Foto 5) -->
@@ -329,6 +458,15 @@
             <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60 md:hidden">Desliza
                 para ver más</p>
         </div>
+        <!-- Divider to White -->
+        <div class="paper-divider text-white">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
     </section>
 
     <!-- Lightbox (Visor de Imágenes) -->
@@ -342,7 +480,7 @@
     </div>
 
     <!-- Detalles (Section ID: details) -->
-    <section id="details" class="py-24 px-4 bg-white scroll-mt-20">
+    <section id="details" class="py-24 px-4 bg-white scroll-mt-20 relative">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in-section">
                 <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Ubicación</span>
@@ -370,10 +508,19 @@
                 </div>
             </div>
         </div>
+        <!-- Divider to Sand -->
+        <div class="paper-divider text-sand">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
     </section>
 
     <!-- Código de Vestimenta -->
-    <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20">
+    <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20 relative">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Información</span>
             <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Código de Vestimenta</h2>
@@ -402,10 +549,19 @@
                 </div>
             </div>
         </div>
+        <!-- Divider to White -->
+        <div class="paper-divider text-white">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
     </section>
 
     <!-- Regalos (Section ID: gifts) -->
-    <section id="gifts" class="py-20 px-4 bg-white scroll-mt-20">
+    <section id="gifts" class="py-20 px-4 bg-white scroll-mt-20 relative">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Regalos</h2>
 
@@ -418,6 +574,17 @@
 
             <img src="regalo.png" alt="Mesa de Regalos"
                 class="mx-auto mt-8 max-w-full w-64 md:w-80 h-auto object-contain rounded-lg shadow-sm hover:scale-105 transition-transform duration-300">
+        </div>
+        <!-- Divider to RSVP (using color #eadad5 approx for terracotta-light/20) -->
+        <!-- Note: terracotta-light is #e8b4a3. 20% opacity on white... hard to match exact SVG fill.
+             Ideally we use the same hex. Let's try #fcf0ec which works for terracotta tint. -->
+        <div class="paper-divider text-[#fcf0ec]">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
         </div>
     </section>
 
@@ -457,7 +624,9 @@
                                 dígitos)</label>
                             <input type="tel" name="telefono" id="rsvp-phone" required
                                 class="w-full bg-sand p-4 rounded outline-none border border-transparent focus:border-terracotta"
-                                placeholder="55 1234 5678" maxlength="10">
+                                placeholder="55 1234 5678" maxlength="10"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, ''); document.getElementById('phone-error').classList.add('hidden');">
+                            <p id="phone-error" class="text-red-500 text-xs mt-1 hidden font-bold"></p>
                         </div>
                     </div>
                     <div>
@@ -495,22 +664,46 @@
         <div class="max-w-4xl mx-auto px-4 text-center fade-in-section">
             <h2 class="font-heading text-2xl md:text-3xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
 
-            <div class="grid grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto text-charcoal">
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-lg">
-                    <span class="block text-3xl md:text-5xl font-serif text-terracotta" id="days-final">00</span>
-                    <span class="text-xs uppercase tracking-wider opacity-80">Días</span>
+            <div class="flip-clock-container text-terracotta">
+                <!-- Days -->
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="days">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase tracking-wider opacity-80 mt-2">Días</span>
                 </div>
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-lg">
-                    <span class="block text-3xl md:text-5xl font-serif text-terracotta" id="hours-final">00</span>
-                    <span class="text-xs uppercase tracking-wider opacity-80">Hs</span>
+                <!-- Hours -->
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="hours">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase tracking-wider opacity-80 mt-2">Hs</span>
                 </div>
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-lg">
-                    <span class="block text-3xl md:text-5xl font-serif text-terracotta" id="minutes-final">00</span>
-                    <span class="text-xs uppercase tracking-wider opacity-80">Min</span>
+                <!-- Minutes -->
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="minutes">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase tracking-wider opacity-80 mt-2">Min</span>
                 </div>
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-lg">
-                    <span class="block text-3xl md:text-5xl font-serif text-terracotta" id="seconds-final">00</span>
-                    <span class="text-xs uppercase tracking-wider opacity-80">Seg</span>
+                <!-- Seconds -->
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="seconds">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase tracking-wider opacity-80 mt-2">Seg</span>
                 </div>
             </div>
 
@@ -566,6 +759,14 @@
                     console.log("Autoplay bloqueado");
                 });
             }
+
+            // Lanzar confeti al entrar
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#c15b43', '#e8b4a3', '#ffffff']
+            });
         }
 
         function toggleMusic() {
@@ -606,36 +807,95 @@
             else { nav.classList.remove('shadow-md', 'bg-white/95'); nav.classList.add('bg-sand/90'); }
         });
 
-        // 3. Cuenta Regresiva
+        // 3. Cuenta Regresiva Flip Clock
         const weddingDate = new Date("June 05, 2026 13:00:00").getTime();
+        let previousTimeIds = { days: "00", hours: "00", minutes: "00", seconds: "00" };
+
+        function updateFlipCard(unit, newValue) {
+            const card = document.querySelector(`.flip-card[data-unit="${unit}"]`);
+            if (!card) return;
+
+            const top = card.querySelector('.top');
+            const bottom = card.querySelector('.bottom');
+            const topFlip = card.querySelector('.top-flip');
+            const bottomFlip = card.querySelector('.bottom-flip');
+
+            const currentValue = top.innerText;
+            if (newValue === currentValue) return;
+
+            // Setup
+            topFlip.innerText = currentValue;
+            bottomFlip.innerText = newValue;
+
+            // Trigger Animation
+            card.classList.add('flipping');
+
+            // On Animation End (simplified logic)
+            setTimeout(() => {
+                top.innerText = newValue;
+                topFlip.innerText = newValue;
+                bottom.innerText = newValue;
+                bottomFlip.innerText = newValue;
+                card.classList.remove('flipping');
+            }, 500); // Duration matches CSS approx
+        }
 
         const timer = setInterval(function () {
             const now = new Date().getTime();
             const distance = weddingDate - now;
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Actualizar elementos
-            const dEl = document.getElementById("days-final");
-            if (dEl) dEl.innerText = days < 10 ? "0" + days : days;
-
-            const hEl = document.getElementById("hours-final");
-            if (hEl) hEl.innerText = hours < 10 ? "0" + hours : hours;
-
-            const mEl = document.getElementById("minutes-final");
-            if (mEl) mEl.innerText = minutes < 10 ? "0" + minutes : minutes;
-
-            const sEl = document.getElementById("seconds-final");
-            if (sEl) sEl.innerText = seconds < 10 ? "0" + seconds : seconds;
-
             if (distance < 0) {
                 clearInterval(timer);
-                if (dEl) document.getElementById("days-final").innerText = "00";
+                return;
             }
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const days = d < 10 ? "0" + d : String(d);
+            const hours = h < 10 ? "0" + h : String(h);
+            const minutes = m < 10 ? "0" + m : String(m);
+            const seconds = s < 10 ? "0" + s : String(s);
+
+            updateFlipCard('days', days);
+            updateFlipCard('hours', hours);
+            updateFlipCard('seconds', seconds);
+
         }, 1000);
+
+        // 5. Animaciones de Scroll (Fade In & Parallax)
+
+        // A. Fade In
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const scrollObserver = new IntersectionObserver((entries, scrollObserver) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    scrollObserver.unobserve(entry.target); // Solo animar una vez
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            scrollObserver.observe(section);
+        });
+
+        // B. Parallax Hero
+        const heroBg = document.getElementById('hero-bg');
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.pageYOffset;
+            if (scrollPosition < window.innerHeight) {
+                // Mover la imagen a 40% de la velocidad del scroll
+                heroBg.style.transform = `translateY(${scrollPosition * 0.4}px)`;
+            }
+        });
 
         // 4. Formulario, Validación, Modal y Seguridad LocalStorage
         const form = document.forms['submit-to-google-sheet'];
@@ -691,10 +951,12 @@
                 e.preventDefault();
 
                 const phoneInput = form.querySelector('input[name="telefono"]');
-                const phoneVal = phoneInput.value.replace(/\D/g, '');
+                const phoneError = document.getElementById('phone-error');
+                const phoneVal = phoneInput.value;
 
                 if (phoneVal.length !== 10) {
-                    alert("Por favor, ingresa un número de teléfono válido de 10 dígitos.");
+                    phoneError.innerText = "Por favor, ingresa 10 dígitos.";
+                    phoneError.classList.remove('hidden');
                     phoneInput.focus();
                     return;
                 }
@@ -726,6 +988,26 @@
                         limitMessage.classList.add('hidden');
                         rsvpTitle.classList.add('hidden');
                         successMessage.classList.remove('hidden');
+
+                        // Lanzar confeti de celebración
+                        var duration = 3 * 1000;
+                        var animationEnd = Date.now() + duration;
+                        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+
+                        function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
+                        var interval = setInterval(function () {
+                            var timeLeft = animationEnd - Date.now();
+
+                            if (timeLeft <= 0) {
+                                return clearInterval(interval);
+                            }
+
+                            var particleCount = 50 * (timeLeft / duration);
+                            // since particles fall down, start a bit higher than random
+                            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#c15b43', '#e8b4a3'] }));
+                            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#c15b43', '#e8b4a3'] }));
+                        }, 250);
 
                         form.reset();
                         btn.innerText = originalText;
