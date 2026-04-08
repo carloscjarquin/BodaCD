@@ -328,10 +328,10 @@
         // --- CONFIGURACIÓN DE GALERÍA (67 FOTOS) ---
         function cargarGaleria() {
             const contenedor = document.getElementById('galeria-contenedor');
-            const totalFotos = 67;
+            const totalFotos = 14;
             
             for (let i = 1; i <= totalFotos; i++) {
-                const ruta = `galeria/Foto${i}.jpg`; 
+                const ruta = `galeria/foto${i}.jpg`; 
                 const div = document.createElement('div');
                 div.className = 'flex-none snap-center';
                 div.innerHTML = `
