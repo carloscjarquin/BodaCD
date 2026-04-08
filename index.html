@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carlos & Doris | Nuestra Boda</title>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Configuración visual -->
     <script>
         tailwind.config = {
             theme: {
@@ -108,9 +104,8 @@
         .wax-seal-btn:active { transform: scale(0.95); }
         .wax-text { font-family: 'Great Vibes', cursive; font-size: 2rem; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.4); transform: rotate(-5deg); }
         
-        /* Estilo para input bloqueado */
         input[readonly] {
-            background-color: #f3f0e9; /* Un arena más oscuro para indicar bloqueo */
+            background-color: #f3f0e9;
             color: #666;
             cursor: not-allowed;
             border: 1px solid #e2ded5;
@@ -119,10 +114,8 @@
 </head>
 <body class="text-charcoal font-sans antialiased">
 
-    <!-- Audio -->
     <audio id="weddingMusic" loop preload="auto"><source src="cancion.mp3" type="audio/mpeg"></audio>
 
-    <!-- Bienvenida -->
     <div id="welcome-overlay">
         <div class="text-center p-8 flex flex-col items-center">
             <p id="welcome-guest-name" class="font-heading text-terracotta text-lg mb-2 hidden"></p>
@@ -133,7 +126,6 @@
         </div>
     </div>
 
-    <!-- Navegación -->
     <nav class="fixed top-0 w-full z-50 bg-sand/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
@@ -157,10 +149,8 @@
         </div>
     </nav>
 
-    <!-- Música Flotante -->
     <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-terracotta rounded-full shadow-lg flex items-center justify-center border border-terracotta/20"><i class="fas fa-play ml-1" id="musicIcon"></i></button>
     
-    <!-- Hero -->
     <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
         <div class="absolute inset-0 z-0"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover brightness-[0.65]"></div>
         <div class="relative z-10 text-white fade-in-section">
@@ -171,7 +161,6 @@
         </div>
     </section>
 
-    <!-- Frase -->
     <section class="pt-20 pb-10 px-4 bg-sand text-center">
         <div class="max-w-2xl mx-auto fade-in-section">
             <i class="fas fa-heart text-terracotta text-2xl mb-6 animate-heartbeat"></i>
@@ -179,23 +168,31 @@
         </div>
     </section>
 
-    <!-- Galería Dinámica -->
     <section class="pb-20 px-4 bg-sand">
         <div class="max-w-7xl mx-auto fade-in-section">
-            <div id="galeria-contenedor" class="flex overflow-x-auto space-x-6 pb-8 snap-x snap-mandatory no-scrollbar px-4">
-                <!-- Se carga vía Script -->
-            </div>
-            <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60">Desliza para ver nuestra historia</p>
+            <div id="galeria-contenedor" class="flex overflow-x-auto space-x-6 pb-8 snap-x snap-mandatory no-scrollbar px-4" 
+                 onmouseenter="pausarCarrusel()" onmouseleave="iniciarCarrusel()" ontouchstart="pausarCarrusel()">
+                </div>
+            <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60">Toca para abrir • Desliza para ver más</p>
         </div>
     </section>
 
-    <!-- Lightbox Protegido -->
-    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="closeLightbox()" oncontextmenu="return false;">
-        <button class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none">×</button>
-        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] rounded shadow-2xl transform scale-95 transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="cerrarSiFondo(event)" oncontextmenu="return false;">
+        <button onclick="closeLightbox(event)" class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none z-50">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <button onclick="prevImage(event)" class="absolute left-2 md:left-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] rounded shadow-2xl transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
+
+        <button onclick="nextImage(event)" class="absolute right-2 md:right-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 
-    <!-- Detalles -->
     <section id="details" class="py-24 px-4 bg-white scroll-mt-20">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in-section">
@@ -222,7 +219,6 @@
         </div>
     </section>
 
-    <!-- Vestimenta -->
     <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Información</span>
@@ -243,7 +239,6 @@
         </div>
     </section>
 
-    <!-- Regalo -->
     <section id="gift" class="py-20 px-4 bg-white scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <i class="fas fa-gift text-4xl text-terracotta mb-4"></i>
@@ -253,7 +248,6 @@
         </div>
     </section>
 
-    <!-- RSVP -->
     <section id="rsvp" class="py-24 px-4 bg-terracotta-light/20 scroll-mt-20">
         <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
             <div class="w-full text-center">
@@ -275,7 +269,6 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Nombre</label>
-                            <!-- El input de nombre -->
                             <input type="text" id="rsvp-name" name="nombre" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none transition-colors" placeholder="Tu nombre">
                         </div>
                         <div>
@@ -292,7 +285,6 @@
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Personas</label>
-                        <!-- Selector de invitados -->
                         <select id="rsvp-guests" name="invitados" class="w-full bg-sand p-4 rounded outline-none cursor-pointer">
                             <option value="1">1 Persona</option>
                         </select>
@@ -304,7 +296,6 @@
         </div>
     </section>
 
-    <!-- Cuenta Regresiva -->
     <section class="py-24 bg-terracotta text-white text-center">
         <div class="max-w-4xl mx-auto px-4 fade-in-section">
             <h2 class="font-heading text-2xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
@@ -324,25 +315,111 @@
     </footer>
 
     <script>
-        // --- CONFIGURACIÓN DE GALERÍA (67 FOTOS) ---
+        // --- 1. CONFIGURACIÓN Y LÓGICA DE GALERÍA AVANZADA ---
+        const totalFotos = 14; 
+        const arrayFotos = [];
+        let currentIndex = 0;
+        let autoScrollInterval;
+
+        // Llenamos el array con tus rutas
+        for (let i = 1; i <= totalFotos; i++) {
+            arrayFotos.push(`galeria/foto${i}.jpg`);
+        }
+
         function cargarGaleria() {
             const contenedor = document.getElementById('galeria-contenedor');
-            const totalFotos = 14;
-            
-            for (let i = 1; i <= totalFotos; i++) {
-                const ruta = `galeria/foto${i}.jpg`; 
+            arrayFotos.forEach((ruta, index) => {
                 const div = document.createElement('div');
                 div.className = 'flex-none snap-center';
                 div.innerHTML = `
-                    <img src="${ruta}" alt="Foto ${i}" 
-                         onclick="openLightbox('${ruta}')" 
+                    <img src="${ruta}" alt="Foto ${index + 1}" 
+                         onclick="openLightbox(${index})" 
                          oncontextmenu="return false;" ondragstart="return false;"
                          class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 transition-transform protected-img">
                 `;
                 contenedor.appendChild(div);
+            });
+            iniciarCarrusel(); // Inicia el movimiento automático
+        }
+
+        // --- MOVIMIENTO AUTOMÁTICO DEL CARRUSEL ---
+        function iniciarCarrusel() {
+            const contenedor = document.getElementById('galeria-contenedor');
+            autoScrollInterval = setInterval(() => {
+                // Si llegamos al final, vuelve al inicio, si no, avanza
+                if (contenedor.scrollLeft + contenedor.clientWidth >= contenedor.scrollWidth - 10) {
+                    contenedor.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    contenedor.scrollBy({ left: 250, behavior: 'smooth' });
+                }
+            }, 3000); // 3000ms = 3 segundos
+        }
+
+        function pausarCarrusel() {
+            clearInterval(autoScrollInterval);
+        }
+
+        // --- LÓGICA DEL LIGHTBOX (VISUALIZADOR) ---
+        function openLightbox(index) {
+            currentIndex = index;
+            actualizarImagen();
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('hidden');
+            setTimeout(() => lb.classList.remove('opacity-0'), 10);
+            pausarCarrusel(); // Pausamos el fondo mientras ven una foto
+        }
+
+        function actualizarImagen() {
+            const img = document.getElementById('lightbox-img');
+            // Efecto suave al cambiar
+            img.style.opacity = 0; 
+            setTimeout(() => {
+                img.src = arrayFotos[currentIndex];
+                img.style.opacity = 1;
+            }, 150);
+        }
+
+        function nextImage(event) {
+            if (event) event.stopPropagation(); // Evita que se cierre el lightbox al hacer clic en la flecha
+            currentIndex = (currentIndex + 1) % totalFotos; // Si llega a la última, vuelve a la 1
+            actualizarImagen();
+        }
+
+        function prevImage(event) {
+            if (event) event.stopPropagation();
+            currentIndex = (currentIndex - 1 + totalFotos) % totalFotos; // Si está en la 1, va a la última
+            actualizarImagen();
+        }
+
+        function closeLightbox(event) {
+            if (event) event.stopPropagation();
+            const lb = document.getElementById('lightbox');
+            lb.classList.add('opacity-0');
+            setTimeout(() => lb.classList.add('hidden'), 300);
+            iniciarCarrusel(); // Retoma el movimiento
+        }
+
+        function cerrarSiFondo(event) {
+            // Solo cierra si se hace clic en el fondo oscuro, no en las flechas ni en la imagen
+            if (event.target.id === 'lightbox') {
+                closeLightbox();
             }
         }
 
+        // SOPORTE PARA DESLIZAR (SWIPE) EN CELULARES DENTRO DEL LIGHTBOX
+        let touchstartX = 0;
+        let touchendX = 0;
+        document.getElementById('lightbox').addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+        document.getElementById('lightbox').addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            if (touchendX < touchstartX - 50) nextImage(); // Deslizó a la izquierda
+            if (touchendX > touchstartX + 50) prevImage(); // Deslizó a la derecha
+        });
+
+
+        // --- RESTO DEL CÓDIGO (Música, RSVP, Menú, Cuenta Regresiva) ---
         const scriptURL = "https://script.google.com/macros/s/AKfycbxlk8DVe-RpZhkYEoAFNU2XqVxY_j-IHUaHFS9OrlRFshYwlLe9Q1bb77Pc7yF9EcG8/exec";
         const audio = document.getElementById('weddingMusic');
         const musicBtn = document.getElementById('musicToggle');
@@ -396,7 +473,6 @@
             const storageKey = 'rsvp_conf_' + (nombre ? encodeURIComponent(nombre) : 'generic');
             const stored = localStorage.getItem(storageKey);
 
-            // Si ya confirmó antes en este dispositivo
             if (stored) {
                 const data = JSON.parse(stored);
                 form.classList.add('hidden');
@@ -409,13 +485,10 @@
                     document.getElementById('welcome-guest-name').classList.remove('hidden');
                 }
             } 
-            // Si es la primera vez que entra
             else {
                 if (nombre) {
                     document.getElementById('welcome-guest-name').innerText = "¡Hola, " + nombre + "!";
                     document.getElementById('welcome-guest-name').classList.remove('hidden');
-                    
-                    // BLOQUEAR EL INPUT DE NOMBRE
                     const nameInput = document.getElementById('rsvp-name');
                     nameInput.value = nombre;
                     nameInput.setAttribute('readonly', true);
@@ -423,16 +496,12 @@
                 
                 if (pases) {
                     const sel = document.getElementById('rsvp-guests');
-                    sel.innerHTML = ''; // Limpiar opciones por defecto
+                    sel.innerHTML = '';
                     const numPases = parseInt(pases);
-                    
-                    // Solo permite elegir hasta el número máximo de pases otorgados
                     for (let i = 1; i <= numPases; i++) {
                         sel.add(new Option(i + (i===1 ? " Persona" : " Personas"), i));
                     }
-                    sel.value = numPases; // Selecciona el máximo por defecto
-                    
-                    // Mostrar mensaje de ayuda y límite
+                    sel.value = numPases;
                     document.getElementById('guest-help-text').classList.remove('hidden');
                     const limitMsg = document.getElementById('rsvp-limit-message');
                     limitMsg.innerText = `Tienes un máximo de ${numPases} lugares reservados.`;
@@ -442,7 +511,6 @@
 
             form.addEventListener('submit', e => {
                 e.preventDefault();
-                
                 const phoneInput = form.querySelector('input[name="telefono"]');
                 const phoneVal = phoneInput.value.replace(/\D/g, ''); 
                 if (phoneVal.length !== 10) {
@@ -450,27 +518,22 @@
                     phoneInput.focus();
                     return;
                 }
-
                 const btn = form.querySelector('button[type="submit"]');
                 const originalText = btn.innerText;
                 btn.innerText = "Enviando..."; 
                 btn.disabled = true;
-
-                // Si bloqueamos el input de nombre con readonly, igual se envía en el form data, así que está perfecto.
                 
                 fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                     .then(() => {
                         const guestsConfirmed = document.getElementById('rsvp-guests').value;
                         localStorage.setItem(storageKey, JSON.stringify({confirmed:true, count:guestsConfirmed}));
                         
-                        // En lugar de recargar la página, ocultamos el form y mostramos el éxito suavemente
                         form.classList.add('hidden');
                         document.getElementById('rsvp-title').classList.add('hidden');
                         document.getElementById('rsvp-limit-message').classList.add('hidden');
                         document.getElementById('final-confirmation-text').innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
                         document.getElementById('rsvp-success-message').classList.remove('hidden');
                         
-                        // Hacer scroll hacia el mensaje de éxito
                         document.getElementById('rsvp-header').scrollIntoView({ behavior: 'smooth' });
                     })
                     .catch(error => {
@@ -481,20 +544,9 @@
             });
         };
 
-        function openLightbox(src) {
-            document.getElementById('lightbox-img').src = src;
-            const lb = document.getElementById('lightbox');
-            lb.classList.remove('hidden');
-            setTimeout(() => lb.classList.remove('opacity-0'), 10);
-        }
-        function closeLightbox() {
-            const lb = document.getElementById('lightbox');
-            lb.classList.add('opacity-0');
-            setTimeout(() => lb.classList.add('hidden'), 300);
-        }
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-
-        // --- CÓDIGO FALTANTE QUE HACE APARECER LAS COSAS ---
+        
+        // --- OBSERVADOR PARA QUE LOS ELEMENTOS APAREZCAN AL BAJAR ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { 
                 if (entry.isIntersecting) { 
@@ -504,7 +556,7 @@
             });
         }, { threshold: 0.15 });
         document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
-        // --------------------------------------------------
+
     </script>
 </body>
 </html>
