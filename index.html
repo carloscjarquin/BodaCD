@@ -19,13 +19,12 @@
     <meta name="twitter:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
     <meta name="twitter:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fuentes Locales (Asegúrate de tener el archivo fonts.css si descargaste las Google Fonts) -->
+    <link rel="stylesheet" href="assets/css/fonts.css">
+    <!-- Tailwind CSS (Local) -->
+    <script src="assets/js/tailwindcss.js"></script>
+    <!-- Font Awesome (Local) -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
 
     <!-- Configuración visual -->
     <script>
@@ -169,7 +168,7 @@
                     <a href="#home" class="nav-link text-gray-600 hover:text-terracotta">Inicio</a>
                     <a href="#details" class="nav-link text-gray-600 hover:text-terracotta">Ubicación</a>
                     <a href="#dresscode" class="nav-link text-gray-600 hover:text-terracotta">Vestimenta</a>
-                    <a href="#gift" class="nav-link text-gray-600 hover:text-terracotta">Regalo</a>
+                    <a href="#gift" class="nav-link text-gray-600 hover:text-terracotta">Regalos</a>
                     <a href="#rsvp" class="nav-link text-gray-600 hover:text-terracotta">Confirmar</a>
                 </div>
                 <div class="md:hidden"><button onclick="toggleMobileMenu()" class="text-terracotta"><i class="fas fa-bars text-2xl"></i></button></div>
@@ -179,7 +178,7 @@
             <a href="#home" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Inicio</a>
             <a href="#details" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Ubicación</a>
             <a href="#dresscode" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Vestimenta</a>
-            <a href="#gift" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Regalo</a>
+            <a href="#gift" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Regalos</a>
             <a href="#rsvp" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Confirmar</a>
         </div>
     </nav>
@@ -203,7 +202,7 @@
     <section class="pt-20 pb-10 px-4 bg-sand text-center">
         <div class="max-w-2xl mx-auto fade-in-section">
             <i class="fas fa-heart text-terracotta text-2xl mb-6 animate-heartbeat"></i>
-            <h2 class="font-serif text-3xl italic text-charcoal mb-4">"Dios nos ha bendecido con este amor, y hoy celebramos su promesa de unirnos en matrimonio."</h2>
+            <h2 class="font-serif text-3xl italic text-charcoal mb-4">"Nuestra historia comenzó hace tiempo, pero el 05.06.2026 escribiremos el capítulo más importante ante Dios y nuestras familias."</h2>
         </div>
     </section>
 
@@ -292,10 +291,13 @@
     <!-- Regalo -->
     <section id="gift" class="py-20 px-4 bg-white scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
-            <i class="fas fa-gift text-4xl text-terracotta mb-4"></i>
-            <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Regalo</h2>
+            <i class="fas fa-envelope text-4xl text-terracotta mb-4"></i>
+            <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Regalos</h2>
             <div class="w-20 h-1 bg-terracotta mx-auto mb-8"></div>
-            <p class="font-sans text-gray-600 text-lg leading-relaxed">Tu presencia es el mejor regalo, pero habrá un baúl en donde podrás depositar el sobre.</p>
+            <p class="font-sans text-gray-600 text-lg mb-10 italic max-w-2xl mx-auto leading-relaxed">
+                Su compañía en este día es lo mas importante para nosotros, pero si deseas contribuir al inicio de esta nueva etapa juntos, te lo agredeceremos de corazón.
+            </p>
+            <img src="img/regalo.png" alt="Mesa de Regalos" class="mx-auto mt-8 max-w-full w-64 md:w-80 h-auto object-contain rounded-lg shadow-sm hover:scale-105 transition-transform duration-300">
         </div>
     </section>
 
