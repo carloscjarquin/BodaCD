@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carlos & Doris | Nuestra Boda</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Configuración visual -->
     <script>
         tailwind.config = {
             theme: {
@@ -70,6 +74,19 @@
             -webkit-touch-callout: none;
         }
 
+        /* ESTILO POLAROID AVANZADO */
+        .polaroid-frame {
+            background-color: white;
+            padding: 8px 8px 32px 8px; /* Más padding abajo para el look Polaroid */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+        @media (min-width: 768px) {
+            .polaroid-frame {
+                padding: 12px 12px 48px 12px;
+            }
+        }
+
         /* --- ESTILO SELLO DE CERA --- */
         .wax-seal-btn {
             width: 140px;
@@ -114,8 +131,10 @@
 </head>
 <body class="text-charcoal font-sans antialiased">
 
+    <!-- Audio -->
     <audio id="weddingMusic" loop preload="auto"><source src="cancion.mp3" type="audio/mpeg"></audio>
 
+    <!-- Bienvenida -->
     <div id="welcome-overlay">
         <div class="text-center p-8 flex flex-col items-center">
             <p id="welcome-guest-name" class="font-heading text-terracotta text-lg mb-2 hidden"></p>
@@ -126,6 +145,7 @@
         </div>
     </div>
 
+    <!-- Navegación -->
     <nav class="fixed top-0 w-full z-50 bg-sand/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
@@ -149,8 +169,10 @@
         </div>
     </nav>
 
+    <!-- Música Flotante -->
     <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-terracotta rounded-full shadow-lg flex items-center justify-center border border-terracotta/20"><i class="fas fa-play ml-1" id="musicIcon"></i></button>
     
+    <!-- Hero -->
     <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
         <div class="absolute inset-0 z-0"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover brightness-[0.65]"></div>
         <div class="relative z-10 text-white fade-in-section">
@@ -161,6 +183,7 @@
         </div>
     </section>
 
+    <!-- Frase -->
     <section class="pt-20 pb-10 px-4 bg-sand text-center">
         <div class="max-w-2xl mx-auto fade-in-section">
             <i class="fas fa-heart text-terracotta text-2xl mb-6 animate-heartbeat"></i>
@@ -168,31 +191,39 @@
         </div>
     </section>
 
+    <!-- Galería Dinámica -->
     <section class="pb-20 px-4 bg-sand">
         <div class="max-w-7xl mx-auto fade-in-section">
-            <div id="galeria-contenedor" class="flex overflow-x-auto space-x-6 pb-8 snap-x snap-mandatory no-scrollbar px-4" 
+            <div id="galeria-contenedor" class="flex overflow-x-auto space-x-6 pb-12 pt-4 snap-x snap-mandatory no-scrollbar px-4" 
                  onmouseenter="pausarCarrusel()" onmouseleave="iniciarCarrusel()" ontouchstart="pausarCarrusel()">
-                </div>
+                <!-- Se carga vía Script -->
+            </div>
             <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60">Toca para abrir • Desliza para ver más</p>
         </div>
     </section>
 
+    <!-- Lightbox Protegido e Interactivo -->
     <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="cerrarSiFondo(event)" oncontextmenu="return false;">
+        <!-- Botón Cerrar -->
         <button onclick="closeLightbox(event)" class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none z-50">
             <i class="fas fa-times"></i>
         </button>
 
+        <!-- Flecha Izquierda -->
         <button onclick="prevImage(event)" class="absolute left-2 md:left-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
             <i class="fas fa-chevron-left"></i>
         </button>
 
+        <!-- Imagen -->
         <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] rounded shadow-2xl transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
 
+        <!-- Flecha Derecha -->
         <button onclick="nextImage(event)" class="absolute right-2 md:right-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
             <i class="fas fa-chevron-right"></i>
         </button>
     </div>
 
+    <!-- Detalles -->
     <section id="details" class="py-24 px-4 bg-white scroll-mt-20">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in-section">
@@ -219,6 +250,7 @@
         </div>
     </section>
 
+    <!-- Vestimenta -->
     <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Información</span>
@@ -239,6 +271,7 @@
         </div>
     </section>
 
+    <!-- Regalo -->
     <section id="gift" class="py-20 px-4 bg-white scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <i class="fas fa-gift text-4xl text-terracotta mb-4"></i>
@@ -248,6 +281,7 @@
         </div>
     </section>
 
+    <!-- RSVP -->
     <section id="rsvp" class="py-24 px-4 bg-terracotta-light/20 scroll-mt-20">
         <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
             <div class="w-full text-center">
@@ -290,12 +324,20 @@
                         </select>
                         <p id="guest-help-text" class="text-xs text-gray-400 mt-1 hidden">Puedes elegir menos lugares si alguien no puede asistir.</p>
                     </div>
+                    
+                    <!-- Caja de Mensajes / Comentarios añadida nuevamente -->
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Mensaje</label>
+                        <textarea name="mensaje" rows="2" class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none transition-colors" placeholder="Déjale un mensaje a los novios..."></textarea>
+                    </div>
+
                     <button type="submit" class="w-full bg-terracotta text-white font-heading uppercase tracking-widest py-4 rounded hover:bg-terracotta-dark transition-colors">Enviar Confirmación</button>
                 </form>
             </div>
         </div>
     </section>
 
+    <!-- Cuenta Regresiva -->
     <section class="py-24 bg-terracotta text-white text-center">
         <div class="max-w-4xl mx-auto px-4 fade-in-section">
             <h2 class="font-heading text-2xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
@@ -331,11 +373,13 @@
             arrayFotos.forEach((ruta, index) => {
                 const div = document.createElement('div');
                 div.className = 'flex-none snap-center';
+                
+                // Implementando la clase polaroid-frame a la imagen generada
                 div.innerHTML = `
                     <img src="${ruta}" alt="Foto ${index + 1}" 
                          onclick="openLightbox(${index})" 
                          oncontextmenu="return false;" ondragstart="return false;"
-                         class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 transition-transform protected-img">
+                         class="polaroid-frame h-64 w-48 md:h-80 md:w-60 object-cover cursor-pointer hover:scale-105 hover:-rotate-2 transition-transform duration-300 protected-img">
                 `;
                 contenedor.appendChild(div);
             });
