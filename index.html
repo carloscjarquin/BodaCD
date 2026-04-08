@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carlos & Doris | Nuestra Boda</title>
-    
-    <!-- Meta etiquetas para compartir (Vista previa en WhatsApp, FB, etc.) -->
-    <meta property="og:title" content="Carlos & Doris | Nuestra Boda">
-    <meta property="og:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
-    <!-- Puedes cambiar este enlace por el de una de tus fotos reales, ej: "https://carloscjarquin.github.io/BodaCD/galeria/foto1.jpg" -->
-    <meta property="og:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
-    <meta property="og:url" content="https://carloscjarquin.github.io/BodaCD/">
-    <meta property="og:type" content="website">
-    
-    <!-- Meta etiquetas para Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Carlos & Doris | Nuestra Boda">
-    <meta name="twitter:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
-    <meta name="twitter:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
 
-    <!-- Fuentes Locales (Asegúrate de tener el archivo fonts.css si descargaste las Google Fonts) -->
-    <link rel="stylesheet" href="assets/css/fonts.css">
-    <!-- Tailwind CSS (Local) -->
-    <script src="assets/js/tailwindcss.js"></script>
-    <!-- Font Awesome (Local) -->
-    <link rel="stylesheet" href="assets/css/all.min.css">
+    <!-- Social Sharing (Open Graph) -->
+    <!-- Social Sharing (Open Graph) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Carlos & Doris | Nuestra Boda">
+    <meta property="og:description" content="Acompáñanos a celebrar nuestro enlace matrimonial el 05.06.2026">
+    <meta property="og:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Confetti JS -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <!-- Configuración visual -->
     <script>
@@ -46,59 +44,113 @@
             }
         }
     </script>
-    
+
     <style>
-        body { background-color: #fdfbf7; overflow-x: hidden; }
-        
-        #welcome-overlay { position: fixed; inset: 0; background-color: #fdfbf7; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s; }
-        #welcome-overlay.hidden-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
-        
-        .fade-in-section { opacity: 0; transform: translateY(20px); transition: 1s; }
-        .fade-in-section.is-visible { opacity: 1; transform: none; }
-        
-        @keyframes pulse-ring { 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(193, 91, 67, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(193, 91, 67, 0); } 100% { transform: scale(0.8); } }
-        .music-playing { animation: pulse-ring 2s infinite; }
-
-        .nav-link.active { color: #c15b43 !important; font-weight: 700; }
-        .nav-link { transition: color 0.3s ease; }
-        #successModal { transition: opacity 0.3s ease; }
-
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            14% { transform: scale(1.3); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.3); }
-            70% { transform: scale(1); }
+        body {
+            background-color: #fdfbf7;
+            overflow-x: hidden;
         }
+
+        #welcome-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: #fdfbf7;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s;
+        }
+
+        #welcome-overlay.hidden-overlay {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 1s;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                box-shadow: 0 0 0 0 rgba(193, 91, 67, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(193, 91, 67, 0);
+            }
+
+            100% {
+                transform: scale(0.8);
+            }
+        }
+
+        .music-playing {
+            animation: pulse-ring 2s infinite;
+        }
+
+        .nav-link.active {
+            color: #c15b43 !important;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+
+        #successModal {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Animación de Latido de Corazón */
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+
+            14% {
+                transform: scale(1.3);
+            }
+
+            28% {
+                transform: scale(1);
+            }
+
+            42% {
+                transform: scale(1.3);
+            }
+
+            70% {
+                transform: scale(1);
+            }
+        }
+
         .animate-heartbeat {
             animation: heartbeat 1.5s linear infinite;
             display: inline-block;
         }
 
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* PROTECCIÓN DE IMÁGENES */
-        .protected-img {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -webkit-touch-callout: none;
+        /* Ocultar barra de scroll en el carrusel pero permitir scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
 
-        /* ESTILO POLAROID AVANZADO */
-        .polaroid-frame {
-            background-color: white;
-            padding: 8px 8px 32px 8px; /* Más padding abajo para el look Polaroid */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-        @media (min-width: 768px) {
-            .polaroid-frame {
-                padding: 12px 12px 48px 12px;
-            }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
         }
 
         /* --- ESTILO SELLO DE CERA --- */
@@ -106,47 +158,192 @@
             width: 140px;
             height: 140px;
             border-radius: 50%;
+            /* Degradado para dar efecto 3D esférico */
             background: radial-gradient(circle at 30% 30%, #d66d54, #9a432e);
-            box-shadow: 
-                0 4px 15px rgba(0,0,0,0.3),
-                inset 0 0 20px rgba(0,0,0,0.3),
+            /* Sombras complejas para simular el relieve de la cera */
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.3),
+                /* Sombra caída */
+                inset 0 0 20px rgba(0, 0, 0, 0.3),
+                /* Profundidad interna */
                 0 0 0 4px rgba(154, 67, 46, 0.3),
+                /* Anillo exterior difuso */
                 0 0 0 8px rgba(253, 251, 247, 0.2);
+            /* Borde claro para separar del fondo */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Efecto rebote suave */
             border: 2px solid #853221;
             position: relative;
         }
 
+        /* Efecto de borde irregular (opcional, simplificado con border-style) */
         .wax-seal-btn::before {
             content: '';
             position: absolute;
             inset: 6px;
             border-radius: 50%;
-            border: 1px dashed rgba(255,255,255,0.3);
+            border: 1px dashed rgba(255, 255, 255, 0.3);
             opacity: 0.7;
         }
 
-        .wax-seal-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 10px 25px rgba(0,0,0,0.25), inset 0 0 10px rgba(0,0,0,0.2); }
-        .wax-seal-btn:active { transform: scale(0.95); }
-        .wax-text { font-family: 'Great Vibes', cursive; font-size: 2rem; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.4); transform: rotate(-5deg); }
-        
-        input[readonly] {
-            background-color: #f3f0e9;
-            color: #666;
-            cursor: not-allowed;
-            border: 1px solid #e2ded5;
+        .wax-seal-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.25),
+                inset 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .wax-seal-btn:active {
+            transform: scale(0.95);
+        }
+
+        .wax-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+            transform: rotate(-5deg);
+        }
+
+        /* --- DIVISOR PAPEL RASGADO --- */
+        .paper-divider {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .paper-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 50px;
+        }
+
+        .paper-divider .shape-fill {
+            fill: currentColor;
+        }
+
+        /* --- FLIP CLOCK STYLES --- */
+        .flip-clock-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .flip-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .flip-card {
+            position: relative;
+            width: 60px;
+            height: 70px;
+            background-color: #fdfbf7;
+            border-radius: 6px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #c15b43;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            perspective: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .flip-card {
+                width: 80px;
+                height: 100px;
+                font-size: 3.5rem;
+            }
+
+            .flip-clock-container {
+                gap: 1.5rem;
+            }
+        }
+
+        .top,
+        .bottom,
+        .top-flip,
+        .bottom-flip {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            background-color: #fdfbf7;
+            backface-visibility: hidden;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .top,
+        .top-flip {
+            top: 0;
+            align-items: flex-end;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .bottom,
+        .bottom-flip {
+            bottom: 0;
+            align-items: flex-start;
+            border-radius: 0 0 6px 6px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            transform-origin: 50% 0;
+        }
+
+        .top-flip {
+            transform-origin: 50% 100%;
+        }
+
+        /* Animation Classes */
+        .flip-card.flipping .top-flip {
+            animation: flip-top 0.6s ease-in;
+            z-index: 2;
+        }
+
+        .flip-card.flipping .bottom-flip {
+            animation: flip-bottom 0.6s ease-out 0.6s;
+            /* Wait for top to finish? No, overlapping */
+            animation: flip-bottom 0.6s ease-out;
+            z-index: 2;
+        }
+
+        /* Better Keyframes */
+        @keyframes flip-top {
+            100% {
+                transform: rotateX(-90deg);
+            }
+        }
+
+        @keyframes flip-bottom {
+            0% {
+                transform: rotateX(90deg);
+            }
+
+            100% {
+                transform: rotateX(0deg);
+            }
         }
     </style>
 </head>
+
 <body class="text-charcoal font-sans antialiased">
 
     <!-- Audio -->
-    <audio id="weddingMusic" loop preload="auto"><source src="cancion.mp3" type="audio/mpeg"></audio>
+    <audio id="weddingMusic" loop preload="auto">
+        <source src="cancion.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Bienvenida -->
     <div id="welcome-overlay">
@@ -154,7 +351,12 @@
             <p id="welcome-guest-name" class="font-heading text-terracotta text-lg mb-2 hidden"></p>
             <div class="font-script text-6xl md:text-8xl text-terracotta mb-4">C & D</div>
             <p class="font-heading uppercase tracking-widest text-gray-500 mb-12">Nuestra Boda</p>
-            <div onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación"><span class="wax-text">Abrir</span></div>
+
+            <!-- BOTÓN TIPO SELLO DE CERA -->
+            <div onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación">
+                <span class="wax-text">Abrir</span>
+            </div>
+
             <p class="text-xs text-gray-400 mt-6 tracking-wider font-heading">Toca el sello para entrar</p>
         </div>
     </div>
@@ -168,33 +370,45 @@
                     <a href="#home" class="nav-link text-gray-600 hover:text-terracotta">Inicio</a>
                     <a href="#details" class="nav-link text-gray-600 hover:text-terracotta">Ubicación</a>
                     <a href="#dresscode" class="nav-link text-gray-600 hover:text-terracotta">Vestimenta</a>
-                    <a href="#gift" class="nav-link text-gray-600 hover:text-terracotta">Regalo</a>
+                    <a href="#gifts" class="nav-link text-gray-600 hover:text-terracotta">Regalos</a>
                     <a href="#rsvp" class="nav-link text-gray-600 hover:text-terracotta">Confirmar</a>
                 </div>
-                <div class="md:hidden"><button onclick="toggleMobileMenu()" class="text-terracotta"><i class="fas fa-bars text-2xl"></i></button></div>
+                <div class="md:hidden"><button onclick="toggleMobileMenu()" class="text-terracotta"><i
+                            class="fas fa-bars text-2xl"></i></button></div>
             </div>
         </div>
-        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 p-4 text-center font-heading text-sm uppercase space-y-4 shadow-lg">
-            <a href="#home" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Inicio</a>
-            <a href="#details" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Ubicación</a>
-            <a href="#dresscode" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Vestimenta</a>
-            <a href="#gift" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Regalo</a>
-            <a href="#rsvp" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Confirmar</a>
+        <div id="mobileMenu"
+            class="hidden md:hidden bg-white border-t border-gray-100 p-4 text-center font-heading text-sm uppercase space-y-4 shadow-lg">
+            <a href="#home" onclick="toggleMobileMenu()"
+                class="nav-link block text-gray-600 hover:text-terracotta">Inicio</a>
+            <a href="#details" onclick="toggleMobileMenu()"
+                class="nav-link block text-gray-600 hover:text-terracotta">Ubicación</a>
+            <a href="#dresscode" onclick="toggleMobileMenu()"
+                class="nav-link block text-gray-600 hover:text-terracotta">Vestimenta</a>
+            <a href="#gifts" onclick="toggleMobileMenu()"
+                class="nav-link block text-gray-600 hover:text-terracotta">Regalos</a>
+            <a href="#rsvp" onclick="toggleMobileMenu()"
+                class="nav-link block text-gray-600 hover:text-terracotta">Confirmar</a>
         </div>
     </nav>
 
     <!-- Música Flotante -->
-    <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-terracotta rounded-full shadow-lg flex items-center justify-center border border-terracotta/20"><i class="fas fa-play ml-1" id="musicIcon"></i></button>
-    
-    <!-- Hero -->
+    <button id="musicToggle" onclick="toggleMusic()"
+        class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-terracotta rounded-full shadow-lg flex items-center justify-center border border-terracotta/20"><i
+            class="fas fa-play ml-1" id="musicIcon"></i></button>
+
+    <!-- Hero (Section ID: home) -->
     <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
-        <!-- RUTA LOCAL: Aquí cambié la imagen de internet por la ruta local -->
-        <div class="absolute inset-0 z-0"><img src="img/portada.jpg" class="w-full h-full object-cover brightness-[0.65]"></div>
+        <div class="absolute inset-0 z-0"><img id="hero-bg"
+                src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop"
+                class="w-full h-full object-cover brightness-[0.65] transition-transform duration-75 will-change-transform">
+        </div>
         <div class="relative z-10 text-white fade-in-section">
             <p class="text-sm uppercase tracking-[0.3em] mb-4">¡Nos casamos!</p>
             <h1 class="font-script text-7xl md:text-9xl text-terracotta-light">Carlos & Doris</h1>
             <p class="font-heading text-xl tracking-widest my-6">05 . 06 . 2026</p>
-            <a href="#rsvp" class="inline-block bg-terracotta text-white font-heading text-xs uppercase tracking-widest py-4 px-10 rounded shadow-lg hover:bg-white hover:text-terracotta transition-all">Acompañanos</a>
+            <a href="#rsvp"
+                class="inline-block bg-terracotta text-white font-heading text-xs uppercase tracking-widest py-4 px-10 rounded shadow-lg hover:bg-white hover:text-terracotta transition-all">Acompañanos</a>
         </div>
     </section>
 
@@ -202,44 +416,71 @@
     <section class="pt-20 pb-10 px-4 bg-sand text-center">
         <div class="max-w-2xl mx-auto fade-in-section">
             <i class="fas fa-heart text-terracotta text-2xl mb-6 animate-heartbeat"></i>
-            <h2 class="font-serif text-3xl italic text-charcoal mb-4">"Dios nos ha bendecido con este amor, y hoy celebramos su promesa de unirnos en matrimonio."</h2>
+            <h2 class="font-serif text-3xl italic text-charcoal mb-4">Nuestra historia comenzó hace tiempo, pero el
+                05.06.2026 escribiremos el capítulo más importante ante Dios y nuestras familias.</h2>
         </div>
     </section>
 
-    <!-- Galería Dinámica -->
-    <section class="pb-20 px-4 bg-sand">
+    <!-- Galería de Imágenes -->
+    <section class="pb-20 px-4 bg-sand relative">
         <div class="max-w-7xl mx-auto fade-in-section">
-            <div id="galeria-contenedor" class="flex overflow-x-auto space-x-6 pb-12 pt-4 snap-x snap-mandatory no-scrollbar px-4" 
-                 onmouseenter="pausarCarrusel()" onmouseleave="iniciarCarrusel()" ontouchstart="pausarCarrusel()">
-                <!-- Se carga vía Script -->
+            <div class="flex overflow-x-auto space-x-6 pb-8 snap-x snap-mandatory no-scrollbar px-4 md:justify-center">
+                <!-- Foto 1 (Actualizada con la imagen de la Foto 5) -->
+                <div class="flex-none snap-center">
+                    <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=600&auto=format&fit=crop"
+                        alt="Foto Pareja 1" onclick="openLightbox(this.src)"
+                        class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
+                </div>
+                <!-- Foto 2 -->
+                <div class="flex-none snap-center">
+                    <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=600&auto=format&fit=crop"
+                        alt="Foto Pareja 2" onclick="openLightbox(this.src)"
+                        class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
+                </div>
+                <!-- Foto 3 -->
+                <div class="flex-none snap-center">
+                    <img src="pedida76de97.jpg" alt="Foto Pareja 3" onclick="openLightbox(this.src)"
+                        class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
+                </div>
+                <!-- Foto 4 -->
+                <div class="flex-none snap-center">
+                    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=600&auto=format&fit=crop"
+                        alt="Foto Pareja 4" onclick="openLightbox(this.src)"
+                        class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
+                </div>
+                <!-- Foto 5 -->
+                <div class="flex-none snap-center">
+                    <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=600&auto=format&fit=crop"
+                        alt="Foto Pareja 5" onclick="openLightbox(this.src)"
+                        class="h-64 w-48 md:h-80 md:w-60 object-cover rounded-lg shadow-md cursor-pointer hover:scale-105 hover:opacity-90 transition-transform duration-300">
+                </div>
             </div>
-            <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60">Toca para abrir • Desliza para ver más</p>
+            <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60 md:hidden">Desliza
+                para ver más</p>
+        </div>
+        <!-- Divider to White -->
+        <div class="paper-divider text-white">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
         </div>
     </section>
 
-    <!-- Lightbox Protegido e Interactivo -->
-    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="cerrarSiFondo(event)" oncontextmenu="return false;">
-        <!-- Botón Cerrar -->
-        <button onclick="closeLightbox(event)" class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none z-50">
-            <i class="fas fa-times"></i>
-        </button>
-
-        <!-- Flecha Izquierda -->
-        <button onclick="prevImage(event)" class="absolute left-2 md:left-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-
-        <!-- Imagen -->
-        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] rounded shadow-2xl transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
-
-        <!-- Flecha Derecha -->
-        <button onclick="nextImage(event)" class="absolute right-2 md:right-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
-            <i class="fas fa-chevron-right"></i>
-        </button>
+    <!-- Lightbox (Visor de Imágenes) -->
+    <div id="lightbox"
+        class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0"
+        onclick="closeLightbox()">
+        <button
+            class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none">&times;</button>
+        <img id="lightbox-img" src=""
+            class="max-w-full max-h-[90vh] rounded shadow-2xl transform scale-95 transition-transform duration-300">
     </div>
 
-    <!-- Detalles -->
-    <section id="details" class="py-24 px-4 bg-white scroll-mt-20">
+    <!-- Detalles (Section ID: details) -->
+    <section id="details" class="py-24 px-4 bg-white scroll-mt-20 relative">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in-section">
                 <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Ubicación</span>
@@ -251,237 +492,256 @@
                     <i class="fas fa-church text-4xl text-terracotta mb-4"></i>
                     <h3 class="font-heading text-xl mb-2">Ceremonia</h3>
                     <p class="font-serif text-2xl text-terracotta mb-4">1:00 PM</p>
-                    <p class="text-gray-600 mb-6">Parroquia de la Asunsión de María<br>Irribarren Sierra 51, Sta. Maria, 70760 Santo Domingo Tehuantepec, Oax.</p>
-                    <button onclick="window.open('https://maps.app.goo.gl/EVPgQESHV9RtaKwz8','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
+                    <p class="text-gray-600 mb-6">Parroquia de la Asunsión de María<br>Irribarren Sierra 51, Sta. Maria,
+                        70760 Santo Domingo Tehuantepec, Oax.</p>
+                    <button onclick="window.open('https://maps.app.goo.gl/EVPgQESHV9RtaKwz8','_blank')"
+                        class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
                 </div>
                 <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
                     <i class="fas fa-glass-cheers text-4xl text-terracotta mb-4"></i>
                     <h3 class="font-heading text-xl mb-2">Recepción</h3>
                     <p class="font-serif text-2xl text-terracotta mb-4">3:00 PM</p>
-                    <p class="text-gray-600 mb-6">Salon los Pinos<br>C. Reoloteca 26, La Soledad, 70760 Santo Domingo Tehuantepec, Oax.</p>
-                    <button onclick="window.open('https://maps.app.goo.gl/d3AY6gjdNXA9y5Xs9','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
+                    <p class="text-gray-600 mb-6">Salon los Pinos<br>C. Reoloteca 26, La Soledad, 70760 Santo Domingo
+                        Tehuantepec, Oax.</p>
+                    <button onclick="window.open('https://maps.app.goo.gl/d3AY6gjdNXA9y5Xs9','_blank')"
+                        class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
                 </div>
             </div>
         </div>
+        <!-- Divider to Sand -->
+        <div class="paper-divider text-sand">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
     </section>
 
-    <!-- Vestimenta -->
-    <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20">
+    <!-- Código de Vestimenta -->
+    <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20 relative">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Información</span>
             <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Código de Vestimenta</h2>
-            <p class="font-sans text-gray-600 text-lg mb-10 italic">El blanco está reservado para la novia,<br>¡nos encantará verte en otros colores!</p>
+
+            <p class="font-sans text-gray-600 text-lg mb-10 italic">
+                El blanco está reservado para la novia,<br>
+                ¡nos encantará verte en otros colores!
+            </p>
+
             <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 md:gap-24">
+                <!-- Traje -->
                 <div class="text-center group w-64">
-                    <!-- RUTA LOCAL: Traje -->
-                    <img src="img/traje.png" alt="Traje" class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <img src="https://specially.love/elegant/suit.png" alt="Traje"
+                        class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
                     <p class="font-heading text-sm mt-4 uppercase tracking-widest text-charcoal">Ellos</p>
                     <p class="text-xs text-gray-500 mt-1 font-sans">Guayabera o filipina, y pantalón de vestir</p>
                 </div>
+
+                <!-- Vestido -->
                 <div class="text-center group w-64">
-                    <!-- RUTA LOCAL: Vestido -->
-                    <img src="img/vestido.png" alt="Vestido" class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <img src="https://specially.love/elegant/dress.png" alt="Vestido"
+                        class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
                     <p class="font-heading text-sm mt-4 uppercase tracking-widest text-charcoal">Ellas</p>
-                    <p class="text-xs text-gray-500 mt-1 font-sans leading-relaxed">Traje regional en cualquiera de sus variantes (Traje de galón, coordinado, enagua de olán o rabona)</p>
+                    <p class="text-xs text-gray-500 mt-1 font-sans leading-relaxed">Traje regional en cualquiera de sus
+                        variantes (Traje de galón, coordinado, enagua de olán o rabona)</p>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Regalo -->
-    <section id="gift" class="py-20 px-4 bg-white scroll-mt-20">
-        <div class="max-w-4xl mx-auto text-center fade-in-section">
-            <i class="fas fa-gift text-4xl text-terracotta mb-4"></i>
-            <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Regalo</h2>
-            <div class="w-20 h-1 bg-terracotta mx-auto mb-8"></div>
-            <p class="font-sans text-gray-600 text-lg leading-relaxed">Tu presencia es el mejor regalo, pero habrá un baúl en donde podrás depositar el sobre.</p>
+        <!-- Divider to White -->
+        <div class="paper-divider text-white">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
         </div>
     </section>
 
-    <!-- RSVP -->
+    <!-- Regalos (Section ID: gifts) -->
+    <section id="gifts" class="py-20 px-4 bg-white scroll-mt-20 relative">
+        <div class="max-w-4xl mx-auto text-center fade-in-section">
+            <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Regalos</h2>
+
+            <i class="fas fa-envelope text-4xl text-terracotta mb-6"></i>
+
+            <p class="font-sans text-gray-600 text-lg mb-10 italic max-w-2xl mx-auto leading-relaxed">
+                Su compañía en este día es lo mas importante para nosotros, pero si deseas contribuir al inicio de esta
+                nueva etapa juntos, te lo agredeceremos de corazón.
+            </p>
+
+            <img src="regalo.png" alt="Mesa de Regalos"
+                class="mx-auto mt-8 max-w-full w-64 md:w-80 h-auto object-contain rounded-lg shadow-sm hover:scale-105 transition-transform duration-300">
+        </div>
+        <!-- Divider to RSVP (using color #eadad5 approx for terracotta-light/20) -->
+        <!-- Note: terracotta-light is #e8b4a3. 20% opacity on white... hard to match exact SVG fill.
+             Ideally we use the same hex. Let's try #fcf0ec which works for terracotta tint. -->
+        <div class="paper-divider text-[#fcf0ec]">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- RSVP Real (Section ID: rsvp) -->
     <section id="rsvp" class="py-24 px-4 bg-terracotta-light/20 scroll-mt-20">
-        <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
-            <div class="w-full text-center">
-                <div id="rsvp-header" class="mb-10">
+        <div
+            class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
+            <div class="w-full">
+                <div class="text-center mb-10">
                     <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">RSVP</span>
                     <h2 id="rsvp-title" class="font-serif text-4xl text-charcoal mt-2">Confirma tu Asistencia</h2>
                     <p id="rsvp-limit-message" class="text-terracotta text-sm font-bold mt-2 hidden"></p>
                 </div>
 
-                <div id="rsvp-success-message" class="hidden py-10">
-                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce"><i class="fas fa-check text-3xl"></i></div>
+                <div id="rsvp-success-message" class="hidden text-center py-10">
+                    <div
+                        class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce">
+                        <i class="fas fa-check text-3xl"></i>
+                    </div>
                     <p id="final-confirmation-text" class="text-terracotta font-serif text-2xl mb-2 font-bold"></p>
                     <p class="text-gray-600 mb-6">Hemos registrado tu respuesta correctamente.</p>
-                    <p class="font-serif text-lg text-charcoal italic mb-6">"El amor es la razón de este día, y tu presencia lo hará aún más especial."</p>
+                    <p class="font-serif text-lg text-charcoal italic mb-6 px-4">"El amor es la razón de este día, y tu
+                        presencia lo hará aún más especial."</p>
                     <p class="text-sm text-gray-400 uppercase tracking-widest">Nos vemos en la boda</p>
                 </div>
 
-                <form id="rsvpForm" class="space-y-6 text-left" name="submit-to-google-sheet">
+                <form id="rsvpForm" class="space-y-6" name="submit-to-google-sheet">
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Nombre</label>
-                            <input type="text" id="rsvp-name" name="nombre" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none transition-colors" placeholder="Tu nombre">
+                            <input type="text" id="rsvp-name" name="nombre" required
+                                class="w-full bg-sand p-4 rounded outline-none border border-transparent focus:border-terracotta"
+                                placeholder="Tu nombre">
                         </div>
                         <div>
-                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Teléfono (10 dígitos)</label>
-                            <input type="tel" name="telefono" id="rsvp-phone" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none" maxlength="10" placeholder="Ej. 5512345678">
+                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Teléfono (10
+                                dígitos)</label>
+                            <input type="tel" name="telefono" id="rsvp-phone" required
+                                class="w-full bg-sand p-4 rounded outline-none border border-transparent focus:border-terracotta"
+                                placeholder="55 1234 5678" maxlength="10"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, ''); document.getElementById('phone-error').classList.add('hidden');">
+                            <p id="phone-error" class="text-red-500 text-xs mt-1 hidden font-bold"></p>
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">¿Asistirás?</label>
                         <div class="flex space-x-6 mt-2">
-                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="Si" checked class="text-terracotta focus:ring-terracotta"><span>¡Sí!</span></label>
-                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="No" class="text-terracotta focus:ring-terracotta"><span>No podré</span></label>
+                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio"
+                                    name="asistencia" value="Si" class="text-terracotta focus:ring-terracotta"
+                                    checked><span>¡Sí, ahí estaré!</span></label>
+                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio"
+                                    name="asistencia" value="No" class="text-terracotta focus:ring-terracotta"><span>Lo
+                                    siento, no podré ir</span></label>
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Personas</label>
-                        <select id="rsvp-guests" name="invitados" class="w-full bg-sand p-4 rounded outline-none cursor-pointer">
+                        <select id="rsvp-guests" name="invitados" class="w-full bg-sand p-4 rounded outline-none">
                             <option value="1">1 Persona</option>
                         </select>
-                        <p id="guest-help-text" class="text-xs text-gray-400 mt-1 hidden">Puedes elegir menos lugares si alguien no puede asistir.</p>
                     </div>
-                    
-                    <!-- Caja de Mensajes / Comentarios añadida nuevamente -->
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Mensaje</label>
-                        <textarea name="mensaje" rows="2" class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none transition-colors" placeholder="Déjale un mensaje a los novios..."></textarea>
+                        <textarea name="mensaje" rows="2" class="w-full bg-sand p-4 rounded outline-none"
+                            placeholder="Mensaje..."></textarea>
                     </div>
-
-                    <button type="submit" class="w-full bg-terracotta text-white font-heading uppercase tracking-widest py-4 rounded hover:bg-terracotta-dark transition-colors">Enviar Confirmación</button>
+                    <button type="submit"
+                        class="w-full bg-terracotta text-white font-heading uppercase tracking-widest py-4 rounded hover:bg-terracotta-dark transition-colors">Enviar
+                        Confirmación</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Cuenta Regresiva -->
-    <section class="py-24 bg-terracotta text-white text-center">
-        <div class="max-w-4xl mx-auto px-4 fade-in-section">
-            <h2 class="font-heading text-2xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
-            <div class="grid grid-cols-4 gap-4 max-w-2xl mx-auto text-charcoal">
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="days-final">00</span><span class="text-xs uppercase">Días</span></div>
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="hours-final">00</span><span class="text-xs uppercase">Hs</span></div>
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="minutes-final">00</span><span class="text-xs uppercase">Min</span></div>
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="seconds-final">00</span><span class="text-xs uppercase">Seg</span></div>
+    <!-- Countdown Final -->
+    <section class="py-24 bg-terracotta text-white relative">
+        <div class="max-w-4xl mx-auto px-4 text-center fade-in-section">
+            <h2 class="font-heading text-2xl md:text-3xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
+
+            <div class="flip-clock-container text-terracotta">
+                <!-- Days -->
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="days">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase tracking-wider opacity-80 mt-2">Días</span>
+                </div>
+                <!-- Hours -->
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="hours">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase tracking-wider opacity-80 mt-2">Hs</span>
+                </div>
+                <!-- Minutes -->
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="minutes">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase tracking-wider opacity-80 mt-2">Min</span>
+                </div>
+                <!-- Seconds -->
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="seconds">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase tracking-wider opacity-80 mt-2">Seg</span>
+                </div>
             </div>
+
             <p class="mt-8 font-script text-3xl opacity-90">...el mejor día de nuestras vidas</p>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="bg-charcoal text-white py-12 text-center">
         <h2 class="font-script text-5xl mb-6 text-terracotta-light">C & D</h2>
-        <div class="text-xs text-gray-600">© 2026 Carlos & Doris.</div>
+        <div class="text-xs text-gray-600">&copy; 2026 Carlos & Doris.</div>
     </footer>
 
+    <!-- MODAL DE ÉXITO (Oculto) -->
+    <div id="successModal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 hidden opacity-0 pointer-events-none">
+        <div class="bg-white p-8 rounded-xl max-w-sm text-center m-4 shadow-2xl transform scale-95 transition-transform duration-300"
+            id="modalContent">
+            <div
+                class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-500">
+                <i class="fas fa-check text-2xl"></i>
+            </div>
+            <h3 class="font-serif text-2xl text-terracotta mb-2">¡Gracias!</h3>
+            <p class="text-gray-500 mb-6">Hemos recibido tu confirmación correctamente.</p>
+            <button onclick="closeModal()"
+                class="bg-terracotta text-white px-6 py-2 rounded hover:bg-terracotta-dark transition-colors">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script>
-        // --- 1. CONFIGURACIÓN Y LÓGICA DE GALERÍA AVANZADA ---
-        const totalFotos = 14; 
-        const arrayFotos = [];
-        let currentIndex = 0;
-        let autoScrollInterval;
-
-        // Llenamos el array con tus rutas
-        for (let i = 1; i <= totalFotos; i++) {
-            arrayFotos.push(`galeria/foto${i}.jpg`);
-        }
-
-        function cargarGaleria() {
-            const contenedor = document.getElementById('galeria-contenedor');
-            arrayFotos.forEach((ruta, index) => {
-                const div = document.createElement('div');
-                div.className = 'flex-none snap-center';
-                
-                // Implementando la clase polaroid-frame a la imagen generada
-                div.innerHTML = `
-                    <img src="${ruta}" alt="Foto ${index + 1}" 
-                         onclick="openLightbox(${index})" 
-                         oncontextmenu="return false;" ondragstart="return false;"
-                         class="polaroid-frame h-64 w-48 md:h-80 md:w-60 object-cover cursor-pointer hover:scale-105 hover:-rotate-2 transition-transform duration-300 protected-img">
-                `;
-                contenedor.appendChild(div);
-            });
-            iniciarCarrusel(); // Inicia el movimiento automático
-        }
-
-        // --- MOVIMIENTO AUTOMÁTICO DEL CARRUSEL ---
-        function iniciarCarrusel() {
-            const contenedor = document.getElementById('galeria-contenedor');
-            autoScrollInterval = setInterval(() => {
-                // Si llegamos al final, vuelve al inicio, si no, avanza
-                if (contenedor.scrollLeft + contenedor.clientWidth >= contenedor.scrollWidth - 10) {
-                    contenedor.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    contenedor.scrollBy({ left: 250, behavior: 'smooth' });
-                }
-            }, 3000); // 3000ms = 3 segundos
-        }
-
-        function pausarCarrusel() {
-            clearInterval(autoScrollInterval);
-        }
-
-        // --- LÓGICA DEL LIGHTBOX (VISUALIZADOR) ---
-        function openLightbox(index) {
-            currentIndex = index;
-            actualizarImagen();
-            const lb = document.getElementById('lightbox');
-            lb.classList.remove('hidden');
-            setTimeout(() => lb.classList.remove('opacity-0'), 10);
-            pausarCarrusel(); // Pausamos el fondo mientras ven una foto
-        }
-
-        function actualizarImagen() {
-            const img = document.getElementById('lightbox-img');
-            // Efecto suave al cambiar
-            img.style.opacity = 0; 
-            setTimeout(() => {
-                img.src = arrayFotos[currentIndex];
-                img.style.opacity = 1;
-            }, 150);
-        }
-
-        function nextImage(event) {
-            if (event) event.stopPropagation(); // Evita que se cierre el lightbox al hacer clic en la flecha
-            currentIndex = (currentIndex + 1) % totalFotos; // Si llega a la última, vuelve a la 1
-            actualizarImagen();
-        }
-
-        function prevImage(event) {
-            if (event) event.stopPropagation();
-            currentIndex = (currentIndex - 1 + totalFotos) % totalFotos; // Si está en la 1, va a la última
-            actualizarImagen();
-        }
-
-        function closeLightbox(event) {
-            if (event) event.stopPropagation();
-            const lb = document.getElementById('lightbox');
-            lb.classList.add('opacity-0');
-            setTimeout(() => lb.classList.add('hidden'), 300);
-            iniciarCarrusel(); // Retoma el movimiento
-        }
-
-        function cerrarSiFondo(event) {
-            // Solo cierra si se hace clic en el fondo oscuro, no en las flechas ni en la imagen
-            if (event.target.id === 'lightbox') {
-                closeLightbox();
-            }
-        }
-
-        // SOPORTE PARA DESLIZAR (SWIPE) EN CELULARES DENTRO DEL LIGHTBOX
-        let touchstartX = 0;
-        let touchendX = 0;
-        document.getElementById('lightbox').addEventListener('touchstart', e => {
-            touchstartX = e.changedTouches[0].screenX;
-        });
-        document.getElementById('lightbox').addEventListener('touchend', e => {
-            touchendX = e.changedTouches[0].screenX;
-            if (touchendX < touchstartX - 50) nextImage(); // Deslizó a la izquierda
-            if (touchendX > touchstartX + 50) prevImage(); // Deslizó a la derecha
-        });
-
-
-        // --- RESTO DEL CÓDIGO (Música, RSVP, Menú, Cuenta Regresiva) ---
+        // -------------------------------------------------------------
+        // URL DE TU SCRIPT DE GOOGLE
+        // -------------------------------------------------------------
         const scriptURL = "https://script.google.com/macros/s/AKfycbxlk8DVe-RpZhkYEoAFNU2XqVxY_j-IHUaHFS9OrlRFshYwlLe9Q1bb77Pc7yF9EcG8/exec";
+        // -------------------------------------------------------------
+
+        // 1. Música
         const audio = document.getElementById('weddingMusic');
         const musicBtn = document.getElementById('musicToggle');
         const musicIcon = document.getElementById('musicIcon');
@@ -489,113 +749,269 @@
         function enterSite() {
             document.getElementById('welcome-overlay').classList.add('hidden-overlay');
             musicBtn.classList.remove('hidden');
-            audio.play().then(() => {
-                musicIcon.className = "fas fa-pause";
-                musicBtn.classList.add('music-playing');
-            }).catch(e => console.log("Autoplay bloqueado"));
+
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    musicIcon.className = "fas fa-pause";
+                    musicBtn.classList.add('music-playing');
+                }).catch(error => {
+                    console.log("Autoplay bloqueado");
+                });
+            }
+
+            // Lanzar confeti al entrar
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#c15b43', '#e8b4a3', '#ffffff']
+            });
         }
 
         function toggleMusic() {
-            if (audio.paused) { audio.play(); musicIcon.className = "fas fa-pause"; musicBtn.classList.add('music-playing'); }
-            else { audio.pause(); musicIcon.className = "fas fa-play ml-1"; musicBtn.classList.remove('music-playing'); }
+            if (audio.paused) {
+                audio.play();
+                musicIcon.className = "fas fa-pause";
+                musicBtn.classList.add('music-playing');
+            } else {
+                audio.pause();
+                musicIcon.className = "fas fa-play ml-1";
+                musicBtn.classList.remove('music-playing');
+            }
         }
+
+        // 2. Navegación Activa (Scroll Spy) y Menú Móvil
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
 
         window.addEventListener('scroll', () => {
             let current = '';
-            document.querySelectorAll('section').forEach(s => { if (pageYOffset >= (s.offsetTop - 300)) current = s.getAttribute('id'); });
-            document.querySelectorAll('.nav-link').forEach(l => {
-                l.classList.remove('active');
-                if (current && l.getAttribute('href').includes(current)) l.classList.add('active');
+            // Ajuste de offset para detectar mejor la sección
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 300)) {
+                    current = section.getAttribute('id');
+                }
             });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (current && link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) { nav.classList.add('shadow-md', 'bg-white/95'); nav.classList.remove('bg-sand/90'); }
             else { nav.classList.remove('shadow-md', 'bg-white/95'); nav.classList.add('bg-sand/90'); }
         });
 
+        // 3. Cuenta Regresiva Flip Clock
         const weddingDate = new Date("June 05, 2026 13:00:00").getTime();
-        setInterval(() => {
+        let previousTimeIds = { days: "00", hours: "00", minutes: "00", seconds: "00" };
+
+        function updateFlipCard(unit, newValue) {
+            const card = document.querySelector(`.flip-card[data-unit="${unit}"]`);
+            if (!card) return;
+
+            const top = card.querySelector('.top');
+            const bottom = card.querySelector('.bottom');
+            const topFlip = card.querySelector('.top-flip');
+            const bottomFlip = card.querySelector('.bottom-flip');
+
+            const currentValue = top.innerText;
+            if (newValue === currentValue) return;
+
+            // Setup
+            topFlip.innerText = currentValue;
+            bottomFlip.innerText = newValue;
+
+            // Trigger Animation
+            card.classList.add('flipping');
+
+            // On Animation End (simplified logic)
+            setTimeout(() => {
+                top.innerText = newValue;
+                topFlip.innerText = newValue;
+                bottom.innerText = newValue;
+                bottomFlip.innerText = newValue;
+                card.classList.remove('flipping');
+            }, 500); // Duration matches CSS approx
+        }
+
+        const timer = setInterval(function () {
             const now = new Date().getTime();
-            const d = weddingDate - now;
-            if (d < 0) return;
-            document.getElementById("days-final").innerText = Math.floor(d / 864e5) < 10 ? "0"+Math.floor(d / 864e5) : Math.floor(d / 864e5);
-            document.getElementById("hours-final").innerText = Math.floor((d % 864e5) / 36e5) < 10 ? "0"+Math.floor((d % 864e5) / 36e5) : Math.floor((d % 864e5) / 36e5);
-            document.getElementById("minutes-final").innerText = Math.floor((d % 36e5) / 6e4) < 10 ? "0"+Math.floor((d % 36e5) / 6e4) : Math.floor((d % 36e5) / 6e4);
-            document.getElementById("seconds-final").innerText = Math.floor((d % 6e4) / 1e3) < 10 ? "0"+Math.floor((d % 6e4) / 1e3) : Math.floor((d % 6e4) / 1e3);
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                return;
+            }
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const days = d < 10 ? "0" + d : String(d);
+            const hours = h < 10 ? "0" + h : String(h);
+            const minutes = m < 10 ? "0" + m : String(m);
+            const seconds = s < 10 ? "0" + s : String(s);
+
+            updateFlipCard('days', days);
+            updateFlipCard('hours', hours);
+            updateFlipCard('seconds', seconds);
+
         }, 1000);
 
+        // 5. Animaciones de Scroll (Fade In & Parallax)
+
+        // A. Fade In
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const scrollObserver = new IntersectionObserver((entries, scrollObserver) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    scrollObserver.unobserve(entry.target); // Solo animar una vez
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            scrollObserver.observe(section);
+        });
+
+        // B. Parallax Hero
+        const heroBg = document.getElementById('hero-bg');
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.pageYOffset;
+            if (scrollPosition < window.innerHeight) {
+                // Mover la imagen a 40% de la velocidad del scroll
+                heroBg.style.transform = `translateY(${scrollPosition * 0.4}px)`;
+            }
+        });
+
+        // 4. Formulario, Validación, Modal y Seguridad LocalStorage
         const form = document.forms['submit-to-google-sheet'];
-        
-        window.onload = () => {
-            cargarGaleria();
+        const successMessage = document.getElementById('rsvp-success-message');
+        const limitMessage = document.getElementById('rsvp-limit-message');
+        const rsvpTitle = document.getElementById('rsvp-title');
+        const finalText = document.getElementById('final-confirmation-text');
+
+        window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
             const nombre = urlParams.get('nombre');
             const pases = urlParams.get('pases');
-            
-            const storageKey = 'rsvp_conf_' + (nombre ? encodeURIComponent(nombre) : 'generic');
-            const stored = localStorage.getItem(storageKey);
 
-            if (stored) {
-                const data = JSON.parse(stored);
+            const storageKey = 'rsvp_conf_' + (nombre ? encodeURIComponent(nombre) : 'generic');
+            const storedData = localStorage.getItem(storageKey);
+
+            if (storedData) {
+                const data = JSON.parse(storedData);
                 form.classList.add('hidden');
-                document.getElementById('rsvp-title').classList.add('hidden');
-                document.getElementById('final-confirmation-text').innerText = "Ya has confirmado " + data.count + (data.count == 1 ? " lugar" : " lugares");
-                document.getElementById('rsvp-success-message').classList.remove('hidden');
-                
+                rsvpTitle.classList.add('hidden');
+                limitMessage.classList.add('hidden');
+
+                finalText.innerText = "Ya has confirmado " + data.count + (data.count == 1 ? " lugar" : " lugares");
+                successMessage.classList.remove('hidden');
+
                 if (nombre) {
                     document.getElementById('welcome-guest-name').innerText = "¡Hola de nuevo, " + nombre + "!";
                     document.getElementById('welcome-guest-name').classList.remove('hidden');
                 }
-            } 
-            else {
+            } else {
                 if (nombre) {
                     document.getElementById('welcome-guest-name').innerText = "¡Hola, " + nombre + "!";
                     document.getElementById('welcome-guest-name').classList.remove('hidden');
-                    const nameInput = document.getElementById('rsvp-name');
-                    nameInput.value = nombre;
-                    nameInput.setAttribute('readonly', true);
+                    document.getElementById('rsvp-name').value = nombre;
                 }
-                
                 if (pases) {
-                    const sel = document.getElementById('rsvp-guests');
-                    sel.innerHTML = '';
-                    const numPases = parseInt(pases);
-                    for (let i = 1; i <= numPases; i++) {
-                        sel.add(new Option(i + (i===1 ? " Persona" : " Personas"), i));
+                    const select = document.getElementById('rsvp-guests');
+                    const max = parseInt(pases);
+                    select.innerHTML = '';
+                    for (let i = 1; i <= max; i++) {
+                        let opt = document.createElement("option");
+                        opt.value = i;
+                        opt.text = i + (i === 1 ? " Persona" : " Personas");
+                        select.appendChild(opt);
                     }
-                    sel.value = numPases;
-                    document.getElementById('guest-help-text').classList.remove('hidden');
-                    const limitMsg = document.getElementById('rsvp-limit-message');
-                    limitMsg.innerText = `Tienes un máximo de ${numPases} lugares reservados.`;
-                    limitMsg.classList.remove('hidden');
+                    select.value = max;
+                    limitMessage.innerText = `Tienes ${max} lugares reservados.`;
+                    limitMessage.classList.remove('hidden');
                 }
             }
 
             form.addEventListener('submit', e => {
                 e.preventDefault();
+
                 const phoneInput = form.querySelector('input[name="telefono"]');
-                const phoneVal = phoneInput.value.replace(/\D/g, ''); 
+                const phoneError = document.getElementById('phone-error');
+                const phoneVal = phoneInput.value;
+
                 if (phoneVal.length !== 10) {
-                    alert("Por favor, ingresa un número de teléfono válido de 10 dígitos.");
+                    phoneError.innerText = "Por favor, ingresa 10 dígitos.";
+                    phoneError.classList.remove('hidden');
                     phoneInput.focus();
                     return;
                 }
+
+                const guestsConfirmed = form.querySelector('select[name="invitados"]').value;
                 const btn = form.querySelector('button[type="submit"]');
                 const originalText = btn.innerText;
-                btn.innerText = "Enviando..."; 
+                btn.innerText = "Enviando...";
                 btn.disabled = true;
-                
+
                 fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-                    .then(() => {
-                        const guestsConfirmed = document.getElementById('rsvp-guests').value;
-                        localStorage.setItem(storageKey, JSON.stringify({confirmed:true, count:guestsConfirmed}));
-                        
+                    .then(response => {
+                        const dataToSave = { confirmed: true, count: guestsConfirmed };
+                        localStorage.setItem(storageKey, JSON.stringify(dataToSave));
+
+                        const modal = document.getElementById('successModal');
+                        const modalContent = document.getElementById('modalContent');
+                        modal.classList.remove('hidden');
+
+                        setTimeout(() => {
+                            modal.classList.remove('opacity-0', 'pointer-events-none');
+                            modalContent.classList.remove('scale-95');
+                            modalContent.classList.add('scale-100');
+                        }, 10);
+
+                        finalText.innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
+
                         form.classList.add('hidden');
-                        document.getElementById('rsvp-title').classList.add('hidden');
-                        document.getElementById('rsvp-limit-message').classList.add('hidden');
-                        document.getElementById('final-confirmation-text').innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
-                        document.getElementById('rsvp-success-message').classList.remove('hidden');
-                        
-                        document.getElementById('rsvp-header').scrollIntoView({ behavior: 'smooth' });
+                        limitMessage.classList.add('hidden');
+                        rsvpTitle.classList.add('hidden');
+                        successMessage.classList.remove('hidden');
+
+                        // Lanzar confeti de celebración
+                        var duration = 3 * 1000;
+                        var animationEnd = Date.now() + duration;
+                        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+
+                        function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
+                        var interval = setInterval(function () {
+                            var timeLeft = animationEnd - Date.now();
+
+                            if (timeLeft <= 0) {
+                                return clearInterval(interval);
+                            }
+
+                            var particleCount = 50 * (timeLeft / duration);
+                            // since particles fall down, start a bit higher than random
+                            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#c15b43', '#e8b4a3'] }));
+                            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#c15b43', '#e8b4a3'] }));
+                        }, 250);
+
+                        form.reset();
+                        btn.innerText = originalText;
+                        btn.disabled = false;
                     })
                     .catch(error => {
                         alert("Hubo un error al enviar. Por favor intenta de nuevo.");
@@ -605,19 +1021,42 @@
             });
         };
 
+        function closeModal() {
+            const modal = document.getElementById('successModal');
+            const modalContent = document.getElementById('modalContent');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        }
+
+        // Scripts para la galería (Lightbox)
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('hidden');
+            setTimeout(() => {
+                lightbox.classList.remove('opacity-0');
+                document.getElementById('lightbox-img').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('opacity-0');
+            document.getElementById('lightbox-img').classList.add('scale-95');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+            }, 300);
+        }
+
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-        
-        // --- OBSERVADOR PARA QUE LOS ELEMENTOS APAREZCAN AL BAJAR ---
+
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { 
-                if (entry.isIntersecting) { 
-                    entry.target.classList.add('is-visible'); 
-                    observer.unobserve(entry.target); 
-                } 
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.15 });
         document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
-
     </script>
 </body>
+
 </html>
