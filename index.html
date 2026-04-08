@@ -19,326 +19,606 @@
     <meta name="twitter:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
     <meta name="twitter:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
 
-    <!-- Estilos CSS Internos (Sin llamadas externas para mayor seguridad y rapidez) -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Configuración visual -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        terracotta: { light: '#e8b4a3', DEFAULT: '#c15b43', dark: '#9a432e' },
+                        sand: '#fdfbf7',
+                        charcoal: '#333333',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        script: ['Great Vibes', 'cursive'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        heading: ['Cinzel', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
-        /* Variables de colores y fuentes seguras para todos los dispositivos */
-        :root {
-            --color-principal: #d4af37; /* Dorado */
-            --color-fondo: #fdfbf7;
-            --color-texto: #4a4a4a;
-            --fuente-titulos: 'Georgia', 'Times New Roman', serif;
-            --fuente-texto: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        body { background-color: #fdfbf7; overflow-x: hidden; }
+        
+        #welcome-overlay { position: fixed; inset: 0; background-color: #fdfbf7; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s; }
+        #welcome-overlay.hidden-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .fade-in-section { opacity: 0; transform: translateY(20px); transition: 1s; }
+        .fade-in-section.is-visible { opacity: 1; transform: none; }
+        
+        @keyframes pulse-ring { 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(193, 91, 67, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(193, 91, 67, 0); } 100% { transform: scale(0.8); } }
+        .music-playing { animation: pulse-ring 2s infinite; }
+
+        .nav-link.active { color: #c15b43 !important; font-weight: 700; }
+        .nav-link { transition: color 0.3s ease; }
+        #successModal { transition: opacity 0.3s ease; }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+        .animate-heartbeat {
+            animation: heartbeat 1.5s linear infinite;
+            display: inline-block;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* PROTECCIÓN DE IMÁGENES */
+        .protected-img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -webkit-touch-callout: none;
         }
 
-        body {
-            font-family: var(--fuente-texto);
-            background-color: var(--color-fondo);
-            color: var(--color-texto);
-            line-height: 1.6;
+        /* ESTILO POLAROID AVANZADO */
+        .polaroid-frame {
+            background-color: white;
+            padding: 8px 8px 32px 8px; /* Más padding abajo para el look Polaroid */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+        @media (min-width: 768px) {
+            .polaroid-frame {
+                padding: 12px 12px 48px 12px;
+            }
         }
 
-        h1, h2, h3 {
-            font-family: var(--fuente-titulos);
-            font-weight: normal;
-        }
-
-        /* Sección Principal (Hero) */
-        .hero {
-            height: 100vh;
+        /* --- ESTILO SELLO DE CERA --- */
+        .wax-seal-btn {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #d66d54, #9a432e);
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.3),
+                inset 0 0 20px rgba(0,0,0,0.3),
+                0 0 0 4px rgba(154, 67, 46, 0.3),
+                0 0 0 8px rgba(253, 251, 247, 0.2);
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            /* RUTA LOCAL PARA EL FONDO: Asegúrate de tener esta imagen en tu carpeta */
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('img/portada.jpg');
-            background-size: cover;
-            background-position: center;
-            background-color: #cccccc; /* Color de respaldo por si no carga la imagen */
-            color: white;
-            padding: 20px;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-        }
-
-        /* Cuenta regresiva */
-        .contador-container {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
             justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid #853221;
+            position: relative;
         }
 
-        .contador-item {
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--color-texto);
-            padding: 15px 20px;
-            border-radius: 8px;
-            min-width: 80px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        .wax-seal-btn::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border-radius: 50%;
+            border: 1px dashed rgba(255,255,255,0.3);
+            opacity: 0.7;
         }
 
-        .contador-item span {
-            display: block;
-            font-size: 2rem;
-            font-family: var(--fuente-titulos);
-            color: var(--color-principal);
-        }
-
-        .contador-item p {
-            font-size: 0.9rem;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #777;
-        }
-
-        /* Secciones Generales */
-        .seccion {
-            padding: 80px 20px;
-            text-align: center;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .seccion-titulo {
-            font-size: 2.5rem;
-            color: var(--color-principal);
-            margin-bottom: 20px;
-        }
-
-        /* Detalles del Evento */
-        .detalles-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            justify-content: center;
-            margin-top: 40px;
-        }
-
-        .tarjeta-detalle {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            flex: 1;
-            min-width: 300px;
-            border-top: 5px solid var(--color-principal);
-        }
-
-        .tarjeta-detalle svg {
-            width: 50px;
-            height: 50px;
-            fill: var(--color-principal);
-            margin-bottom: 20px;
-        }
-
-        .tarjeta-detalle h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
-        .boton {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 25px;
-            background-color: var(--color-principal);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            transition: background 0.3s;
-            font-weight: bold;
-        }
-
-        .boton:hover {
-            background-color: #b8975a;
-        }
-
-        /* Galería */
-        .galeria-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 40px;
-        }
-
-        .galeria-item {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            background-color: #e0e0e0; /* Color de fondo si no carga la imagen */
-        }
-
-        /* Pie de página */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        footer h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--color-principal);
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 3rem; }
-            .hero p { font-size: 1.2rem; }
-            .contador-item { padding: 10px 15px; min-width: 70px; }
-            .contador-item span { font-size: 1.5rem; }
+        .wax-seal-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 10px 25px rgba(0,0,0,0.25), inset 0 0 10px rgba(0,0,0,0.2); }
+        .wax-seal-btn:active { transform: scale(0.95); }
+        .wax-text { font-family: 'Great Vibes', cursive; font-size: 2rem; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.4); transform: rotate(-5deg); }
+        
+        input[readonly] {
+            background-color: #f3f0e9;
+            color: #666;
+            cursor: not-allowed;
+            border: 1px solid #e2ded5;
         }
     </style>
 </head>
-<body>
+<body class="text-charcoal font-sans antialiased">
 
-    <!-- Sección Inicial (Hero) -->
-    <header class="hero">
-        <h1>Carlos & Doris</h1>
-        <p>¡Nos Casamos!</p>
-        <p>05 . 06 . 2026</p>
+    <!-- Audio -->
+    <audio id="weddingMusic" loop preload="auto"><source src="cancion.mp3" type="audio/mpeg"></audio>
 
-        <div class="contador-container" id="contador">
-            <div class="contador-item">
-                <span id="dias">0</span>
-                <p>Días</p>
-            </div>
-            <div class="contador-item">
-                <span id="horas">0</span>
-                <p>Hrs</p>
-            </div>
-            <div class="contador-item">
-                <span id="minutos">0</span>
-                <p>Min</p>
-            </div>
-            <div class="contador-item">
-                <span id="segundos">0</span>
-                <p>Seg</p>
+    <!-- Bienvenida -->
+    <div id="welcome-overlay">
+        <div class="text-center p-8 flex flex-col items-center">
+            <p id="welcome-guest-name" class="font-heading text-terracotta text-lg mb-2 hidden"></p>
+            <div class="font-script text-6xl md:text-8xl text-terracotta mb-4">C & D</div>
+            <p class="font-heading uppercase tracking-widest text-gray-500 mb-12">Nuestra Boda</p>
+            <div onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación"><span class="wax-text">Abrir</span></div>
+            <p class="text-xs text-gray-400 mt-6 tracking-wider font-heading">Toca el sello para entrar</p>
+        </div>
+    </div>
+
+    <!-- Navegación -->
+    <nav class="fixed top-0 w-full z-50 bg-sand/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="font-script text-3xl text-terracotta">C & D</div>
+                <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-heading">
+                    <a href="#home" class="nav-link text-gray-600 hover:text-terracotta">Inicio</a>
+                    <a href="#details" class="nav-link text-gray-600 hover:text-terracotta">Ubicación</a>
+                    <a href="#dresscode" class="nav-link text-gray-600 hover:text-terracotta">Vestimenta</a>
+                    <a href="#gift" class="nav-link text-gray-600 hover:text-terracotta">Regalo</a>
+                    <a href="#rsvp" class="nav-link text-gray-600 hover:text-terracotta">Confirmar</a>
+                </div>
+                <div class="md:hidden"><button onclick="toggleMobileMenu()" class="text-terracotta"><i class="fas fa-bars text-2xl"></i></button></div>
             </div>
         </div>
-    </header>
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 p-4 text-center font-heading text-sm uppercase space-y-4 shadow-lg">
+            <a href="#home" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Inicio</a>
+            <a href="#details" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Ubicación</a>
+            <a href="#dresscode" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Vestimenta</a>
+            <a href="#gift" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Regalo</a>
+            <a href="#rsvp" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Confirmar</a>
+        </div>
+    </nav>
 
-    <!-- Sección de Detalles del Evento -->
-    <section class="seccion">
-        <h2 class="seccion-titulo">Dónde y Cuándo</h2>
-        <p>Acompáñanos a celebrar el inicio de nuestra nueva historia juntos.</p>
-        
-        <div class="detalles-grid">
-            <!-- Ceremonia -->
-            <div class="tarjeta-detalle">
-                <!-- Icono SVG (Sin enlaces externos) -->
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                </svg>
-                <h3>Ceremonia</h3>
-                <p><strong>Fecha:</strong> Viernes, 05 de Junio de 2026</p>
-                <p><strong>Hora:</strong> 4:00 PM</p>
-                <p><strong>Lugar:</strong> Templo Principal, Ciudad</p>
-                <a href="#" class="boton">Ver en Mapa</a>
+    <!-- Música Flotante -->
+    <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-terracotta rounded-full shadow-lg flex items-center justify-center border border-terracotta/20"><i class="fas fa-play ml-1" id="musicIcon"></i></button>
+    
+    <!-- Hero -->
+    <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+        <!-- RUTA LOCAL: Aquí cambié la imagen de internet por la ruta local -->
+        <div class="absolute inset-0 z-0"><img src="img/portada.jpg" class="w-full h-full object-cover brightness-[0.65]"></div>
+        <div class="relative z-10 text-white fade-in-section">
+            <p class="text-sm uppercase tracking-[0.3em] mb-4">¡Nos casamos!</p>
+            <h1 class="font-script text-7xl md:text-9xl text-terracotta-light">Carlos & Doris</h1>
+            <p class="font-heading text-xl tracking-widest my-6">05 . 06 . 2026</p>
+            <a href="#rsvp" class="inline-block bg-terracotta text-white font-heading text-xs uppercase tracking-widest py-4 px-10 rounded shadow-lg hover:bg-white hover:text-terracotta transition-all">Acompañanos</a>
+        </div>
+    </section>
+
+    <!-- Frase -->
+    <section class="pt-20 pb-10 px-4 bg-sand text-center">
+        <div class="max-w-2xl mx-auto fade-in-section">
+            <i class="fas fa-heart text-terracotta text-2xl mb-6 animate-heartbeat"></i>
+            <h2 class="font-serif text-3xl italic text-charcoal mb-4">"Dios nos ha bendecido con este amor, y hoy celebramos su promesa de unirnos en matrimonio."</h2>
+        </div>
+    </section>
+
+    <!-- Galería Dinámica -->
+    <section class="pb-20 px-4 bg-sand">
+        <div class="max-w-7xl mx-auto fade-in-section">
+            <div id="galeria-contenedor" class="flex overflow-x-auto space-x-6 pb-12 pt-4 snap-x snap-mandatory no-scrollbar px-4" 
+                 onmouseenter="pausarCarrusel()" onmouseleave="iniciarCarrusel()" ontouchstart="pausarCarrusel()">
+                <!-- Se carga vía Script -->
             </div>
+            <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60">Toca para abrir • Desliza para ver más</p>
+        </div>
+    </section>
 
-            <!-- Recepción -->
-            <div class="tarjeta-detalle">
-                <!-- Icono SVG (Sin enlaces externos) -->
-                <svg viewBox="0 0 24 24">
-                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
-                </svg>
-                <h3>Recepción</h3>
-                <p><strong>Fecha:</strong> Viernes, 05 de Junio de 2026</p>
-                <p><strong>Hora:</strong> 6:00 PM</p>
-                <p><strong>Lugar:</strong> Salón de Eventos Elegance</p>
-                <a href="#" class="boton">Ver en Mapa</a>
+    <!-- Lightbox Protegido e Interactivo -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="cerrarSiFondo(event)" oncontextmenu="return false;">
+        <!-- Botón Cerrar -->
+        <button onclick="closeLightbox(event)" class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none z-50">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Flecha Izquierda -->
+        <button onclick="prevImage(event)" class="absolute left-2 md:left-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <!-- Imagen -->
+        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] rounded shadow-2xl transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
+
+        <!-- Flecha Derecha -->
+        <button onclick="nextImage(event)" class="absolute right-2 md:right-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- Detalles -->
+    <section id="details" class="py-24 px-4 bg-white scroll-mt-20">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 fade-in-section">
+                <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Ubicación</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4">Cuándo & Dónde</h2>
+                <div class="w-20 h-1 bg-terracotta mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 text-center">
+                <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
+                    <i class="fas fa-church text-4xl text-terracotta mb-4"></i>
+                    <h3 class="font-heading text-xl mb-2">Ceremonia</h3>
+                    <p class="font-serif text-2xl text-terracotta mb-4">1:00 PM</p>
+                    <p class="text-gray-600 mb-6">Parroquia de la Asunsión de María<br>Irribarren Sierra 51, Sta. Maria, 70760 Santo Domingo Tehuantepec, Oax.</p>
+                    <button onclick="window.open('https://maps.app.goo.gl/EVPgQESHV9RtaKwz8','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
+                </div>
+                <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
+                    <i class="fas fa-glass-cheers text-4xl text-terracotta mb-4"></i>
+                    <h3 class="font-heading text-xl mb-2">Recepción</h3>
+                    <p class="font-serif text-2xl text-terracotta mb-4">3:00 PM</p>
+                    <p class="text-gray-600 mb-6">Salon los Pinos<br>C. Reoloteca 26, La Soledad, 70760 Santo Domingo Tehuantepec, Oax.</p>
+                    <button onclick="window.open('https://maps.app.goo.gl/d3AY6gjdNXA9y5Xs9','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección de Galería -->
-    <section class="seccion" style="background-color: white;">
-        <h2 class="seccion-titulo">Nuestros Momentos</h2>
-        <p>Un pequeño vistazo a nuestra historia de amor.</p>
-        
-        <div class="galeria-grid">
-            <!-- RUTAS LOCALES: Asegúrate de tener estas imágenes en tu carpeta 'galeria' -->
-            <img src="galeria/foto1.jpg" alt="Foto de Carlos y Doris 1" class="galeria-item">
-            <img src="galeria/foto2.jpg" alt="Foto de Carlos y Doris 2" class="galeria-item">
-            <img src="galeria/foto3.jpg" alt="Foto de Carlos y Doris 3" class="galeria-item">
-            <img src="galeria/foto4.jpg" alt="Foto de Carlos y Doris 4" class="galeria-item">
-            <img src="galeria/foto5.jpg" alt="Foto de Carlos y Doris 5" class="galeria-item">
-            <img src="galeria/foto6.jpg" alt="Foto de Carlos y Doris 6" class="galeria-item">
+    <!-- Vestimenta -->
+    <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20">
+        <div class="max-w-4xl mx-auto text-center fade-in-section">
+            <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Información</span>
+            <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Código de Vestimenta</h2>
+            <p class="font-sans text-gray-600 text-lg mb-10 italic">El blanco está reservado para la novia,<br>¡nos encantará verte en otros colores!</p>
+            <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 md:gap-24">
+                <div class="text-center group w-64">
+                    <!-- RUTA LOCAL: Traje -->
+                    <img src="img/traje.png" alt="Traje" class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <p class="font-heading text-sm mt-4 uppercase tracking-widest text-charcoal">Ellos</p>
+                    <p class="text-xs text-gray-500 mt-1 font-sans">Guayabera o filipina, y pantalón de vestir</p>
+                </div>
+                <div class="text-center group w-64">
+                    <!-- RUTA LOCAL: Vestido -->
+                    <img src="img/vestido.png" alt="Vestido" class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <p class="font-heading text-sm mt-4 uppercase tracking-widest text-charcoal">Ellas</p>
+                    <p class="text-xs text-gray-500 mt-1 font-sans leading-relaxed">Traje regional en cualquiera de sus variantes (Traje de galón, coordinado, enagua de olán o rabona)</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Sección de Asistencia / RSVP -->
-    <section class="seccion">
-        <h2 class="seccion-titulo">Confirmar Asistencia</h2>
-        <p>Por favor, confírmanos tu asistencia antes del 15 de Mayo de 2026.</p>
-        <p>Nos hace mucha ilusión poder compartir este día contigo.</p>
-        
-        <!-- Aquí puedes poner un enlace directo a WhatsApp (Sustituye 123456789 por tu número) -->
-        <a href="https://wa.me/9711239303?text=¡Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Carlos%20y%20Doris." target="_blank" class="boton" style="font-size: 1.2rem; padding: 15px 30px;">Confirmar por WhatsApp</a>
+    <!-- Regalo -->
+    <section id="gift" class="py-20 px-4 bg-white scroll-mt-20">
+        <div class="max-w-4xl mx-auto text-center fade-in-section">
+            <i class="fas fa-gift text-4xl text-terracotta mb-4"></i>
+            <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Regalo</h2>
+            <div class="w-20 h-1 bg-terracotta mx-auto mb-8"></div>
+            <p class="font-sans text-gray-600 text-lg leading-relaxed">Tu presencia es el mejor regalo, pero habrá un baúl en donde podrás depositar el sobre.</p>
+        </div>
     </section>
 
-    <!-- Reproductor de música opcional con ruta local -->
-    <!-- 
-    <audio autoplay loop>
-        <source src="musica/cancion_boda.mp3" type="audio/mpeg">
-    </audio> 
-    -->
+    <!-- RSVP -->
+    <section id="rsvp" class="py-24 px-4 bg-terracotta-light/20 scroll-mt-20">
+        <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
+            <div class="w-full text-center">
+                <div id="rsvp-header" class="mb-10">
+                    <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">RSVP</span>
+                    <h2 id="rsvp-title" class="font-serif text-4xl text-charcoal mt-2">Confirma tu Asistencia</h2>
+                    <p id="rsvp-limit-message" class="text-terracotta text-sm font-bold mt-2 hidden"></p>
+                </div>
 
-    <!-- Pie de página -->
-    <footer>
-        <h2>Carlos & Doris</h2>
-        <p>05 de Junio, 2026</p>
+                <div id="rsvp-success-message" class="hidden py-10">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce"><i class="fas fa-check text-3xl"></i></div>
+                    <p id="final-confirmation-text" class="text-terracotta font-serif text-2xl mb-2 font-bold"></p>
+                    <p class="text-gray-600 mb-6">Hemos registrado tu respuesta correctamente.</p>
+                    <p class="font-serif text-lg text-charcoal italic mb-6">"El amor es la razón de este día, y tu presencia lo hará aún más especial."</p>
+                    <p class="text-sm text-gray-400 uppercase tracking-widest">Nos vemos en la boda</p>
+                </div>
+
+                <form id="rsvpForm" class="space-y-6 text-left" name="submit-to-google-sheet">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Nombre</label>
+                            <input type="text" id="rsvp-name" name="nombre" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none transition-colors" placeholder="Tu nombre">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Teléfono (10 dígitos)</label>
+                            <input type="tel" name="telefono" id="rsvp-phone" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none" maxlength="10" placeholder="Ej. 5512345678">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">¿Asistirás?</label>
+                        <div class="flex space-x-6 mt-2">
+                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="Si" checked class="text-terracotta focus:ring-terracotta"><span>¡Sí!</span></label>
+                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="No" class="text-terracotta focus:ring-terracotta"><span>No podré</span></label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Personas</label>
+                        <select id="rsvp-guests" name="invitados" class="w-full bg-sand p-4 rounded outline-none cursor-pointer">
+                            <option value="1">1 Persona</option>
+                        </select>
+                        <p id="guest-help-text" class="text-xs text-gray-400 mt-1 hidden">Puedes elegir menos lugares si alguien no puede asistir.</p>
+                    </div>
+                    
+                    <!-- Caja de Mensajes / Comentarios añadida nuevamente -->
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Mensaje</label>
+                        <textarea name="mensaje" rows="2" class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none transition-colors" placeholder="Déjale un mensaje a los novios..."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-terracotta text-white font-heading uppercase tracking-widest py-4 rounded hover:bg-terracotta-dark transition-colors">Enviar Confirmación</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cuenta Regresiva -->
+    <section class="py-24 bg-terracotta text-white text-center">
+        <div class="max-w-4xl mx-auto px-4 fade-in-section">
+            <h2 class="font-heading text-2xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
+            <div class="grid grid-cols-4 gap-4 max-w-2xl mx-auto text-charcoal">
+                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="days-final">00</span><span class="text-xs uppercase">Días</span></div>
+                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="hours-final">00</span><span class="text-xs uppercase">Hs</span></div>
+                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="minutes-final">00</span><span class="text-xs uppercase">Min</span></div>
+                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="seconds-final">00</span><span class="text-xs uppercase">Seg</span></div>
+            </div>
+            <p class="mt-8 font-script text-3xl opacity-90">...el mejor día de nuestras vidas</p>
+        </div>
+    </section>
+
+    <footer class="bg-charcoal text-white py-12 text-center">
+        <h2 class="font-script text-5xl mb-6 text-terracotta-light">C & D</h2>
+        <div class="text-xs text-gray-600">© 2026 Carlos & Doris.</div>
     </footer>
 
-    <!-- Lógica de la Cuenta Regresiva -->
     <script>
-        // Configurar la fecha de la boda: Año, Mes (inglés), Día, Hora
-        const fechaBoda = new Date("June 05, 2026 16:00:00").getTime();
+        // --- 1. CONFIGURACIÓN Y LÓGICA DE GALERÍA AVANZADA ---
+        const totalFotos = 14; 
+        const arrayFotos = [];
+        let currentIndex = 0;
+        let autoScrollInterval;
 
-        const actualizarContador = setInterval(function() {
-            const ahora = new Date().getTime();
-            const distancia = fechaBoda - ahora;
+        // Llenamos el array con tus rutas
+        for (let i = 1; i <= totalFotos; i++) {
+            arrayFotos.push(`galeria/foto${i}.jpg`);
+        }
 
-            // Cálculos de tiempo
-            const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-            const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-            const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+        function cargarGaleria() {
+            const contenedor = document.getElementById('galeria-contenedor');
+            arrayFotos.forEach((ruta, index) => {
+                const div = document.createElement('div');
+                div.className = 'flex-none snap-center';
+                
+                // Implementando la clase polaroid-frame a la imagen generada
+                div.innerHTML = `
+                    <img src="${ruta}" alt="Foto ${index + 1}" 
+                         onclick="openLightbox(${index})" 
+                         oncontextmenu="return false;" ondragstart="return false;"
+                         class="polaroid-frame h-64 w-48 md:h-80 md:w-60 object-cover cursor-pointer hover:scale-105 hover:-rotate-2 transition-transform duration-300 protected-img">
+                `;
+                contenedor.appendChild(div);
+            });
+            iniciarCarrusel(); // Inicia el movimiento automático
+        }
 
-            // Mostrar resultados
-            document.getElementById("dias").innerText = dias;
-            document.getElementById("horas").innerText = horas;
-            document.getElementById("minutos").innerText = minutos;
-            document.getElementById("segundos").innerText = segundos;
+        // --- MOVIMIENTO AUTOMÁTICO DEL CARRUSEL ---
+        function iniciarCarrusel() {
+            const contenedor = document.getElementById('galeria-contenedor');
+            autoScrollInterval = setInterval(() => {
+                // Si llegamos al final, vuelve al inicio, si no, avanza
+                if (contenedor.scrollLeft + contenedor.clientWidth >= contenedor.scrollWidth - 10) {
+                    contenedor.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    contenedor.scrollBy({ left: 250, behavior: 'smooth' });
+                }
+            }, 3000); // 3000ms = 3 segundos
+        }
 
-            // Mensaje si la fecha ya pasó
-            if (distancia < 0) {
-                clearInterval(actualizarContador);
-                document.getElementById("contador").innerHTML = "<h2 style='color: var(--color-principal);'>¡Llegó el gran día!</h2>";
+        function pausarCarrusel() {
+            clearInterval(autoScrollInterval);
+        }
+
+        // --- LÓGICA DEL LIGHTBOX (VISUALIZADOR) ---
+        function openLightbox(index) {
+            currentIndex = index;
+            actualizarImagen();
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('hidden');
+            setTimeout(() => lb.classList.remove('opacity-0'), 10);
+            pausarCarrusel(); // Pausamos el fondo mientras ven una foto
+        }
+
+        function actualizarImagen() {
+            const img = document.getElementById('lightbox-img');
+            // Efecto suave al cambiar
+            img.style.opacity = 0; 
+            setTimeout(() => {
+                img.src = arrayFotos[currentIndex];
+                img.style.opacity = 1;
+            }, 150);
+        }
+
+        function nextImage(event) {
+            if (event) event.stopPropagation(); // Evita que se cierre el lightbox al hacer clic en la flecha
+            currentIndex = (currentIndex + 1) % totalFotos; // Si llega a la última, vuelve a la 1
+            actualizarImagen();
+        }
+
+        function prevImage(event) {
+            if (event) event.stopPropagation();
+            currentIndex = (currentIndex - 1 + totalFotos) % totalFotos; // Si está en la 1, va a la última
+            actualizarImagen();
+        }
+
+        function closeLightbox(event) {
+            if (event) event.stopPropagation();
+            const lb = document.getElementById('lightbox');
+            lb.classList.add('opacity-0');
+            setTimeout(() => lb.classList.add('hidden'), 300);
+            iniciarCarrusel(); // Retoma el movimiento
+        }
+
+        function cerrarSiFondo(event) {
+            // Solo cierra si se hace clic en el fondo oscuro, no en las flechas ni en la imagen
+            if (event.target.id === 'lightbox') {
+                closeLightbox();
             }
+        }
+
+        // SOPORTE PARA DESLIZAR (SWIPE) EN CELULARES DENTRO DEL LIGHTBOX
+        let touchstartX = 0;
+        let touchendX = 0;
+        document.getElementById('lightbox').addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+        document.getElementById('lightbox').addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            if (touchendX < touchstartX - 50) nextImage(); // Deslizó a la izquierda
+            if (touchendX > touchstartX + 50) prevImage(); // Deslizó a la derecha
+        });
+
+
+        // --- RESTO DEL CÓDIGO (Música, RSVP, Menú, Cuenta Regresiva) ---
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxlk8DVe-RpZhkYEoAFNU2XqVxY_j-IHUaHFS9OrlRFshYwlLe9Q1bb77Pc7yF9EcG8/exec";
+        const audio = document.getElementById('weddingMusic');
+        const musicBtn = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+
+        function enterSite() {
+            document.getElementById('welcome-overlay').classList.add('hidden-overlay');
+            musicBtn.classList.remove('hidden');
+            audio.play().then(() => {
+                musicIcon.className = "fas fa-pause";
+                musicBtn.classList.add('music-playing');
+            }).catch(e => console.log("Autoplay bloqueado"));
+        }
+
+        function toggleMusic() {
+            if (audio.paused) { audio.play(); musicIcon.className = "fas fa-pause"; musicBtn.classList.add('music-playing'); }
+            else { audio.pause(); musicIcon.className = "fas fa-play ml-1"; musicBtn.classList.remove('music-playing'); }
+        }
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            document.querySelectorAll('section').forEach(s => { if (pageYOffset >= (s.offsetTop - 300)) current = s.getAttribute('id'); });
+            document.querySelectorAll('.nav-link').forEach(l => {
+                l.classList.remove('active');
+                if (current && l.getAttribute('href').includes(current)) l.classList.add('active');
+            });
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) { nav.classList.add('shadow-md', 'bg-white/95'); nav.classList.remove('bg-sand/90'); }
+            else { nav.classList.remove('shadow-md', 'bg-white/95'); nav.classList.add('bg-sand/90'); }
+        });
+
+        const weddingDate = new Date("June 05, 2026 13:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const d = weddingDate - now;
+            if (d < 0) return;
+            document.getElementById("days-final").innerText = Math.floor(d / 864e5) < 10 ? "0"+Math.floor(d / 864e5) : Math.floor(d / 864e5);
+            document.getElementById("hours-final").innerText = Math.floor((d % 864e5) / 36e5) < 10 ? "0"+Math.floor((d % 864e5) / 36e5) : Math.floor((d % 864e5) / 36e5);
+            document.getElementById("minutes-final").innerText = Math.floor((d % 36e5) / 6e4) < 10 ? "0"+Math.floor((d % 36e5) / 6e4) : Math.floor((d % 36e5) / 6e4);
+            document.getElementById("seconds-final").innerText = Math.floor((d % 6e4) / 1e3) < 10 ? "0"+Math.floor((d % 6e4) / 1e3) : Math.floor((d % 6e4) / 1e3);
         }, 1000);
+
+        const form = document.forms['submit-to-google-sheet'];
+        
+        window.onload = () => {
+            cargarGaleria();
+            const urlParams = new URLSearchParams(window.location.search);
+            const nombre = urlParams.get('nombre');
+            const pases = urlParams.get('pases');
+            
+            const storageKey = 'rsvp_conf_' + (nombre ? encodeURIComponent(nombre) : 'generic');
+            const stored = localStorage.getItem(storageKey);
+
+            if (stored) {
+                const data = JSON.parse(stored);
+                form.classList.add('hidden');
+                document.getElementById('rsvp-title').classList.add('hidden');
+                document.getElementById('final-confirmation-text').innerText = "Ya has confirmado " + data.count + (data.count == 1 ? " lugar" : " lugares");
+                document.getElementById('rsvp-success-message').classList.remove('hidden');
+                
+                if (nombre) {
+                    document.getElementById('welcome-guest-name').innerText = "¡Hola de nuevo, " + nombre + "!";
+                    document.getElementById('welcome-guest-name').classList.remove('hidden');
+                }
+            } 
+            else {
+                if (nombre) {
+                    document.getElementById('welcome-guest-name').innerText = "¡Hola, " + nombre + "!";
+                    document.getElementById('welcome-guest-name').classList.remove('hidden');
+                    const nameInput = document.getElementById('rsvp-name');
+                    nameInput.value = nombre;
+                    nameInput.setAttribute('readonly', true);
+                }
+                
+                if (pases) {
+                    const sel = document.getElementById('rsvp-guests');
+                    sel.innerHTML = '';
+                    const numPases = parseInt(pases);
+                    for (let i = 1; i <= numPases; i++) {
+                        sel.add(new Option(i + (i===1 ? " Persona" : " Personas"), i));
+                    }
+                    sel.value = numPases;
+                    document.getElementById('guest-help-text').classList.remove('hidden');
+                    const limitMsg = document.getElementById('rsvp-limit-message');
+                    limitMsg.innerText = `Tienes un máximo de ${numPases} lugares reservados.`;
+                    limitMsg.classList.remove('hidden');
+                }
+            }
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const phoneInput = form.querySelector('input[name="telefono"]');
+                const phoneVal = phoneInput.value.replace(/\D/g, ''); 
+                if (phoneVal.length !== 10) {
+                    alert("Por favor, ingresa un número de teléfono válido de 10 dígitos.");
+                    phoneInput.focus();
+                    return;
+                }
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn.innerText;
+                btn.innerText = "Enviando..."; 
+                btn.disabled = true;
+                
+                fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                    .then(() => {
+                        const guestsConfirmed = document.getElementById('rsvp-guests').value;
+                        localStorage.setItem(storageKey, JSON.stringify({confirmed:true, count:guestsConfirmed}));
+                        
+                        form.classList.add('hidden');
+                        document.getElementById('rsvp-title').classList.add('hidden');
+                        document.getElementById('rsvp-limit-message').classList.add('hidden');
+                        document.getElementById('final-confirmation-text').innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
+                        document.getElementById('rsvp-success-message').classList.remove('hidden');
+                        
+                        document.getElementById('rsvp-header').scrollIntoView({ behavior: 'smooth' });
+                    })
+                    .catch(error => {
+                        alert("Hubo un error al enviar. Por favor intenta de nuevo.");
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                    });
+            });
+        };
+
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
+        
+        // --- OBSERVADOR PARA QUE LOS ELEMENTOS APAREZCAN AL BAJAR ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { 
+                if (entry.isIntersecting) { 
+                    entry.target.classList.add('is-visible'); 
+                    observer.unobserve(entry.target); 
+                } 
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
+
     </script>
 </body>
 </html>
