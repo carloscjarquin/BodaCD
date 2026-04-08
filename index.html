@@ -25,6 +25,8 @@
     <script src="assets/js/tailwindcss.js"></script>
     <!-- Font Awesome (Local) -->
     <link rel="stylesheet" href="assets/css/all.min.css">
+    <!-- Confetti JS (CDN para la animación) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <!-- Configuración visual -->
     <script>
@@ -489,9 +491,44 @@
         const musicBtn = document.getElementById('musicToggle');
         const musicIcon = document.getElementById('musicIcon');
 
+        // ANIMACIÓN DE CONFETI EN PANTALLA COMPLETA
+        function lanzarConfeti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
+
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                
+                // Cae desde dos puntos distintos arriba para abarcar toda la pantalla
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, 
+                    colors: ['#c15b43', '#e8b4a3', '#ffffff'] 
+                }));
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, 
+                    colors: ['#c15b43', '#e8b4a3', '#ffffff'] 
+                }));
+            }, 250);
+        }
+
         function enterSite() {
             document.getElementById('welcome-overlay').classList.add('hidden-overlay');
             musicBtn.classList.remove('hidden');
+            
+            // Iniciar animación de confeti
+            lanzarConfeti();
+
             audio.play().then(() => {
                 musicIcon.className = "fas fa-pause";
                 musicBtn.classList.add('music-playing');
