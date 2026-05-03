@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carlos & Doris | Nuestra Boda</title>
+    <title>Carlos Ricardo & Doris Johana | Nuestra Boda</title>
     
     <!-- Meta etiquetas para compartir (Vista previa en WhatsApp, FB, etc.) -->
-    <meta property="og:title" content="Carlos & Doris | Nuestra Boda">
+    <meta property="og:title" content="Carlos Ricardo & Doris Johana | Nuestra Boda">
     <meta property="og:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
-    <!-- Puedes cambiar este enlace por el de una de tus fotos reales, ej: "https://carloscjarquin.github.io/BodaCD/galeria/foto1.jpg" -->
     <meta property="og:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
     <meta property="og:url" content="https://carloscjarquin.github.io/BodaCD/">
     <meta property="og:type" content="website">
     
     <!-- Meta etiquetas para Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Carlos & Doris | Nuestra Boda">
+    <meta name="twitter:title" content="Carlos Ricardo & Doris Johana | Nuestra Boda">
     <meta name="twitter:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
     <meta name="twitter:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
 
-    <!-- Fuentes Locales (Asegúrate de tener el archivo fonts.css si descargaste las Google Fonts) -->
+    <!-- Fuentes Locales -->
     <link rel="stylesheet" href="assets/css/fonts.css">
     <!-- Tailwind CSS (Local) -->
     <script src="assets/js/tailwindcss.js"></script>
@@ -52,8 +51,13 @@
     <style>
         body { background-color: #fdfbf7; overflow-x: hidden; }
         
-        #welcome-overlay { position: fixed; inset: 0; background-color: #fdfbf7; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s; }
+        /* Animaciones para el overlay */
+        #welcome-overlay { transition: opacity 0.8s; perspective: 1000px; }
         #welcome-overlay.hidden-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .fade-out-on-open { transition: opacity 0.5s ease; }
+        .envelope-open #envelope-top { transform: rotateX(180deg); }
+        .envelope-open .fade-out-on-open { opacity: 0; }
         
         .fade-in-section { opacity: 0; transform: translateY(20px); transition: 1s; }
         .fade-in-section.is-visible { opacity: 1; transform: none; }
@@ -63,7 +67,6 @@
 
         .nav-link.active { color: #c15b43 !important; font-weight: 700; }
         .nav-link { transition: color 0.3s ease; }
-        #successModal { transition: opacity 0.3s ease; }
 
         @keyframes heartbeat {
             0% { transform: scale(1); }
@@ -72,76 +75,56 @@
             42% { transform: scale(1.3); }
             70% { transform: scale(1); }
         }
-        .animate-heartbeat {
-            animation: heartbeat 1.5s linear infinite;
-            display: inline-block;
-        }
+        .animate-heartbeat { animation: heartbeat 1.5s linear infinite; display: inline-block; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* PROTECCIÓN DE IMÁGENES */
         .protected-img {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -webkit-touch-callout: none;
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+            -webkit-user-drag: none; -webkit-touch-callout: none;
         }
 
-        /* ESTILO POLAROID AVANZADO */
         .polaroid-frame {
-            background-color: white;
-            padding: 8px 8px 32px 8px; /* Más padding abajo para el look Polaroid */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
+            background-color: white; padding: 8px 8px 32px 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;
         }
-        @media (min-width: 768px) {
-            .polaroid-frame {
-                padding: 12px 12px 48px 12px;
-            }
-        }
+        @media (min-width: 768px) { .polaroid-frame { padding: 12px 12px 48px 12px; } }
 
-        /* --- ESTILO SELLO DE CERA --- */
+        /* --- ESTILO SELLO DE CERA PERSONALIZADO ORO/BRONCE --- */
         .wax-seal-btn {
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #d66d54, #9a432e);
+            background: radial-gradient(circle at 30% 30%, #e8cd87, #b88a38);
             box-shadow: 
                 0 4px 15px rgba(0,0,0,0.3),
-                inset 0 0 20px rgba(0,0,0,0.3),
-                0 0 0 4px rgba(154, 67, 46, 0.3),
-                0 0 0 8px rgba(253, 251, 247, 0.2);
+                inset 0 0 20px rgba(0,0,0,0.2),
+                0 0 0 4px rgba(184, 138, 56, 0.3),
+                0 0 0 8px rgba(253, 251, 247, 0.4);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid #853221;
+            border: 2px solid #946f2a;
             position: relative;
         }
 
         .wax-seal-btn::before {
             content: '';
             position: absolute;
-            inset: 6px;
+            inset: 4px;
             border-radius: 50%;
-            border: 1px dashed rgba(255,255,255,0.3);
-            opacity: 0.7;
+            border: 1px dashed rgba(255,255,255,0.4);
         }
 
         .wax-seal-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 10px 25px rgba(0,0,0,0.25), inset 0 0 10px rgba(0,0,0,0.2); }
         .wax-seal-btn:active { transform: scale(0.95); }
-        .wax-text { font-family: 'Great Vibes', cursive; font-size: 2rem; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.4); transform: rotate(-5deg); }
         
         input[readonly] {
-            background-color: #f3f0e9;
-            color: #666;
-            cursor: not-allowed;
-            border: 1px solid #e2ded5;
+            background-color: #f3f0e9; color: #666; cursor: not-allowed; border: 1px solid #e2ded5;
         }
     </style>
 </head>
@@ -150,14 +133,74 @@
     <!-- Audio -->
     <audio id="weddingMusic" loop preload="auto"><source src="cancion.mp3" type="audio/mpeg"></audio>
 
-    <!-- Bienvenida -->
-    <div id="welcome-overlay">
-        <div class="text-center p-8 flex flex-col items-center">
-            <p id="welcome-guest-name" class="font-heading text-terracotta text-lg mb-2 hidden"></p>
-            <div class="font-script text-6xl md:text-8xl text-terracotta mb-4">C & D</div>
-            <p class="font-heading uppercase tracking-widest text-gray-500 mb-12">Nuestra Boda</p>
-            <div onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación"><span class="wax-text">Abrir</span></div>
-            <p class="text-xs text-gray-400 mt-6 tracking-wider font-heading">Toca el sello para entrar</p>
+    <!-- BIENVENIDA TIPO SOBRE -->
+    <div id="welcome-overlay" class="fixed inset-0 z-[9999] bg-[#f9f6ef] overflow-hidden">
+        
+        <!-- Base del sobre y solapas inferiores (Fondo) -->
+        <div class="absolute inset-0 pointer-events-none z-0 flex justify-center items-end">
+            <svg class="w-full h-full max-w-3xl drop-shadow-sm" preserveAspectRatio="none" viewBox="0 0 100 100">
+                <!-- Solapa Izquierda -->
+                <polygon points="0,0 50,55 0,100" fill="#fafafa" stroke="#e5e0d8" stroke-width="0.3"/>
+                <!-- Solapa Derecha -->
+                <polygon points="100,0 50,55 100,100" fill="#fafafa" stroke="#e5e0d8" stroke-width="0.3"/>
+                <!-- Solapa Inferior -->
+                <polygon points="0,100 50,55 100,100" fill="#f4f4f4" stroke="#e5e0d8" stroke-width="0.3"/>
+            </svg>
+        </div>
+
+        <!-- Solapa Superior (Abre hacia arriba) -->
+        <div id="envelope-top" class="absolute left-0 right-0 top-0 h-[55%] z-10 origin-top transition-transform duration-1000 ease-in-out flex justify-center" style="filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15)); transform-style: preserve-3d;">
+            <svg class="w-full h-full max-w-3xl" preserveAspectRatio="none" viewBox="0 0 100 100">
+                <polygon points="0,0 100,0 50,100" fill="#ffffff" stroke="#e5e0d8" stroke-width="0.2"/>
+            </svg>
+        </div>
+
+        <!-- Textos en la parte superior (Se desvanecen al abrir) -->
+        <div class="absolute top-[10%] md:top-[12%] left-0 right-0 z-20 text-center pointer-events-none fade-out-on-open">
+            <h1 class="font-script text-5xl md:text-6xl text-terracotta leading-tight px-4">
+                Carlos Ricardo <br> <span class="text-3xl inline-block my-2 font-serif">&</span> <br> Doris Johana
+            </h1>
+        </div>
+
+        <!-- Sello de Cera interactivo -->
+        <div class="absolute top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-700 ease-in-out" id="seal-container">
+            <div id="wax-seal" onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación">
+                
+                <!-- Letras del sello -->
+                <span class="wax-text z-10" style="font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 500; text-shadow: 1px 1px 2px rgba(0,0,0,0.2), -1px -1px 1px rgba(255,255,255,0.4); color: #fff;">C|D</span>
+                
+                <!-- SVG de las ramas de olivo (Basado en tu diseño) -->
+                <svg class="absolute inset-0 w-full h-full opacity-80" viewBox="0 0 100 100">
+                    <!-- Rama Izquierda -->
+                    <path d="M 25,75 C 15,55 20,35 38,20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M 25,75 L 20,68 M 22,60 L 15,58 M 18,48 L 12,42 M 22,35 L 20,28" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                    <!-- Rama Derecha -->
+                    <path d="M 75,75 C 85,55 80,35 62,20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M 75,75 L 80,68 M 78,60 L 85,58 M 82,48 L 88,42 M 78,35 L 80,28" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                    <!-- Hojitas (Óvalos y puntos) -->
+                    <ellipse cx="20" cy="68" rx="3" ry="1.5" transform="rotate(45 20 68)" fill="#fff"/>
+                    <ellipse cx="15" cy="58" rx="3" ry="1.5" transform="rotate(20 15 58)" fill="#fff"/>
+                    <ellipse cx="12" cy="42" rx="3" ry="1.5" transform="rotate(60 12 42)" fill="#fff"/>
+                    <ellipse cx="20" cy="28" rx="3" ry="1.5" transform="rotate(75 20 28)" fill="#fff"/>
+                    <ellipse cx="80" cy="68" rx="3" ry="1.5" transform="rotate(-45 80 68)" fill="#fff"/>
+                    <ellipse cx="85" cy="58" rx="3" ry="1.5" transform="rotate(-20 85 58)" fill="#fff"/>
+                    <ellipse cx="88" cy="42" rx="3" ry="1.5" transform="rotate(-60 88 42)" fill="#fff"/>
+                    <ellipse cx="80" cy="28" rx="3" ry="1.5" transform="rotate(-75 80 28)" fill="#fff"/>
+                    <!-- Detalles circulares extras -->
+                    <circle cx="28" cy="68" r="1.5" fill="#fff"/><circle cx="24" cy="50" r="1.5" fill="#fff"/><circle cx="32" cy="38" r="1.5" fill="#fff"/>
+                    <circle cx="72" cy="68" r="1.5" fill="#fff"/><circle cx="76" cy="50" r="1.5" fill="#fff"/><circle cx="68" cy="38" r="1.5" fill="#fff"/>
+                    <!-- Punteado superior -->
+                    <circle cx="40" cy="15" r="1.5" fill="#fff"/><circle cx="45" cy="13" r="1.5" fill="#fff"/><circle cx="50" cy="12" r="1.5" fill="#fff"/><circle cx="55" cy="13" r="1.5" fill="#fff"/><circle cx="60" cy="15" r="1.5" fill="#fff"/>
+                    <!-- Punteado inferior -->
+                    <circle cx="38" cy="82" r="1.5" fill="#fff"/><circle cx="44" cy="85" r="1.5" fill="#fff"/><circle cx="50" cy="86" r="1.5" fill="#fff"/><circle cx="56" cy="85" r="1.5" fill="#fff"/><circle cx="62" cy="82" r="1.5" fill="#fff"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Instrucción inferior -->
+        <div class="absolute bottom-[10%] left-0 right-0 z-20 text-center pointer-events-none fade-out-on-open">
+            <p class="font-serif text-charcoal text-lg">Tenemos una noticia...</p>
+            <p class="font-serif text-charcoal text-xl font-bold mt-1">¡Toca el sello para abrir!</p>
         </div>
     </div>
 
@@ -165,7 +208,7 @@
     <nav class="fixed top-0 w-full z-50 bg-sand/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
-                <div class="font-script text-3xl text-terracotta">C & D</div>
+                <div class="font-script text-3xl text-terracotta">C <span class="font-serif">&</span> D</div>
                 <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-heading">
                     <a href="#home" class="nav-link text-gray-600 hover:text-terracotta">Inicio</a>
                     <a href="#details" class="nav-link text-gray-600 hover:text-terracotta">Ubicación</a>
@@ -190,13 +233,32 @@
     
     <!-- Hero -->
     <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
-        <!-- RUTA LOCAL: Aquí cambié la imagen de internet por la ruta local -->
         <div class="absolute inset-0 z-0"><img src="img/portada.jpg" class="w-full h-full object-cover brightness-[0.65]"></div>
         <div class="relative z-10 text-white fade-in-section">
             <p class="text-sm uppercase tracking-[0.3em] mb-4">¡Nos casamos!</p>
-            <h1 class="font-script text-7xl md:text-9xl text-terracotta-light">Carlos & Doris</h1>
-            <p class="font-heading text-xl tracking-widest my-6">05 . 06 . 2026</p>
-            <a href="#rsvp" class="inline-block bg-terracotta text-white font-heading text-xs uppercase tracking-widest py-4 px-10 rounded shadow-lg hover:bg-white hover:text-terracotta transition-all">Acompañanos</a>
+            
+            <!-- Nombres Actualizados con Ampersand en Serif -->
+            <h1 class="font-script text-5xl md:text-7xl text-terracotta-light leading-tight mb-8">
+                Carlos Ricardo <br> <span class="text-3xl md:text-5xl inline-block my-2 font-serif">&</span> <br> Doris Johana
+            </h1>
+            
+            <!-- Diseño de Fecha Solicitado -->
+            <div class="flex flex-col items-center justify-center text-white my-6">
+                <span class="font-heading uppercase tracking-[0.3em] text-sm md:text-base mb-3">Junio</span>
+                <div class="flex items-center justify-center space-x-4 md:space-x-6">
+                    <div class="flex flex-col items-center w-24">
+                        <hr class="w-full border-t border-white/80 mb-2">
+                        <span class="font-heading uppercase tracking-widest text-xs">Viernes</span>
+                        <hr class="w-full border-t border-white/80 mt-2">
+                    </div>
+                    <span class="font-script text-7xl md:text-8xl leading-none text-white mx-2" style="transform: translateY(-5px);">05</span>
+                    <div class="flex flex-col items-center w-24">
+                        <hr class="w-full border-t border-white/80 mb-2">
+                        <span class="font-heading tracking-widest text-xs">2026</span>
+                        <hr class="w-full border-t border-white/80 mt-2">
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -213,7 +275,6 @@
         <div class="max-w-7xl mx-auto fade-in-section">
             <div id="galeria-contenedor" class="flex overflow-x-auto space-x-6 pb-12 pt-4 snap-x snap-mandatory no-scrollbar px-4" 
                  onmouseenter="pausarCarrusel()" onmouseleave="iniciarCarrusel()" ontouchstart="pausarCarrusel()">
-                <!-- Se carga vía Script -->
             </div>
             <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60">Toca para abrir • Desliza para ver más</p>
         </div>
@@ -221,20 +282,13 @@
 
     <!-- Lightbox Protegido e Interactivo -->
     <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="cerrarSiFondo(event)" oncontextmenu="return false;">
-        <!-- Botón Cerrar -->
         <button onclick="closeLightbox(event)" class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none z-50">
             <i class="fas fa-times"></i>
         </button>
-
-        <!-- Flecha Izquierda -->
         <button onclick="prevImage(event)" class="absolute left-2 md:left-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
             <i class="fas fa-chevron-left"></i>
         </button>
-
-        <!-- Imagen -->
         <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] rounded shadow-2xl transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
-
-        <!-- Flecha Derecha -->
         <button onclick="nextImage(event)" class="absolute right-2 md:right-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
             <i class="fas fa-chevron-right"></i>
         </button>
@@ -275,13 +329,11 @@
             <p class="font-sans text-gray-600 text-lg mb-10 italic">El blanco está reservado para la novia,<br>¡nos encantará verte en otros colores!</p>
             <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 md:gap-24">
                 <div class="text-center group w-64">
-                    <!-- RUTA LOCAL: Traje -->
                     <img src="img/traje.png" alt="Traje" class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
                     <p class="font-heading text-sm mt-4 uppercase tracking-widest text-charcoal">Ellos</p>
                     <p class="text-xs text-gray-500 mt-1 font-sans">Guayabera o filipina, y pantalón de vestir</p>
                 </div>
                 <div class="text-center group w-64">
-                    <!-- RUTA LOCAL: Vestido -->
                     <img src="img/vestido.png" alt="Vestido" class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
                     <p class="font-heading text-sm mt-4 uppercase tracking-widest text-charcoal">Ellas</p>
                     <p class="text-xs text-gray-500 mt-1 font-sans leading-relaxed">Traje regional en cualquiera de sus variantes (Traje de galón, coordinado, enagua de olán o rabona)</p>
@@ -347,7 +399,6 @@
                         <p id="guest-help-text" class="text-xs text-gray-400 mt-1 hidden">Puedes elegir menos lugares si alguien no puede asistir.</p>
                     </div>
                     
-                    <!-- Caja de Mensajes / Comentarios añadida nuevamente -->
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Mensaje</label>
                         <textarea name="mensaje" rows="2" class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none transition-colors" placeholder="Déjale un mensaje a los novios..."></textarea>
@@ -374,18 +425,44 @@
     </section>
 
     <footer class="bg-charcoal text-white py-12 text-center">
-        <h2 class="font-script text-5xl mb-6 text-terracotta-light">C & D</h2>
-        <div class="text-xs text-gray-600">© 2026 Carlos & Doris.</div>
+        <h2 class="font-script text-5xl mb-6 text-terracotta-light">C <span class="font-serif">&</span> D</h2>
+        <div class="text-xs text-gray-600">© 2026 Carlos Ricardo & Doris Johana.</div>
     </footer>
 
     <script>
-        // --- 1. CONFIGURACIÓN Y LÓGICA DE GALERÍA AVANZADA ---
+        // --- ANIMACIÓN DE APERTURA DEL SOBRE ---
+        function enterSite() {
+            const overlay = document.getElementById('welcome-overlay');
+            const sealContainer = document.getElementById('seal-container');
+            const musicBtn = document.getElementById('musicToggle');
+
+            // 1. Desvanecer el sello y hacerlo un poco más grande
+            sealContainer.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            sealContainer.style.opacity = '0';
+
+            // 2. Activar la clase que abre la solapa (girarla hacia arriba)
+            overlay.classList.add('envelope-open');
+
+            // 3. Después de que termine la animación, quitar la pantalla de bienvenida y empezar fiesta
+            setTimeout(() => {
+                overlay.classList.add('hidden-overlay');
+                musicBtn.classList.remove('hidden');
+                
+                lanzarConfeti();
+
+                audio.play().then(() => {
+                    document.getElementById('musicIcon').className = "fas fa-pause";
+                    musicBtn.classList.add('music-playing');
+                }).catch(e => console.log("Autoplay bloqueado por el navegador"));
+            }, 1200);
+        }
+
+        // --- RESTO DEL CÓDIGO (Galería, Música, RSVP, Cuenta Regresiva) ---
         const totalFotos = 14; 
         const arrayFotos = [];
         let currentIndex = 0;
         let autoScrollInterval;
 
-        // Llenamos el array con tus rutas
         for (let i = 1; i <= totalFotos; i++) {
             arrayFotos.push(`galeria/foto${i}.jpg`);
         }
@@ -395,8 +472,6 @@
             arrayFotos.forEach((ruta, index) => {
                 const div = document.createElement('div');
                 div.className = 'flex-none snap-center';
-                
-                // Implementando la clase polaroid-frame a la imagen generada
                 div.innerHTML = `
                     <img src="${ruta}" alt="Foto ${index + 1}" 
                          onclick="openLightbox(${index})" 
@@ -405,93 +480,63 @@
                 `;
                 contenedor.appendChild(div);
             });
-            iniciarCarrusel(); // Inicia el movimiento automático
+            iniciarCarrusel(); 
         }
 
-        // --- MOVIMIENTO AUTOMÁTICO DEL CARRUSEL ---
         function iniciarCarrusel() {
             const contenedor = document.getElementById('galeria-contenedor');
             autoScrollInterval = setInterval(() => {
-                // Si llegamos al final, vuelve al inicio, si no, avanza
                 if (contenedor.scrollLeft + contenedor.clientWidth >= contenedor.scrollWidth - 10) {
                     contenedor.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
                     contenedor.scrollBy({ left: 250, behavior: 'smooth' });
                 }
-            }, 3000); // 3000ms = 3 segundos
+            }, 3000);
         }
 
-        function pausarCarrusel() {
-            clearInterval(autoScrollInterval);
-        }
+        function pausarCarrusel() { clearInterval(autoScrollInterval); }
 
-        // --- LÓGICA DEL LIGHTBOX (VISUALIZADOR) ---
         function openLightbox(index) {
             currentIndex = index;
             actualizarImagen();
             const lb = document.getElementById('lightbox');
             lb.classList.remove('hidden');
             setTimeout(() => lb.classList.remove('opacity-0'), 10);
-            pausarCarrusel(); // Pausamos el fondo mientras ven una foto
+            pausarCarrusel(); 
         }
 
         function actualizarImagen() {
             const img = document.getElementById('lightbox-img');
-            // Efecto suave al cambiar
             img.style.opacity = 0; 
-            setTimeout(() => {
-                img.src = arrayFotos[currentIndex];
-                img.style.opacity = 1;
-            }, 150);
+            setTimeout(() => { img.src = arrayFotos[currentIndex]; img.style.opacity = 1; }, 150);
         }
 
-        function nextImage(event) {
-            if (event) event.stopPropagation(); // Evita que se cierre el lightbox al hacer clic en la flecha
-            currentIndex = (currentIndex + 1) % totalFotos; // Si llega a la última, vuelve a la 1
-            actualizarImagen();
-        }
-
-        function prevImage(event) {
-            if (event) event.stopPropagation();
-            currentIndex = (currentIndex - 1 + totalFotos) % totalFotos; // Si está en la 1, va a la última
-            actualizarImagen();
-        }
+        function nextImage(event) { if (event) event.stopPropagation(); currentIndex = (currentIndex + 1) % totalFotos; actualizarImagen(); }
+        function prevImage(event) { if (event) event.stopPropagation(); currentIndex = (currentIndex - 1 + totalFotos) % totalFotos; actualizarImagen(); }
 
         function closeLightbox(event) {
             if (event) event.stopPropagation();
             const lb = document.getElementById('lightbox');
             lb.classList.add('opacity-0');
             setTimeout(() => lb.classList.add('hidden'), 300);
-            iniciarCarrusel(); // Retoma el movimiento
+            iniciarCarrusel(); 
         }
 
-        function cerrarSiFondo(event) {
-            // Solo cierra si se hace clic en el fondo oscuro, no en las flechas ni en la imagen
-            if (event.target.id === 'lightbox') {
-                closeLightbox();
-            }
-        }
+        function cerrarSiFondo(event) { if (event.target.id === 'lightbox') closeLightbox(); }
 
-        // SOPORTE PARA DESLIZAR (SWIPE) EN CELULARES DENTRO DEL LIGHTBOX
-        let touchstartX = 0;
-        let touchendX = 0;
-        document.getElementById('lightbox').addEventListener('touchstart', e => {
-            touchstartX = e.changedTouches[0].screenX;
-        });
+        let touchstartX = 0; let touchendX = 0;
+        document.getElementById('lightbox').addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
         document.getElementById('lightbox').addEventListener('touchend', e => {
             touchendX = e.changedTouches[0].screenX;
-            if (touchendX < touchstartX - 50) nextImage(); // Deslizó a la izquierda
-            if (touchendX > touchstartX + 50) prevImage(); // Deslizó a la derecha
+            if (touchendX < touchstartX - 50) nextImage(); 
+            if (touchendX > touchstartX + 50) prevImage(); 
         });
 
-
-        // --- RESTO DEL CÓDIGO (Música, RSVP, Menú, Cuenta Regresiva) ---
         const scriptURL = "https://script.google.com/macros/s/AKfycbxlk8DVe-RpZhkYEoAFNU2XqVxY_j-IHUaHFS9OrlRFshYwlLe9Q1bb77Pc7yF9EcG8/exec";
         const audio = document.getElementById('weddingMusic');
         const musicBtn = document.getElementById('musicToggle');
         const musicIcon = document.getElementById('musicIcon');
 
-        // ANIMACIÓN DE CONFETI EN PANTALLA COMPLETA
         function lanzarConfeti() {
             var duration = 3 * 1000;
             var animationEnd = Date.now() + duration;
@@ -501,38 +546,12 @@
 
             var interval = setInterval(function() {
                 var timeLeft = animationEnd - Date.now();
-
-                if (timeLeft <= 0) {
-                    return clearInterval(interval);
-                }
-
+                if (timeLeft <= 0) return clearInterval(interval);
                 var particleCount = 50 * (timeLeft / duration);
                 
-                // Cae desde dos puntos distintos arriba para abarcar toda la pantalla
-                confetti(Object.assign({}, defaults, { 
-                    particleCount, 
-                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, 
-                    colors: ['#c15b43', '#e8b4a3', '#ffffff'] 
-                }));
-                confetti(Object.assign({}, defaults, { 
-                    particleCount, 
-                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, 
-                    colors: ['#c15b43', '#e8b4a3', '#ffffff'] 
-                }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#c15b43', '#e8b4a3', '#ffffff'] }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#c15b43', '#e8b4a3', '#ffffff'] }));
             }, 250);
-        }
-
-        function enterSite() {
-            document.getElementById('welcome-overlay').classList.add('hidden-overlay');
-            musicBtn.classList.remove('hidden');
-            
-            // Iniciar animación de confeti
-            lanzarConfeti();
-
-            audio.play().then(() => {
-                musicIcon.className = "fas fa-pause";
-                musicBtn.classList.add('music-playing');
-            }).catch(e => console.log("Autoplay bloqueado"));
         }
 
         function toggleMusic() {
@@ -580,21 +599,13 @@
                 document.getElementById('rsvp-title').classList.add('hidden');
                 document.getElementById('final-confirmation-text').innerText = "Ya has confirmado " + data.count + (data.count == 1 ? " lugar" : " lugares");
                 document.getElementById('rsvp-success-message').classList.remove('hidden');
-                
-                if (nombre) {
-                    document.getElementById('welcome-guest-name').innerText = "¡Hola de nuevo, " + nombre + "!";
-                    document.getElementById('welcome-guest-name').classList.remove('hidden');
-                }
             } 
             else {
                 if (nombre) {
-                    document.getElementById('welcome-guest-name').innerText = "¡Hola, " + nombre + "!";
-                    document.getElementById('welcome-guest-name').classList.remove('hidden');
                     const nameInput = document.getElementById('rsvp-name');
                     nameInput.value = nombre;
                     nameInput.setAttribute('readonly', true);
                 }
-                
                 if (pases) {
                     const sel = document.getElementById('rsvp-guests');
                     sel.innerHTML = '';
@@ -647,7 +658,6 @@
 
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
         
-        // --- OBSERVADOR PARA QUE LOS ELEMENTOS APAREZCAN AL BAJAR ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { 
                 if (entry.isIntersecting) { 
