@@ -27,13 +27,14 @@
     <!-- Confetti JS (CDN para la animación) -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    <!-- Configuración visual -->
+    <!-- Configuración visual (Actualizada a Verde Olivo) -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        terracotta: { light: '#e8b4a3', DEFAULT: '#c15b43', dark: '#9a432e' },
+                        /* Paleta Verde Olivo Elegante */
+                        olive: { light: '#b5c1af', DEFAULT: '#6b7b62', dark: '#485640' },
                         sand: '#fdfbf7',
                         charcoal: '#333333',
                     },
@@ -51,7 +52,7 @@
     <style>
         body { background-color: #fdfbf7; overflow-x: hidden; }
         
-        /* Animaciones para el overlay */
+        /* Animaciones para el overlay (Sobre) */
         #welcome-overlay { transition: opacity 0.8s; perspective: 1000px; }
         #welcome-overlay.hidden-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
         
@@ -62,10 +63,15 @@
         .fade-in-section { opacity: 0; transform: translateY(20px); transition: 1s; }
         .fade-in-section.is-visible { opacity: 1; transform: none; }
         
-        @keyframes pulse-ring { 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(193, 91, 67, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(193, 91, 67, 0); } 100% { transform: scale(0.8); } }
+        /* Efecto de latido del botón de música (adaptado a verde olivo: RGB 107,123,98) */
+        @keyframes pulse-ring { 
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(107, 123, 98, 0.7); } 
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(107, 123, 98, 0); } 
+            100% { transform: scale(0.8); } 
+        }
         .music-playing { animation: pulse-ring 2s infinite; }
 
-        .nav-link.active { color: #c15b43 !important; font-weight: 700; }
+        .nav-link.active { color: #6b7b62 !important; font-weight: 700; }
         .nav-link { transition: color 0.3s ease; }
 
         @keyframes heartbeat {
@@ -93,15 +99,15 @@
 
         /* --- ESTILO SELLO DE CERA PERSONALIZADO ORO/BRONCE --- */
         .wax-seal-btn {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #e8cd87, #b88a38);
             box-shadow: 
                 0 4px 15px rgba(0,0,0,0.3),
                 inset 0 0 20px rgba(0,0,0,0.2),
                 0 0 0 4px rgba(184, 138, 56, 0.3),
-                0 0 0 8px rgba(253, 251, 247, 0.4);
+                0 0 0 8px rgba(255, 255, 255, 0.6);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -123,7 +129,7 @@
         .wax-seal-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 10px 25px rgba(0,0,0,0.25), inset 0 0 10px rgba(0,0,0,0.2); }
         .wax-seal-btn:active { transform: scale(0.95); }
         
-        input[readonly] {
+        input[readonly], textarea[readonly] {
             background-color: #f3f0e9; color: #666; cursor: not-allowed; border: 1px solid #e2ded5;
         }
     </style>
@@ -133,74 +139,71 @@
     <!-- Audio -->
     <audio id="weddingMusic" loop preload="auto"><source src="cancion.mp3" type="audio/mpeg"></audio>
 
-    <!-- BIENVENIDA TIPO SOBRE -->
-    <div id="welcome-overlay" class="fixed inset-0 z-[9999] bg-[#f9f6ef] overflow-hidden">
+    <!-- BIENVENIDA TIPO SOBRE HORIZONTAL (Rediseñado) -->
+    <div id="welcome-overlay" class="fixed inset-0 z-[9999] bg-[#ffffff] overflow-hidden flex flex-col justify-between">
         
-        <!-- Base del sobre y solapas inferiores (Fondo) -->
-        <div class="absolute inset-0 pointer-events-none z-0 flex justify-center items-end">
-            <svg class="w-full h-full max-w-3xl drop-shadow-sm" preserveAspectRatio="none" viewBox="0 0 100 100">
-                <!-- Solapa Izquierda -->
-                <polygon points="0,0 50,55 0,100" fill="#fafafa" stroke="#e5e0d8" stroke-width="0.3"/>
-                <!-- Solapa Derecha -->
-                <polygon points="100,0 50,55 100,100" fill="#fafafa" stroke="#e5e0d8" stroke-width="0.3"/>
-                <!-- Solapa Inferior -->
-                <polygon points="0,100 50,55 100,100" fill="#f4f4f4" stroke="#e5e0d8" stroke-width="0.3"/>
-            </svg>
-        </div>
-
-        <!-- Solapa Superior (Abre hacia arriba) -->
-        <div id="envelope-top" class="absolute left-0 right-0 top-0 h-[55%] z-10 origin-top transition-transform duration-1000 ease-in-out flex justify-center" style="filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15)); transform-style: preserve-3d;">
-            <svg class="w-full h-full max-w-3xl" preserveAspectRatio="none" viewBox="0 0 100 100">
-                <polygon points="0,0 100,0 50,100" fill="#ffffff" stroke="#e5e0d8" stroke-width="0.2"/>
-            </svg>
-        </div>
-
-        <!-- Textos en la parte superior (Se desvanecen al abrir) -->
-        <div class="absolute top-[10%] md:top-[12%] left-0 right-0 z-20 text-center pointer-events-none fade-out-on-open">
-            <h1 class="font-script text-5xl md:text-6xl text-terracotta leading-tight px-4">
-                Carlos Ricardo <br> <span class="text-3xl inline-block my-2 font-serif">&</span> <br> Doris Johana
+        <!-- Textos Superiores (Se desvanecen al abrir) -->
+        <div class="relative z-20 text-center mt-[10vh] md:mt-[15vh] fade-out-on-open px-4">
+            <h1 class="font-script text-5xl md:text-7xl text-olive leading-tight">
+                Carlos Ricardo <br> 
+                <!-- Ampersand Clásico -->
+                <span class="text-4xl md:text-5xl inline-block my-2" style="font-family: 'Playfair Display', serif; font-style: normal;">&</span> <br> 
+                Doris Johana
             </h1>
-        </div>
-
-        <!-- Sello de Cera interactivo -->
-        <div class="absolute top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-700 ease-in-out" id="seal-container">
-            <div id="wax-seal" onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación">
-                
-                <!-- Letras del sello -->
-                <span class="wax-text z-10" style="font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 500; text-shadow: 1px 1px 2px rgba(0,0,0,0.2), -1px -1px 1px rgba(255,255,255,0.4); color: #fff;">C|D</span>
-                
-                <!-- SVG de las ramas de olivo (Basado en tu diseño) -->
-                <svg class="absolute inset-0 w-full h-full opacity-80" viewBox="0 0 100 100">
-                    <!-- Rama Izquierda -->
-                    <path d="M 25,75 C 15,55 20,35 38,20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M 25,75 L 20,68 M 22,60 L 15,58 M 18,48 L 12,42 M 22,35 L 20,28" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-                    <!-- Rama Derecha -->
-                    <path d="M 75,75 C 85,55 80,35 62,20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M 75,75 L 80,68 M 78,60 L 85,58 M 82,48 L 88,42 M 78,35 L 80,28" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-                    <!-- Hojitas (Óvalos y puntos) -->
-                    <ellipse cx="20" cy="68" rx="3" ry="1.5" transform="rotate(45 20 68)" fill="#fff"/>
-                    <ellipse cx="15" cy="58" rx="3" ry="1.5" transform="rotate(20 15 58)" fill="#fff"/>
-                    <ellipse cx="12" cy="42" rx="3" ry="1.5" transform="rotate(60 12 42)" fill="#fff"/>
-                    <ellipse cx="20" cy="28" rx="3" ry="1.5" transform="rotate(75 20 28)" fill="#fff"/>
-                    <ellipse cx="80" cy="68" rx="3" ry="1.5" transform="rotate(-45 80 68)" fill="#fff"/>
-                    <ellipse cx="85" cy="58" rx="3" ry="1.5" transform="rotate(-20 85 58)" fill="#fff"/>
-                    <ellipse cx="88" cy="42" rx="3" ry="1.5" transform="rotate(-60 88 42)" fill="#fff"/>
-                    <ellipse cx="80" cy="28" rx="3" ry="1.5" transform="rotate(-75 80 28)" fill="#fff"/>
-                    <!-- Detalles circulares extras -->
-                    <circle cx="28" cy="68" r="1.5" fill="#fff"/><circle cx="24" cy="50" r="1.5" fill="#fff"/><circle cx="32" cy="38" r="1.5" fill="#fff"/>
-                    <circle cx="72" cy="68" r="1.5" fill="#fff"/><circle cx="76" cy="50" r="1.5" fill="#fff"/><circle cx="68" cy="38" r="1.5" fill="#fff"/>
-                    <!-- Punteado superior -->
-                    <circle cx="40" cy="15" r="1.5" fill="#fff"/><circle cx="45" cy="13" r="1.5" fill="#fff"/><circle cx="50" cy="12" r="1.5" fill="#fff"/><circle cx="55" cy="13" r="1.5" fill="#fff"/><circle cx="60" cy="15" r="1.5" fill="#fff"/>
-                    <!-- Punteado inferior -->
-                    <circle cx="38" cy="82" r="1.5" fill="#fff"/><circle cx="44" cy="85" r="1.5" fill="#fff"/><circle cx="50" cy="86" r="1.5" fill="#fff"/><circle cx="56" cy="85" r="1.5" fill="#fff"/><circle cx="62" cy="82" r="1.5" fill="#fff"/>
-                </svg>
-            </div>
-        </div>
-
-        <!-- Instrucción inferior -->
-        <div class="absolute bottom-[10%] left-0 right-0 z-20 text-center pointer-events-none fade-out-on-open">
-            <p class="font-serif text-charcoal text-lg">Tenemos una noticia...</p>
+            <p class="font-serif text-charcoal text-lg mt-8 md:mt-12">Tenemos una noticia...</p>
             <p class="font-serif text-charcoal text-xl font-bold mt-1">¡Toca el sello para abrir!</p>
+        </div>
+
+        <!-- Cuerpo del Sobre (Mitad inferior) -->
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl h-[45vh] md:h-[50vh] pointer-events-none z-10">
+            
+            <!-- Base del sobre y solapas inferiores -->
+            <svg class="absolute bottom-0 w-full h-full drop-shadow-xl" preserveAspectRatio="none" viewBox="0 0 100 100">
+                <!-- Solapa Izquierda (Más chica, no estirada) -->
+                <polygon points="0,0 35,55 0,100" fill="#fdfdfd" stroke="#e5e7eb" stroke-width="0.3"/>
+                <!-- Solapa Derecha (Más chica, no estirada) -->
+                <polygon points="100,0 65,55 100,100" fill="#fdfdfd" stroke="#e5e7eb" stroke-width="0.3"/>
+                <!-- Solapa Inferior (Sube para cubrir) -->
+                <polygon points="0,100 50,45 100,100" fill="#f4f5f7" stroke="#d1d5db" stroke-width="0.4"/>
+            </svg>
+
+            <!-- Solapa Superior (Abre hacia arriba) -->
+            <div id="envelope-top" class="absolute top-0 left-0 right-0 h-[65%] origin-top transition-transform duration-1000 z-20" style="transform-style: preserve-3d;">
+                <svg class="w-full h-full drop-shadow-md" preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <polygon points="0,0 100,0 50,100" fill="#ffffff" stroke="#e5e7eb" stroke-width="0.4"/>
+                </svg>
+
+                <!-- Sello de Cera interactivo (Anclado a la punta de la solapa) -->
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 pointer-events-auto transition-all duration-700 ease-in-out" id="seal-container">
+                    <div id="wax-seal" onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación">
+                        <!-- Letras del sello -->
+                        <span class="wax-text z-10" style="font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 500; text-shadow: 1px 1px 2px rgba(0,0,0,0.2), -1px -1px 1px rgba(255,255,255,0.4); color: #fff;">C|D</span>
+                        <!-- SVG de las ramas de olivo -->
+                        <svg class="absolute inset-0 w-full h-full opacity-80" viewBox="0 0 100 100">
+                            <!-- Rama Izquierda -->
+                            <path d="M 25,75 C 15,55 20,35 38,20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M 25,75 L 20,68 M 22,60 L 15,58 M 18,48 L 12,42 M 22,35 L 20,28" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                            <!-- Rama Derecha -->
+                            <path d="M 75,75 C 85,55 80,35 62,20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M 75,75 L 80,68 M 78,60 L 85,58 M 82,48 L 88,42 M 78,35 L 80,28" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                            <!-- Hojitas y puntos -->
+                            <ellipse cx="20" cy="68" rx="3" ry="1.5" transform="rotate(45 20 68)" fill="#fff"/>
+                            <ellipse cx="15" cy="58" rx="3" ry="1.5" transform="rotate(20 15 58)" fill="#fff"/>
+                            <ellipse cx="12" cy="42" rx="3" ry="1.5" transform="rotate(60 12 42)" fill="#fff"/>
+                            <ellipse cx="20" cy="28" rx="3" ry="1.5" transform="rotate(75 20 28)" fill="#fff"/>
+                            <ellipse cx="80" cy="68" rx="3" ry="1.5" transform="rotate(-45 80 68)" fill="#fff"/>
+                            <ellipse cx="85" cy="58" rx="3" ry="1.5" transform="rotate(-20 85 58)" fill="#fff"/>
+                            <ellipse cx="88" cy="42" rx="3" ry="1.5" transform="rotate(-60 88 42)" fill="#fff"/>
+                            <ellipse cx="80" cy="28" rx="3" ry="1.5" transform="rotate(-75 80 28)" fill="#fff"/>
+                            <!-- Detalles circulares -->
+                            <circle cx="28" cy="68" r="1.5" fill="#fff"/><circle cx="24" cy="50" r="1.5" fill="#fff"/><circle cx="32" cy="38" r="1.5" fill="#fff"/>
+                            <circle cx="72" cy="68" r="1.5" fill="#fff"/><circle cx="76" cy="50" r="1.5" fill="#fff"/><circle cx="68" cy="38" r="1.5" fill="#fff"/>
+                            <circle cx="40" cy="15" r="1.5" fill="#fff"/><circle cx="45" cy="13" r="1.5" fill="#fff"/><circle cx="50" cy="12" r="1.5" fill="#fff"/><circle cx="55" cy="13" r="1.5" fill="#fff"/><circle cx="60" cy="15" r="1.5" fill="#fff"/>
+                            <circle cx="38" cy="82" r="1.5" fill="#fff"/><circle cx="44" cy="85" r="1.5" fill="#fff"/><circle cx="50" cy="86" r="1.5" fill="#fff"/><circle cx="56" cy="85" r="1.5" fill="#fff"/><circle cx="62" cy="82" r="1.5" fill="#fff"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -208,28 +211,29 @@
     <nav class="fixed top-0 w-full z-50 bg-sand/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
-                <div class="font-script text-3xl text-terracotta">C <span class="font-serif">&</span> D</div>
+                <!-- Ampersand Clásico -->
+                <div class="font-script text-3xl text-olive">C <span style="font-family: 'Playfair Display', serif; font-style: normal;">&</span> D</div>
                 <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-heading">
-                    <a href="#home" class="nav-link text-gray-600 hover:text-terracotta">Inicio</a>
-                    <a href="#details" class="nav-link text-gray-600 hover:text-terracotta">Ubicación</a>
-                    <a href="#dresscode" class="nav-link text-gray-600 hover:text-terracotta">Vestimenta</a>
-                    <a href="#gift" class="nav-link text-gray-600 hover:text-terracotta">Regalos</a>
-                    <a href="#rsvp" class="nav-link text-gray-600 hover:text-terracotta">Confirmar</a>
+                    <a href="#home" class="nav-link text-gray-600 hover:text-olive">Inicio</a>
+                    <a href="#details" class="nav-link text-gray-600 hover:text-olive">Ubicación</a>
+                    <a href="#dresscode" class="nav-link text-gray-600 hover:text-olive">Vestimenta</a>
+                    <a href="#gift" class="nav-link text-gray-600 hover:text-olive">Regalos</a>
+                    <a href="#rsvp" class="nav-link text-gray-600 hover:text-olive">Confirmar</a>
                 </div>
-                <div class="md:hidden"><button onclick="toggleMobileMenu()" class="text-terracotta"><i class="fas fa-bars text-2xl"></i></button></div>
+                <div class="md:hidden"><button onclick="toggleMobileMenu()" class="text-olive"><i class="fas fa-bars text-2xl"></i></button></div>
             </div>
         </div>
         <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 p-4 text-center font-heading text-sm uppercase space-y-4 shadow-lg">
-            <a href="#home" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Inicio</a>
-            <a href="#details" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Ubicación</a>
-            <a href="#dresscode" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Vestimenta</a>
-            <a href="#gift" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Regalos</a>
-            <a href="#rsvp" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-terracotta">Confirmar</a>
+            <a href="#home" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-olive">Inicio</a>
+            <a href="#details" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-olive">Ubicación</a>
+            <a href="#dresscode" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-olive">Vestimenta</a>
+            <a href="#gift" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-olive">Regalos</a>
+            <a href="#rsvp" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-olive">Confirmar</a>
         </div>
     </nav>
 
     <!-- Música Flotante -->
-    <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-terracotta rounded-full shadow-lg flex items-center justify-center border border-terracotta/20"><i class="fas fa-play ml-1" id="musicIcon"></i></button>
+    <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-olive rounded-full shadow-lg flex items-center justify-center border border-olive/20"><i class="fas fa-play ml-1" id="musicIcon"></i></button>
     
     <!-- Hero -->
     <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
@@ -237,24 +241,26 @@
         <div class="relative z-10 text-white fade-in-section">
             <p class="text-sm uppercase tracking-[0.3em] mb-4">¡Nos casamos!</p>
             
-            <!-- Nombres Actualizados con Ampersand en Serif -->
-            <h1 class="font-script text-5xl md:text-7xl text-terracotta-light leading-tight mb-8">
-                Carlos Ricardo <br> <span class="text-3xl md:text-5xl inline-block my-2 font-serif">&</span> <br> Doris Johana
+            <!-- Nombres Actualizados con Ampersand Clásico -->
+            <h1 class="font-script text-5xl md:text-7xl text-white leading-tight mb-8 drop-shadow-md">
+                Carlos Ricardo <br> 
+                <span class="text-3xl md:text-5xl inline-block my-2" style="font-family: 'Playfair Display', serif; font-style: normal;">&</span> <br> 
+                Doris Johana
             </h1>
             
-            <!-- Diseño de Fecha Solicitado -->
+            <!-- Diseño de Fecha -->
             <div class="flex flex-col items-center justify-center text-white my-6">
-                <span class="font-heading uppercase tracking-[0.3em] text-sm md:text-base mb-3">Junio</span>
+                <span class="font-heading uppercase tracking-[0.3em] text-sm md:text-base mb-3 drop-shadow-sm">Junio</span>
                 <div class="flex items-center justify-center space-x-4 md:space-x-6">
                     <div class="flex flex-col items-center w-24">
                         <hr class="w-full border-t border-white/80 mb-2">
-                        <span class="font-heading uppercase tracking-widest text-xs">Viernes</span>
+                        <span class="font-heading uppercase tracking-widest text-xs drop-shadow-sm">Viernes</span>
                         <hr class="w-full border-t border-white/80 mt-2">
                     </div>
-                    <span class="font-script text-7xl md:text-8xl leading-none text-white mx-2" style="transform: translateY(-5px);">05</span>
+                    <span class="font-script text-7xl md:text-8xl leading-none text-white mx-2 drop-shadow-md" style="transform: translateY(-5px);">05</span>
                     <div class="flex flex-col items-center w-24">
                         <hr class="w-full border-t border-white/80 mb-2">
-                        <span class="font-heading tracking-widest text-xs">2026</span>
+                        <span class="font-heading tracking-widest text-xs drop-shadow-sm">2026</span>
                         <hr class="w-full border-t border-white/80 mt-2">
                     </div>
                 </div>
@@ -265,7 +271,7 @@
     <!-- Frase -->
     <section class="pt-20 pb-10 px-4 bg-sand text-center">
         <div class="max-w-2xl mx-auto fade-in-section">
-            <i class="fas fa-heart text-terracotta text-2xl mb-6 animate-heartbeat"></i>
+            <i class="fas fa-heart text-olive text-2xl mb-6 animate-heartbeat"></i>
             <h2 class="font-serif text-3xl italic text-charcoal mb-4">"Nuestra historia comenzó hace tiempo, pero el 05.06.2026 escribiremos el capítulo más importante ante Dios y nuestras familias."</h2>
         </div>
     </section>
@@ -298,24 +304,24 @@
     <section id="details" class="py-24 px-4 bg-white scroll-mt-20">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in-section">
-                <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Ubicación</span>
+                <span class="text-olive uppercase tracking-[0.2em] text-xs font-bold">Ubicación</span>
                 <h2 class="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4">Cuándo & Dónde</h2>
-                <div class="w-20 h-1 bg-terracotta mx-auto"></div>
+                <div class="w-20 h-1 bg-olive mx-auto"></div>
             </div>
             <div class="grid md:grid-cols-2 gap-12 text-center">
-                <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
-                    <i class="fas fa-church text-4xl text-terracotta mb-4"></i>
+                <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-olive/10">
+                    <i class="fas fa-church text-4xl text-olive mb-4"></i>
                     <h3 class="font-heading text-xl mb-2">Ceremonia</h3>
-                    <p class="font-serif text-2xl text-terracotta mb-4">1:00 PM</p>
+                    <p class="font-serif text-2xl text-olive mb-4">1:00 PM</p>
                     <p class="text-gray-600 mb-6">Parroquia de la Asunsión de María<br>Irribarren Sierra 51, Sta. Maria, 70760 Santo Domingo Tehuantepec, Oax.</p>
-                    <button onclick="window.open('https://maps.app.goo.gl/EVPgQESHV9RtaKwz8','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
+                    <button onclick="window.open('https://maps.app.goo.gl/EVPgQESHV9RtaKwz8','_blank')" class="text-xs font-bold uppercase text-olive border-b border-olive hover:text-olive-dark transition-colors">Ver Mapa</button>
                 </div>
-                <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-terracotta/10">
-                    <i class="fas fa-glass-cheers text-4xl text-terracotta mb-4"></i>
+                <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-olive/10">
+                    <i class="fas fa-glass-cheers text-4xl text-olive mb-4"></i>
                     <h3 class="font-heading text-xl mb-2">Recepción</h3>
-                    <p class="font-serif text-2xl text-terracotta mb-4">3:00 PM</p>
+                    <p class="font-serif text-2xl text-olive mb-4">3:00 PM</p>
                     <p class="text-gray-600 mb-6">Salon los Pinos<br>C. Reoloteca 26, La Soledad, 70760 Santo Domingo Tehuantepec, Oax.</p>
-                    <button onclick="window.open('https://maps.app.goo.gl/d3AY6gjdNXA9y5Xs9','_blank')" class="text-xs font-bold uppercase text-terracotta border-b border-terracotta">Ver Mapa</button>
+                    <button onclick="window.open('https://maps.app.goo.gl/d3AY6gjdNXA9y5Xs9','_blank')" class="text-xs font-bold uppercase text-olive border-b border-olive hover:text-olive-dark transition-colors">Ver Mapa</button>
                 </div>
             </div>
         </div>
@@ -324,7 +330,7 @@
     <!-- Vestimenta -->
     <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
-            <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">Información</span>
+            <span class="text-olive uppercase tracking-[0.2em] text-xs font-bold">Información</span>
             <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Código de Vestimenta</h2>
             <p class="font-sans text-gray-600 text-lg mb-10 italic">El blanco está reservado para la novia,<br>¡nos encantará verte en otros colores!</p>
             <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 md:gap-24">
@@ -345,9 +351,9 @@
     <!-- Regalo -->
     <section id="gift" class="py-20 px-4 bg-white scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
-            <i class="fas fa-envelope text-4xl text-terracotta mb-4"></i>
+            <i class="fas fa-envelope text-4xl text-olive mb-4"></i>
             <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Regalos</h2>
-            <div class="w-20 h-1 bg-terracotta mx-auto mb-8"></div>
+            <div class="w-20 h-1 bg-olive mx-auto mb-8"></div>
             <p class="font-sans text-gray-600 text-lg mb-10 italic max-w-2xl mx-auto leading-relaxed">
                 Su compañía en este día es lo mas importante para nosotros, pero si deseas contribuir al inicio de esta nueva etapa juntos, te lo agredeceremos de corazón.
             </p>
@@ -356,18 +362,18 @@
     </section>
 
     <!-- RSVP -->
-    <section id="rsvp" class="py-24 px-4 bg-terracotta-light/20 scroll-mt-20">
+    <section id="rsvp" class="py-24 px-4 bg-olive-light/20 scroll-mt-20">
         <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
             <div class="w-full text-center">
                 <div id="rsvp-header" class="mb-10">
-                    <span class="text-terracotta uppercase tracking-[0.2em] text-xs font-bold">RSVP</span>
+                    <span class="text-olive uppercase tracking-[0.2em] text-xs font-bold">RSVP</span>
                     <h2 id="rsvp-title" class="font-serif text-4xl text-charcoal mt-2">Confirma tu Asistencia</h2>
-                    <p id="rsvp-limit-message" class="text-terracotta text-sm font-bold mt-2 hidden"></p>
+                    <p id="rsvp-limit-message" class="text-olive text-sm font-bold mt-2 hidden"></p>
                 </div>
 
                 <div id="rsvp-success-message" class="hidden py-10">
-                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce"><i class="fas fa-check text-3xl"></i></div>
-                    <p id="final-confirmation-text" class="text-terracotta font-serif text-2xl mb-2 font-bold"></p>
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 animate-bounce"><i class="fas fa-check text-3xl"></i></div>
+                    <p id="final-confirmation-text" class="text-olive font-serif text-2xl mb-2 font-bold"></p>
                     <p class="text-gray-600 mb-6">Hemos registrado tu respuesta correctamente.</p>
                     <p class="font-serif text-lg text-charcoal italic mb-6">"El amor es la razón de este día, y tu presencia lo hará aún más especial."</p>
                     <p class="text-sm text-gray-400 uppercase tracking-widest">Nos vemos en la boda</p>
@@ -377,23 +383,23 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Nombre</label>
-                            <input type="text" id="rsvp-name" name="nombre" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none transition-colors" placeholder="Tu nombre">
+                            <input type="text" id="rsvp-name" name="nombre" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-olive outline-none transition-colors" placeholder="Tu nombre">
                         </div>
                         <div>
                             <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Teléfono (10 dígitos)</label>
-                            <input type="tel" name="telefono" id="rsvp-phone" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none" maxlength="10" placeholder="Ej. 5512345678">
+                            <input type="tel" name="telefono" id="rsvp-phone" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-olive outline-none" maxlength="10" placeholder="Ej. 5512345678">
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">¿Asistirás?</label>
                         <div class="flex space-x-6 mt-2">
-                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="Si" checked class="text-terracotta focus:ring-terracotta"><span>¡Sí!</span></label>
-                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="No" class="text-terracotta focus:ring-terracotta"><span>No podré</span></label>
+                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="Si" checked class="text-olive focus:ring-olive"><span>¡Sí!</span></label>
+                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="No" class="text-olive focus:ring-olive"><span>No podré</span></label>
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Personas</label>
-                        <select id="rsvp-guests" name="invitados" class="w-full bg-sand p-4 rounded outline-none cursor-pointer">
+                        <select id="rsvp-guests" name="invitados" class="w-full bg-sand p-4 rounded outline-none cursor-pointer focus:border-olive">
                             <option value="1">1 Persona</option>
                         </select>
                         <p id="guest-help-text" class="text-xs text-gray-400 mt-1 hidden">Puedes elegir menos lugares si alguien no puede asistir.</p>
@@ -401,32 +407,33 @@
                     
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Mensaje</label>
-                        <textarea name="mensaje" rows="2" class="w-full bg-sand p-4 rounded border border-transparent focus:border-terracotta outline-none transition-colors" placeholder="Déjale un mensaje a los novios..."></textarea>
+                        <textarea name="mensaje" rows="2" class="w-full bg-sand p-4 rounded border border-transparent focus:border-olive outline-none transition-colors" placeholder="Déjale un mensaje a los novios..."></textarea>
                     </div>
 
-                    <button type="submit" class="w-full bg-terracotta text-white font-heading uppercase tracking-widest py-4 rounded hover:bg-terracotta-dark transition-colors">Enviar Confirmación</button>
+                    <button type="submit" class="w-full bg-olive text-white font-heading uppercase tracking-widest py-4 rounded hover:bg-olive-dark transition-colors">Enviar Confirmación</button>
                 </form>
             </div>
         </div>
     </section>
 
     <!-- Cuenta Regresiva -->
-    <section class="py-24 bg-terracotta text-white text-center">
+    <section class="py-24 bg-olive text-white text-center">
         <div class="max-w-4xl mx-auto px-4 fade-in-section">
             <h2 class="font-heading text-2xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
             <div class="grid grid-cols-4 gap-4 max-w-2xl mx-auto text-charcoal">
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="days-final">00</span><span class="text-xs uppercase">Días</span></div>
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="hours-final">00</span><span class="text-xs uppercase">Hs</span></div>
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="minutes-final">00</span><span class="text-xs uppercase">Min</span></div>
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-terracotta" id="seconds-final">00</span><span class="text-xs uppercase">Seg</span></div>
+                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-olive" id="days-final">00</span><span class="text-xs uppercase font-bold text-gray-500">Días</span></div>
+                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-olive" id="hours-final">00</span><span class="text-xs uppercase font-bold text-gray-500">Hs</span></div>
+                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-olive" id="minutes-final">00</span><span class="text-xs uppercase font-bold text-gray-500">Min</span></div>
+                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-olive" id="seconds-final">00</span><span class="text-xs uppercase font-bold text-gray-500">Seg</span></div>
             </div>
             <p class="mt-8 font-script text-3xl opacity-90">...el mejor día de nuestras vidas</p>
         </div>
     </section>
 
     <footer class="bg-charcoal text-white py-12 text-center">
-        <h2 class="font-script text-5xl mb-6 text-terracotta-light">C <span class="font-serif">&</span> D</h2>
-        <div class="text-xs text-gray-600">© 2026 Carlos Ricardo & Doris Johana.</div>
+        <!-- Ampersand Clásico -->
+        <h2 class="font-script text-5xl mb-6 text-olive-light">C <span style="font-family: 'Playfair Display', serif; font-style: normal;">&</span> D</h2>
+        <div class="text-xs text-gray-400 tracking-wider">© 2026 Carlos Ricardo & Doris Johana.</div>
     </footer>
 
     <script>
@@ -549,8 +556,9 @@
                 if (timeLeft <= 0) return clearInterval(interval);
                 var particleCount = 50 * (timeLeft / duration);
                 
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#c15b43', '#e8b4a3', '#ffffff'] }));
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#c15b43', '#e8b4a3', '#ffffff'] }));
+                /* Confeti ajustado a la paleta Verde Olivo y Blanco */
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#6b7b62', '#b5c1af', '#ffffff'] }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#6b7b62', '#b5c1af', '#ffffff'] }));
             }, 250);
         }
 
