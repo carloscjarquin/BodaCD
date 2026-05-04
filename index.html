@@ -325,7 +325,7 @@
         </div>
     </section>
 
-    <!-- Lightbox Protegido e Interactivo -->
+    <!-- Lightbox Protegido e Interactivo (CON DISEÑO POLAROID) -->
     <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="cerrarSiFondo(event)" oncontextmenu="return false;">
         <button onclick="closeLightbox(event)" class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none z-50">
             <i class="fas fa-times"></i>
@@ -333,7 +333,10 @@
         <button onclick="prevImage(event)" class="absolute left-2 md:left-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
             <i class="fas fa-chevron-left"></i>
         </button>
-        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] rounded shadow-2xl transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
+        
+        <!-- AÑADIDA LA CLASE 'polaroid-frame' a la imagen grande -->
+        <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] polaroid-frame transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
+        
         <button onclick="nextImage(event)" class="absolute right-2 md:right-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
             <i class="fas fa-chevron-right"></i>
         </button>
@@ -344,7 +347,7 @@
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in-section">
                 <span class="text-olive uppercase tracking-[0.2em] text-xs font-bold">Ubicación</span>
-                <h2 class="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4">Dónde</h2>
+                <h2 class="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4">Cuándo & Dónde</h2>
                 <div class="w-20 h-1 bg-olive mx-auto"></div>
             </div>
             
@@ -368,14 +371,12 @@
             <!-- Botón Agregar a Google Calendar -->
             <div class="text-center mt-16 fade-in-section">
                 <!-- Enlace generado dinámicamente para Google Calendar -->
-                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+de+Carlos+Ricardo+y+Doris+Johana&dates=20260605T130000/20260605T230000&ctz=America/Mexico_City&details=%C2%A1Nuestra+Boda!%0A%0ACeremonia+Religiosa:+1:00+PM%0ACelebraci%C3%B3n:+3:00+PM%0A%0A%C2%A1Estamos+muy+felices+de+compartir+nuestro+gran+d%C3%ADa+contigo!&location=Santo+Domingo+Tehuantepec,+Oaxaca" 
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+de+Carlos+Ricardo+y+Doris+Johana&dates=20260605T130000/20260605T230000&ctz=America/Mexico_City&details=Ceremonia+Religiosa+1+PM%0ACelebraci%C3%B3n+3+PM%0A%0A%C2%A1Los+esperamos!&location=Santo+Domingo+Tehuantepec,+Oaxaca" 
                    target="_blank" 
-                   class="inline-flex items-center justify-center gap-3 bg-olive text-white px-8 py-4 rounded-full hover:bg-olive-dark transition-all duration-300 shadow-lg hover:shadow-xl font-heading uppercase tracking-widest text-sm hover:-translate-y-1">
-                    <i class="fab fa-google text-lg"></i>
-                    <i class="far fa-calendar-alt text-xl"></i>
-                    Agregar a Google Calendar
+                   class="inline-block bg-olive text-white font-heading text-sm uppercase tracking-widest py-4 px-8 rounded-full shadow-lg hover:bg-olive-dark hover:scale-105 transition-all duration-300">
+                    <i class="far fa-calendar-alt mr-2"></i> Agendar en Calendario
                 </a>
-                <p class="text-xs text-gray-400 mt-4 max-w-sm mx-auto">Toca el botón para guardar el evento en tu calendario y recibir recordatorios de nuestro gran día.</p>
+                <p class="text-xs text-gray-400 mt-4 max-w-sm mx-auto tracking-widest uppercase">No olvides nuestro gran día</p>
             </div>
 
         </div>
@@ -524,6 +525,20 @@
     </footer>
 
     <script>
+        // --- CÓDIGO INMEDIATO PARA PERSONALIZACIÓN ---
+        const urlParamsImmediate = new URLSearchParams(window.location.search);
+        const nombreInmediato = urlParamsImmediate.get('nombre');
+        
+        if (nombreInmediato) {
+            const envelopeNamesElem = document.getElementById('envelope-names');
+            if (envelopeNamesElem) {
+                envelopeNamesElem.innerHTML = `
+                    <span class="block text-xs md:text-sm uppercase tracking-[0.3em] text-gray-500 mb-6 font-heading">Especialmente para:</span>
+                    <span class="font-script text-5xl md:text-7xl text-olive leading-tight">${nombreInmediato}</span>
+                `;
+            }
+        }
+
         // --- PREVENIR SCROLL INICIAL (Seguridad Táctil) ---
         document.getElementById('welcome-overlay').addEventListener('touchmove', function(e) {
             e.preventDefault();
@@ -732,13 +747,6 @@
             const nombre = urlParams.get('nombre');
             const pases = urlParams.get('pases');
             
-            if (nombre) {
-                document.getElementById('envelope-names').innerHTML = `
-                    <span class="block text-xs md:text-sm uppercase tracking-[0.3em] text-gray-500 mb-6 font-heading">Especialmente para:</span>
-                    <span class="font-script text-5xl md:text-7xl text-olive leading-tight">${nombre}</span>
-                `;
-            }
-
             const storageKey = 'rsvp_conf_' + (nombre ? encodeURIComponent(nombre) : 'generic');
             const stored = localStorage.getItem(storageKey);
 
