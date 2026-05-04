@@ -325,7 +325,7 @@
         </div>
     </section>
 
-    <!-- Lightbox Protegido e Interactivo (CON DISEÑO POLAROID) -->
+    <!-- Lightbox Protegido e Interactivo -->
     <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="cerrarSiFondo(event)" oncontextmenu="return false;">
         <button onclick="closeLightbox(event)" class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none z-50">
             <i class="fas fa-times"></i>
@@ -333,10 +333,7 @@
         <button onclick="prevImage(event)" class="absolute left-2 md:left-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
             <i class="fas fa-chevron-left"></i>
         </button>
-        
-        <!-- AÑADIDA LA CLASE 'polaroid-frame' a la imagen grande -->
-        <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] polaroid-frame transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
-        
+        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] polaroid-frame transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
         <button onclick="nextImage(event)" class="absolute right-2 md:right-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
             <i class="fas fa-chevron-right"></i>
         </button>
@@ -370,7 +367,6 @@
 
             <!-- Botón Agregar a Google Calendar -->
             <div class="text-center mt-16 fade-in-section">
-                <!-- Enlace generado dinámicamente para Google Calendar -->
                 <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+de+Carlos+Ricardo+y+Doris+Johana&dates=20260605T130000/20260605T230000&ctz=America/Mexico_City&details=Ceremonia+Religiosa+1+PM%0ACelebraci%C3%B3n+3+PM%0A%0A%C2%A1Los+esperamos!&location=Santo+Domingo+Tehuantepec,+Oaxaca" 
                    target="_blank" 
                    class="inline-block bg-olive text-white font-heading text-sm uppercase tracking-widest py-4 px-8 rounded-full shadow-lg hover:bg-olive-dark hover:scale-105 transition-all duration-300">
@@ -525,26 +521,50 @@
     </footer>
 
     <script>
-        // --- CÓDIGO INMEDIATO PARA PERSONALIZACIÓN ---
+        // --- LLAVE SECRETA DE ENCRIPTACIÓN (Mantenla segura) ---
+        const SECRET_KEY = "BodaCD26"; 
+
+        // Función para desencriptar el código
+        function decodeGuest(encodedStr) {
+            try {
+                const text = atob(encodedStr);
+                let decoded = '';
+                for (let i = 0; i < text.length; i++) {
+                    decoded += String.fromCharCode(text.charCodeAt(i) ^ SECRET_KEY.charCodeAt(i % SECRET_KEY.length));
+                }
+                const parts = decoded.split('|');
+                if (parts.length === 2) {
+                    return { nombre: parts[0], pases: parseInt(parts[1]) };
+                }
+            } catch(e) {}
+            return null;
+        }
+
+        // --- CÓDIGO INMEDIATO PARA PERSONALIZACIÓN (SIN RETARDOS) ---
         const urlParamsImmediate = new URLSearchParams(window.location.search);
-        const nombreInmediato = urlParamsImmediate.get('nombre');
+        const secretCode = urlParamsImmediate.get('c');
         
-        if (nombreInmediato) {
-            const envelopeNamesElem = document.getElementById('envelope-names');
-            if (envelopeNamesElem) {
-                envelopeNamesElem.innerHTML = `
-                    <span class="block text-xs md:text-sm uppercase tracking-[0.3em] text-gray-500 mb-6 font-heading">Especialmente para:</span>
-                    <span class="font-script text-5xl md:text-7xl text-olive leading-tight">${nombreInmediato}</span>
-                `;
+        let guestInfo = null;
+
+        if (secretCode) {
+            guestInfo = decodeGuest(secretCode);
+            if (guestInfo && guestInfo.nombre) {
+                const envelopeNamesElem = document.getElementById('envelope-names');
+                if (envelopeNamesElem) {
+                    envelopeNamesElem.innerHTML = `
+                        <span class="block text-xs md:text-sm uppercase tracking-[0.3em] text-gray-500 mb-6 font-heading">Especialmente para:</span>
+                        <span class="font-script text-5xl md:text-7xl text-olive leading-tight">${guestInfo.nombre}</span>
+                    `;
+                }
             }
         }
 
-        // --- PREVENIR SCROLL INICIAL (Seguridad Táctil) ---
+        // --- PREVENIR SCROLL INICIAL ---
         document.getElementById('welcome-overlay').addEventListener('touchmove', function(e) {
             e.preventDefault();
         }, { passive: false });
 
-        // --- ANIMACIÓN DE APERTURA DEL SOBRE ---
+        // --- ANIMACIÓN DE APERTURA ---
         function enterSite() {
             window.scrollTo({ top: 0, behavior: 'auto' });
             const overlay = document.getElementById('welcome-overlay');
@@ -689,7 +709,6 @@
         function updateFlipCard(unit, newValue) {
             const card = document.querySelector(`.flip-card[data-unit="${unit}"]`);
             if (!card) return;
-
             const top = card.querySelector('.top');
             const bottom = card.querySelector('.bottom');
             const topFlip = card.querySelector('.top-flip');
@@ -715,26 +734,17 @@
         const timer = setInterval(() => {
             const now = new Date().getTime();
             const distance = weddingDate - now;
-
-            if (distance < 0) {
-                clearInterval(timer);
-                return;
-            }
+            if (distance < 0) { clearInterval(timer); return; }
 
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-            const days = d < 10 ? "0" + d : String(d);
-            const hours = h < 10 ? "0" + h : String(h);
-            const minutes = m < 10 ? "0" + m : String(m);
-            const seconds = s < 10 ? "0" + s : String(s);
-
-            updateFlipCard('days', days);
-            updateFlipCard('hours', hours);
-            updateFlipCard('minutes', minutes);
-            updateFlipCard('seconds', seconds);
+            updateFlipCard('days', d < 10 ? "0" + d : String(d));
+            updateFlipCard('hours', h < 10 ? "0" + h : String(h));
+            updateFlipCard('minutes', m < 10 ? "0" + m : String(m));
+            updateFlipCard('seconds', s < 10 ? "0" + s : String(s));
         }, 1000);
 
         // --- RSVP FORM ---
@@ -743,9 +753,10 @@
         
         window.onload = () => {
             cargarGaleria();
-            const urlParams = new URLSearchParams(window.location.search);
-            const nombre = urlParams.get('nombre');
-            const pases = urlParams.get('pases');
+            
+            // Usamos la información desencriptada del invitado (si existe)
+            const nombre = guestInfo ? guestInfo.nombre : null;
+            const pases = guestInfo ? guestInfo.pases : null;
             
             const storageKey = 'rsvp_conf_' + (nombre ? encodeURIComponent(nombre) : 'generic');
             const stored = localStorage.getItem(storageKey);
@@ -766,14 +777,13 @@
                 if (pases) {
                     const sel = document.getElementById('rsvp-guests');
                     sel.innerHTML = '';
-                    const numPases = parseInt(pases);
-                    for (let i = 1; i <= numPases; i++) {
+                    for (let i = 1; i <= pases; i++) {
                         sel.add(new Option(i + (i===1 ? " Persona" : " Personas"), i));
                     }
-                    sel.value = numPases;
+                    sel.value = pases;
                     document.getElementById('guest-help-text').classList.remove('hidden');
                     const limitMsg = document.getElementById('rsvp-limit-message');
-                    limitMsg.innerText = `Tienes un máximo de ${numPases} lugares reservados.`;
+                    limitMsg.innerText = `Tienes un máximo de ${pases} lugares reservados.`;
                     limitMsg.classList.remove('hidden');
                 }
             }
