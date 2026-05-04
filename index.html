@@ -5,35 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carlos Ricardo & Doris Johana | Nuestra Boda</title>
     
-    <!-- Meta etiquetas para compartir (Vista previa en WhatsApp, FB, etc.) -->
     <meta property="og:title" content="Carlos Ricardo & Doris Johana | Nuestra Boda">
     <meta property="og:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
     <meta property="og:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
     <meta property="og:url" content="https://carloscjarquin.github.io/BodaCD/">
     <meta property="og:type" content="website">
     
-    <!-- Meta etiquetas para Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Carlos Ricardo & Doris Johana | Nuestra Boda">
     <meta name="twitter:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
     <meta name="twitter:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
 
-    <!-- Fuentes Locales -->
     <link rel="stylesheet" href="assets/css/fonts.css">
-    <!-- Tailwind CSS (Local) -->
+    <style>
+        /* Importamos solo para el símbolo & (idéntico al de tu foto de ejemplo) */
+        @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+    </style>
+    
     <script src="assets/js/tailwindcss.js"></script>
-    <!-- Font Awesome (Local) -->
     <link rel="stylesheet" href="assets/css/all.min.css">
-    <!-- Confetti JS (CDN para la animación) -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    <!-- Configuración visual (Actualizada a Verde Olivo) -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        /* Paleta Verde Olivo Elegante */
                         olive: { light: '#b5c1af', DEFAULT: '#6b7b62', dark: '#485640' },
                         sand: '#fdfbf7',
                         charcoal: '#333333',
@@ -52,6 +49,13 @@
     <style>
         body { background-color: #fdfbf7; overflow-x: hidden; }
         
+        /* Estilo especial solo para el "&" */
+        .ampersand {
+            font-family: 'Parisienne', cursive !important;
+            font-style: normal;
+            font-weight: 400;
+        }
+
         /* Animaciones para el overlay (Sobre) */
         #welcome-overlay { transition: opacity 0.8s; perspective: 1000px; }
         #welcome-overlay.hidden-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -63,7 +67,6 @@
         .fade-in-section { opacity: 0; transform: translateY(20px); transition: 1s; }
         .fade-in-section.is-visible { opacity: 1; transform: none; }
         
-        /* Efecto de latido del botón de música (adaptado a verde olivo: RGB 107,123,98) */
         @keyframes pulse-ring { 
             0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(107, 123, 98, 0.7); } 
             70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(107, 123, 98, 0); } 
@@ -97,7 +100,7 @@
         }
         @media (min-width: 768px) { .polaroid-frame { padding: 12px 12px 48px 12px; } }
 
-        /* --- ESTILO SELLO DE CERA PERSONALIZADO ORO/BRONCE --- */
+        /* Sello de Cera Dorado/Bronce */
         .wax-seal-btn {
             width: 110px;
             height: 110px;
@@ -132,61 +135,74 @@
         input[readonly], textarea[readonly] {
             background-color: #f3f0e9; color: #666; cursor: not-allowed; border: 1px solid #e2ded5;
         }
+
+        /* --- ESTILOS DEL RELOJ ANIMADO (FLIP CLOCK) --- */
+        .flip-clock-container { display: flex; justify-content: center; gap: 0.5rem; }
+        .flip-unit { display: flex; flex-direction: column; align-items: center; }
+        .flip-card {
+            position: relative; width: 60px; height: 70px; background-color: #fdfbf7;
+            border-radius: 6px; font-family: 'Playfair Display', serif; font-size: 2.5rem;
+            color: #6b7b62; /* Verde Olivo */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); perspective: 400px;
+        }
+        @media (min-width: 768px) {
+            .flip-card { width: 80px; height: 100px; font-size: 3.5rem; }
+            .flip-clock-container { gap: 1.5rem; }
+        }
+        .top, .bottom, .top-flip, .bottom-flip {
+            position: absolute; left: 0; width: 100%; height: 50%; overflow: hidden;
+            display: flex; justify-content: center; background-color: #fdfbf7;
+            backface-visibility: hidden; border-radius: 6px 6px 0 0;
+        }
+        .top, .top-flip { top: 0; align-items: flex-end; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        .bottom, .bottom-flip { bottom: 0; align-items: flex-start; border-radius: 0 0 6px 6px; border-top: 1px solid rgba(0, 0, 0, 0.05); transform-origin: 50% 0; }
+        .top-flip { transform-origin: 50% 100%; }
+        
+        /* Clases para disparar la animación */
+        .flip-card.flipping .top-flip { animation: flip-top 0.6s ease-in; z-index: 2; }
+        .flip-card.flipping .bottom-flip { animation: flip-bottom 0.6s ease-out; z-index: 2; }
+        
+        @keyframes flip-top { 100% { transform: rotateX(-90deg); } }
+        @keyframes flip-bottom { 0% { transform: rotateX(90deg); } 100% { transform: rotateX(0deg); } }
+
     </style>
 </head>
-<body class="text-charcoal font-sans antialiased">
+<body id="main-body" class="text-charcoal font-sans antialiased" style="overflow: hidden; height: 100vh;">
 
-    <!-- Audio -->
     <audio id="weddingMusic" loop preload="auto"><source src="cancion.mp3" type="audio/mpeg"></audio>
 
-    <!-- BIENVENIDA TIPO SOBRE HORIZONTAL (Rediseñado) -->
     <div id="welcome-overlay" class="fixed inset-0 z-[9999] bg-[#ffffff] overflow-hidden flex flex-col justify-between">
         
-        <!-- Textos Superiores (Se desvanecen al abrir) -->
-        <div class="relative z-20 text-center mt-[10vh] md:mt-[15vh] fade-out-on-open px-4">
-            <h1 class="font-script text-5xl md:text-7xl text-olive leading-tight">
+        <div class="relative z-20 text-center mt-[10vh] md:mt-[15vh] fade-out-on-open px-4" id="envelope-text-container">
+            <h1 id="envelope-names" class="font-script text-5xl md:text-7xl text-olive leading-tight">
                 Carlos Ricardo <br> 
-                <!-- Ampersand Clásico -->
-                <span class="text-4xl md:text-5xl inline-block my-2" style="font-family: 'Playfair Display', serif; font-style: normal;">&</span> <br> 
+                <span class="text-4xl md:text-5xl inline-block my-2 ampersand">&</span> <br> 
                 Doris Johana
             </h1>
             <p class="font-serif text-charcoal text-lg mt-8 md:mt-12">Tenemos una noticia...</p>
             <p class="font-serif text-charcoal text-xl font-bold mt-1">¡Toca el sello para abrir!</p>
         </div>
 
-        <!-- Cuerpo del Sobre (Mitad inferior) -->
         <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl h-[45vh] md:h-[50vh] pointer-events-none z-10">
-            
-            <!-- Base del sobre y solapas inferiores -->
             <svg class="absolute bottom-0 w-full h-full drop-shadow-xl" preserveAspectRatio="none" viewBox="0 0 100 100">
-                <!-- Solapa Izquierda (Más chica, no estirada) -->
                 <polygon points="0,0 35,55 0,100" fill="#fdfdfd" stroke="#e5e7eb" stroke-width="0.3"/>
-                <!-- Solapa Derecha (Más chica, no estirada) -->
                 <polygon points="100,0 65,55 100,100" fill="#fdfdfd" stroke="#e5e7eb" stroke-width="0.3"/>
-                <!-- Solapa Inferior (Sube para cubrir) -->
                 <polygon points="0,100 50,45 100,100" fill="#f4f5f7" stroke="#d1d5db" stroke-width="0.4"/>
             </svg>
 
-            <!-- Solapa Superior (Abre hacia arriba) -->
             <div id="envelope-top" class="absolute top-0 left-0 right-0 h-[65%] origin-top transition-transform duration-1000 z-20" style="transform-style: preserve-3d;">
                 <svg class="w-full h-full drop-shadow-md" preserveAspectRatio="none" viewBox="0 0 100 100">
                     <polygon points="0,0 100,0 50,100" fill="#ffffff" stroke="#e5e7eb" stroke-width="0.4"/>
                 </svg>
 
-                <!-- Sello de Cera interactivo (Anclado a la punta de la solapa) -->
                 <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 pointer-events-auto transition-all duration-700 ease-in-out" id="seal-container">
                     <div id="wax-seal" onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación">
-                        <!-- Letras del sello -->
                         <span class="wax-text z-10" style="font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 500; text-shadow: 1px 1px 2px rgba(0,0,0,0.2), -1px -1px 1px rgba(255,255,255,0.4); color: #fff;">C|D</span>
-                        <!-- SVG de las ramas de olivo -->
                         <svg class="absolute inset-0 w-full h-full opacity-80" viewBox="0 0 100 100">
-                            <!-- Rama Izquierda -->
                             <path d="M 25,75 C 15,55 20,35 38,20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
                             <path d="M 25,75 L 20,68 M 22,60 L 15,58 M 18,48 L 12,42 M 22,35 L 20,28" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-                            <!-- Rama Derecha -->
                             <path d="M 75,75 C 85,55 80,35 62,20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
                             <path d="M 75,75 L 80,68 M 78,60 L 85,58 M 82,48 L 88,42 M 78,35 L 80,28" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-                            <!-- Hojitas y puntos -->
                             <ellipse cx="20" cy="68" rx="3" ry="1.5" transform="rotate(45 20 68)" fill="#fff"/>
                             <ellipse cx="15" cy="58" rx="3" ry="1.5" transform="rotate(20 15 58)" fill="#fff"/>
                             <ellipse cx="12" cy="42" rx="3" ry="1.5" transform="rotate(60 12 42)" fill="#fff"/>
@@ -195,7 +211,6 @@
                             <ellipse cx="85" cy="58" rx="3" ry="1.5" transform="rotate(-20 85 58)" fill="#fff"/>
                             <ellipse cx="88" cy="42" rx="3" ry="1.5" transform="rotate(-60 88 42)" fill="#fff"/>
                             <ellipse cx="80" cy="28" rx="3" ry="1.5" transform="rotate(-75 80 28)" fill="#fff"/>
-                            <!-- Detalles circulares -->
                             <circle cx="28" cy="68" r="1.5" fill="#fff"/><circle cx="24" cy="50" r="1.5" fill="#fff"/><circle cx="32" cy="38" r="1.5" fill="#fff"/>
                             <circle cx="72" cy="68" r="1.5" fill="#fff"/><circle cx="76" cy="50" r="1.5" fill="#fff"/><circle cx="68" cy="38" r="1.5" fill="#fff"/>
                             <circle cx="40" cy="15" r="1.5" fill="#fff"/><circle cx="45" cy="13" r="1.5" fill="#fff"/><circle cx="50" cy="12" r="1.5" fill="#fff"/><circle cx="55" cy="13" r="1.5" fill="#fff"/><circle cx="60" cy="15" r="1.5" fill="#fff"/>
@@ -207,12 +222,10 @@
         </div>
     </div>
 
-    <!-- Navegación -->
     <nav class="fixed top-0 w-full z-50 bg-sand/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
-                <!-- Ampersand Clásico -->
-                <div class="font-script text-3xl text-olive">C <span style="font-family: 'Playfair Display', serif; font-style: normal;">&</span> D</div>
+                <div class="font-script text-3xl text-olive">C <span class="ampersand">&</span> D</div>
                 <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-heading">
                     <a href="#home" class="nav-link text-gray-600 hover:text-olive">Inicio</a>
                     <a href="#details" class="nav-link text-gray-600 hover:text-olive">Ubicación</a>
@@ -232,23 +245,17 @@
         </div>
     </nav>
 
-    <!-- Música Flotante -->
     <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-olive rounded-full shadow-lg flex items-center justify-center border border-olive/20"><i class="fas fa-play ml-1" id="musicIcon"></i></button>
     
-    <!-- Hero -->
     <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
         <div class="absolute inset-0 z-0"><img src="img/portada.jpg" class="w-full h-full object-cover brightness-[0.65]"></div>
         <div class="relative z-10 text-white fade-in-section">
             <p class="text-sm uppercase tracking-[0.3em] mb-4">¡Nos casamos!</p>
-            
-            <!-- Nombres Actualizados con Ampersand Clásico -->
             <h1 class="font-script text-5xl md:text-7xl text-white leading-tight mb-8 drop-shadow-md">
                 Carlos Ricardo <br> 
-                <span class="text-3xl md:text-5xl inline-block my-2" style="font-family: 'Playfair Display', serif; font-style: normal;">&</span> <br> 
+                <span class="text-4xl md:text-5xl inline-block my-2 ampersand">&</span> <br> 
                 Doris Johana
             </h1>
-            
-            <!-- Diseño de Fecha -->
             <div class="flex flex-col items-center justify-center text-white my-6">
                 <span class="font-heading uppercase tracking-[0.3em] text-sm md:text-base mb-3 drop-shadow-sm">Junio</span>
                 <div class="flex items-center justify-center space-x-4 md:space-x-6">
@@ -268,7 +275,6 @@
         </div>
     </section>
 
-    <!-- Frase -->
     <section class="pt-20 pb-10 px-4 bg-sand text-center">
         <div class="max-w-2xl mx-auto fade-in-section">
             <i class="fas fa-heart text-olive text-2xl mb-6 animate-heartbeat"></i>
@@ -276,7 +282,6 @@
         </div>
     </section>
 
-    <!-- Galería Dinámica -->
     <section class="pb-20 px-4 bg-sand">
         <div class="max-w-7xl mx-auto fade-in-section">
             <div id="galeria-contenedor" class="flex overflow-x-auto space-x-6 pb-12 pt-4 snap-x snap-mandatory no-scrollbar px-4" 
@@ -286,7 +291,6 @@
         </div>
     </section>
 
-    <!-- Lightbox Protegido e Interactivo -->
     <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="cerrarSiFondo(event)" oncontextmenu="return false;">
         <button onclick="closeLightbox(event)" class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none z-50">
             <i class="fas fa-times"></i>
@@ -300,7 +304,6 @@
         </button>
     </div>
 
-    <!-- Detalles -->
     <section id="details" class="py-24 px-4 bg-white scroll-mt-20">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in-section">
@@ -327,7 +330,6 @@
         </div>
     </section>
 
-    <!-- Vestimenta -->
     <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <span class="text-olive uppercase tracking-[0.2em] text-xs font-bold">Información</span>
@@ -348,7 +350,6 @@
         </div>
     </section>
 
-    <!-- Regalo -->
     <section id="gift" class="py-20 px-4 bg-white scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <i class="fas fa-envelope text-4xl text-olive mb-4"></i>
@@ -361,7 +362,6 @@
         </div>
     </section>
 
-    <!-- RSVP -->
     <section id="rsvp" class="py-24 px-4 bg-olive-light/20 scroll-mt-20">
         <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
             <div class="w-full text-center">
@@ -416,45 +416,77 @@
         </div>
     </section>
 
-    <!-- Cuenta Regresiva -->
     <section class="py-24 bg-olive text-white text-center">
         <div class="max-w-4xl mx-auto px-4 fade-in-section">
             <h2 class="font-heading text-2xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
-            <div class="grid grid-cols-4 gap-4 max-w-2xl mx-auto text-charcoal">
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-olive" id="days-final">00</span><span class="text-xs uppercase font-bold text-gray-500">Días</span></div>
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-olive" id="hours-final">00</span><span class="text-xs uppercase font-bold text-gray-500">Hs</span></div>
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-olive" id="minutes-final">00</span><span class="text-xs uppercase font-bold text-gray-500">Min</span></div>
-                <div class="bg-white/90 p-4 rounded-lg shadow-lg"><span class="block text-3xl font-serif text-olive" id="seconds-final">00</span><span class="text-xs uppercase font-bold text-gray-500">Seg</span></div>
+            
+            <div class="flip-clock-container text-olive">
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="days">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-gray-300 mt-3 tracking-widest">Días</span>
+                </div>
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="hours">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-gray-300 mt-3 tracking-widest">Hs</span>
+                </div>
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="minutes">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-gray-300 mt-3 tracking-widest">Min</span>
+                </div>
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="seconds">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-gray-300 mt-3 tracking-widest">Seg</span>
+                </div>
             </div>
-            <p class="mt-8 font-script text-3xl opacity-90">...el mejor día de nuestras vidas</p>
+
+            <p class="mt-10 font-script text-3xl opacity-90">...el mejor día de nuestras vidas</p>
         </div>
     </section>
 
     <footer class="bg-charcoal text-white py-12 text-center">
-        <!-- Ampersand Clásico -->
-        <h2 class="font-script text-5xl mb-6 text-olive-light">C <span style="font-family: 'Playfair Display', serif; font-style: normal;">&</span> D</h2>
+        <h2 class="font-script text-5xl mb-6 text-olive-light">C <span class="ampersand">&</span> D</h2>
         <div class="text-xs text-gray-400 tracking-wider">© 2026 Carlos Ricardo & Doris Johana.</div>
     </footer>
 
     <script>
         // --- ANIMACIÓN DE APERTURA DEL SOBRE ---
         function enterSite() {
+            window.scrollTo({ top: 0, behavior: 'auto' });
             const overlay = document.getElementById('welcome-overlay');
             const sealContainer = document.getElementById('seal-container');
             const musicBtn = document.getElementById('musicToggle');
+            const body = document.getElementById('main-body');
 
-            // 1. Desvanecer el sello y hacerlo un poco más grande
             sealContainer.style.transform = 'translate(-50%, -50%) scale(1.5)';
             sealContainer.style.opacity = '0';
-
-            // 2. Activar la clase que abre la solapa (girarla hacia arriba)
             overlay.classList.add('envelope-open');
 
-            // 3. Después de que termine la animación, quitar la pantalla de bienvenida y empezar fiesta
             setTimeout(() => {
                 overlay.classList.add('hidden-overlay');
                 musicBtn.classList.remove('hidden');
-                
+                body.style.overflow = 'auto';
+                body.style.height = 'auto';
+
                 lanzarConfeti();
 
                 audio.play().then(() => {
@@ -464,7 +496,7 @@
             }, 1200);
         }
 
-        // --- RESTO DEL CÓDIGO (Galería, Música, RSVP, Cuenta Regresiva) ---
+        // --- GALERÍA ---
         const totalFotos = 14; 
         const arrayFotos = [];
         let currentIndex = 0;
@@ -539,7 +571,7 @@
             if (touchendX > touchstartX + 50) prevImage(); 
         });
 
-        const scriptURL = "https://script.google.com/macros/s/AKfycbxlk8DVe-RpZhkYEoAFNU2XqVxY_j-IHUaHFS9OrlRFshYwlLe9Q1bb77Pc7yF9EcG8/exec";
+        // --- MÚSICA Y CONFETI ---
         const audio = document.getElementById('weddingMusic');
         const musicBtn = document.getElementById('musicToggle');
         const musicIcon = document.getElementById('musicIcon');
@@ -548,15 +580,12 @@
             var duration = 3 * 1000;
             var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
-
             function randomInRange(min, max) { return Math.random() * (max - min) + min; }
 
             var interval = setInterval(function() {
                 var timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) return clearInterval(interval);
                 var particleCount = 50 * (timeLeft / duration);
-                
-                /* Confeti ajustado a la paleta Verde Olivo y Blanco */
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#6b7b62', '#b5c1af', '#ffffff'] }));
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#6b7b62', '#b5c1af', '#ffffff'] }));
             }, 250);
@@ -579,17 +608,64 @@
             else { nav.classList.remove('shadow-md', 'bg-white/95'); nav.classList.add('bg-sand/90'); }
         });
 
+        // --- LÓGICA DEL RELOJ ANIMADO (FLIP CLOCK) ---
+        function updateFlipCard(unit, newValue) {
+            const card = document.querySelector(`.flip-card[data-unit="${unit}"]`);
+            if (!card) return;
+
+            const top = card.querySelector('.top');
+            const bottom = card.querySelector('.bottom');
+            const topFlip = card.querySelector('.top-flip');
+            const bottomFlip = card.querySelector('.bottom-flip');
+
+            const currentValue = top.innerText;
+            if (newValue === currentValue) return;
+
+            // Configurar valores antes de animar
+            topFlip.innerText = currentValue;
+            bottomFlip.innerText = newValue;
+
+            // Disparar animación
+            card.classList.add('flipping');
+
+            // Actualizar textos fijos y limpiar clase al terminar la animación
+            setTimeout(() => {
+                top.innerText = newValue;
+                topFlip.innerText = newValue;
+                bottom.innerText = newValue;
+                bottomFlip.innerText = newValue;
+                card.classList.remove('flipping');
+            }, 500); 
+        }
+
         const weddingDate = new Date("June 05, 2026 13:00:00").getTime();
-        setInterval(() => {
+        const timer = setInterval(() => {
             const now = new Date().getTime();
-            const d = weddingDate - now;
-            if (d < 0) return;
-            document.getElementById("days-final").innerText = Math.floor(d / 864e5) < 10 ? "0"+Math.floor(d / 864e5) : Math.floor(d / 864e5);
-            document.getElementById("hours-final").innerText = Math.floor((d % 864e5) / 36e5) < 10 ? "0"+Math.floor((d % 864e5) / 36e5) : Math.floor((d % 864e5) / 36e5);
-            document.getElementById("minutes-final").innerText = Math.floor((d % 36e5) / 6e4) < 10 ? "0"+Math.floor((d % 36e5) / 6e4) : Math.floor((d % 36e5) / 6e4);
-            document.getElementById("seconds-final").innerText = Math.floor((d % 6e4) / 1e3) < 10 ? "0"+Math.floor((d % 6e4) / 1e3) : Math.floor((d % 6e4) / 1e3);
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                return;
+            }
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const days = d < 10 ? "0" + d : String(d);
+            const hours = h < 10 ? "0" + h : String(h);
+            const minutes = m < 10 ? "0" + m : String(m);
+            const seconds = s < 10 ? "0" + s : String(s);
+
+            updateFlipCard('days', days);
+            updateFlipCard('hours', hours);
+            updateFlipCard('minutes', minutes);
+            updateFlipCard('seconds', seconds);
         }, 1000);
 
+        // --- RSVP FORM ---
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxlk8DVe-RpZhkYEoAFNU2XqVxY_j-IHUaHFS9OrlRFshYwlLe9Q1bb77Pc7yF9EcG8/exec";
         const form = document.forms['submit-to-google-sheet'];
         
         window.onload = () => {
@@ -598,6 +674,13 @@
             const nombre = urlParams.get('nombre');
             const pases = urlParams.get('pases');
             
+            if (nombre) {
+                document.getElementById('envelope-names').innerHTML = `
+                    <span class="block text-sm md:text-base uppercase tracking-[0.3em] text-gray-500 mb-6 font-heading">Especialmente para:</span>
+                    <span class="font-script text-5xl md:text-7xl text-olive leading-tight">${nombre}</span>
+                `;
+            }
+
             const storageKey = 'rsvp_conf_' + (nombre ? encodeURIComponent(nombre) : 'generic');
             const stored = localStorage.getItem(storageKey);
 
