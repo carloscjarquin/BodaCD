@@ -416,7 +416,7 @@
                     <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 animate-bounce"><i class="fas fa-check text-3xl"></i></div>
                     <p id="final-confirmation-text" class="text-olive font-serif text-2xl mb-2 font-bold"></p>
                     
-                    <!-- NUEVO: Mensaje dinámico de Mesa -->
+                    <!-- Mensaje dinámico de Mesa -->
                     <p id="final-table-text" class="text-olive-dark font-sans text-lg mb-4 font-bold tracking-wide uppercase hidden"></p>
                     
                     <p class="text-gray-600 mb-6">Hemos registrado tu respuesta correctamente.</p>
@@ -540,11 +540,15 @@
 
         // --- CÓDIGO INMEDIATO PARA PERSONALIZACIÓN (SIN RETARDOS) ---
         const urlParamsImmediate = new URLSearchParams(window.location.search);
-        const secretCode = urlParamsImmediate.get('c');
+        let secretCode = urlParamsImmediate.get('c');
         
         let guestInfo = null;
 
         if (secretCode) {
+            // CORRECCIÓN: Los navegadores convierten '+' en espacio en las URL. 
+            // Reemplazamos los espacios por '+' para reparar el Base64.
+            secretCode = secretCode.replace(/ /g, '+');
+            
             guestInfo = decodeGuest(secretCode);
             if (guestInfo && guestInfo.nombre) {
                 const envelopeNamesElem = document.getElementById('envelope-names');
@@ -707,7 +711,6 @@
         function updateFlipCard(unit, newValue) {
             const card = document.querySelector(`.flip-card[data-unit="${unit}"]`);
             if (!card) return;
-
             const top = card.querySelector('.top');
             const bottom = card.querySelector('.bottom');
             const topFlip = card.querySelector('.top-flip');
