@@ -1,0 +1,853 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlos Ricardo & Doris Johana | Nuestra Boda</title>
+    
+    <meta property="og:title" content="Carlos Ricardo & Doris Johana | Nuestra Boda">
+    <meta property="og:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
+    <meta property="og:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
+    <meta property="og:url" content="https://carloscjarquin.github.io/BodaCD/">
+    <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Carlos Ricardo & Doris Johana | Nuestra Boda">
+    <meta name="twitter:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
+    <meta name="twitter:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
+
+    <link rel="stylesheet" href="assets/css/fonts.css">
+    
+    <style>
+        /* Importamos la fuente Parisienne específicamente para el símbolo & */
+        @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+    </style>
+    
+    <script src="assets/js/tailwindcss.js"></script>
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        olive: { light: '#b5c1af', DEFAULT: '#6b7b62', dark: '#485640' },
+                        sand: '#fdfbf7',
+                        charcoal: '#333333',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        script: ['Great Vibes', 'cursive'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        heading: ['Cinzel', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Estilo especial solo para el "&" con la fuente Parisienne */
+        .ampersand {
+            font-family: 'Parisienne', cursive !important;
+            font-style: normal;
+            font-weight: 400;
+        }
+
+        body { background-color: #fdfbf7; overflow-x: hidden; }
+        
+        /* Animaciones para el overlay (Sobre) */
+        #welcome-overlay { transition: opacity 0.8s; perspective: 1000px; }
+        #welcome-overlay.hidden-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .fade-out-on-open { transition: opacity 0.5s ease; }
+        .envelope-open #envelope-top { transform: rotateX(180deg); }
+        .envelope-open .fade-out-on-open { opacity: 0; }
+        
+        .fade-in-section { opacity: 0; transform: translateY(20px); transition: 1s; }
+        .fade-in-section.is-visible { opacity: 1; transform: none; }
+        
+        @keyframes pulse-ring { 
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(107, 123, 98, 0.7); } 
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(107, 123, 98, 0); } 
+            100% { transform: scale(0.8); } 
+        }
+        .music-playing { animation: pulse-ring 2s infinite; }
+
+        .nav-link.active { color: #6b7b62 !important; font-weight: 700; }
+        .nav-link { transition: color 0.3s ease; }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+        .animate-heartbeat { animation: heartbeat 1.5s linear infinite; display: inline-block; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .protected-img {
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+            -webkit-user-drag: none; -webkit-touch-callout: none;
+        }
+
+        .polaroid-frame {
+            background-color: white; padding: 8px 8px 32px 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;
+        }
+        @media (min-width: 768px) { .polaroid-frame { padding: 12px 12px 48px 12px; } }
+
+        /* Sello de Cera Dorado/Bronce */
+        .wax-seal-btn {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #e8cd87, #b88a38);
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.3),
+                inset 0 0 20px rgba(0,0,0,0.2),
+                0 0 0 4px rgba(184, 138, 56, 0.3),
+                0 0 0 8px rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid #946f2a;
+            position: relative;
+        }
+
+        .wax-seal-btn::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            border: 1px dashed rgba(255,255,255,0.4);
+        }
+
+        .wax-seal-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 10px 25px rgba(0,0,0,0.25), inset 0 0 10px rgba(0,0,0,0.2); }
+        .wax-seal-btn:active { transform: scale(0.95); }
+        
+        input[readonly], textarea[readonly] {
+            background-color: #f3f0e9; color: #666; cursor: not-allowed; border: 1px solid #e2ded5;
+        }
+
+        /* --- ESTILOS DEL RELOJ ANIMADO (FLIP CLOCK) --- */
+        .flip-clock-container { display: flex; justify-content: center; gap: 0.5rem; }
+        .flip-unit { display: flex; flex-direction: column; align-items: center; }
+        .flip-card {
+            position: relative; width: 60px; height: 70px; background-color: #fdfbf7;
+            border-radius: 6px; font-family: 'Playfair Display', serif; font-size: 3rem;
+            color: #6b7b62; /* Verde Olivo */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); perspective: 400px;
+        }
+        @media (min-width: 768px) {
+            .flip-card { width: 80px; height: 100px; font-size: 4.5rem; }
+            .flip-clock-container { gap: 1.5rem; }
+        }
+        .top, .bottom, .top-flip, .bottom-flip {
+            position: absolute; left: 0; width: 100%; height: 50%; overflow: hidden;
+            text-align: center; background-color: #fdfbf7;
+            backface-visibility: hidden; transform-style: preserve-3d;
+        }
+        
+        .top, .top-flip {
+            top: 0; border-radius: 6px 6px 0 0;
+            line-height: 78px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        @media (min-width: 768px) {
+            .top, .top-flip { line-height: 112px; }
+        }
+        
+        .bottom, .bottom-flip {
+            bottom: 0; border-radius: 0 0 6px 6px;
+            line-height: 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05); transform-origin: 50% 0;
+        }
+        @media (min-width: 768px) {
+            .bottom, .bottom-flip { line-height: 12px; }
+        }
+        
+        .flip-card.flipping .top-flip { animation: flip-top 0.6s ease-in; z-index: 2; }
+        .flip-card.flipping .bottom-flip { animation: flip-bottom 0.6s ease-out; z-index: 2; }
+        
+        @keyframes flip-top { 100% { transform: rotateX(-90deg); } }
+        @keyframes flip-bottom { 0% { transform: rotateX(90deg); } 100% { transform: rotateX(0deg); } }
+
+    </style>
+</head>
+
+<body id="main-body" class="text-charcoal font-sans antialiased" style="overflow: hidden; height: 100vh; position: fixed; width: 100%; left: 0; top: 0;">
+
+    <audio id="weddingMusic" loop preload="auto"><source src="cancion.mp3" type="audio/mpeg"></audio>
+
+    <div id="welcome-overlay" class="fixed inset-0 z-[9999] bg-[#ffffff] overflow-hidden flex flex-col justify-between">
+        
+        <div class="relative z-20 text-center mt-[10vh] md:mt-[15vh] fade-out-on-open px-4" id="envelope-text-container">
+            <h1 id="envelope-names" class="font-script text-5xl md:text-7xl text-olive leading-tight">
+                Carlos Ricardo <br> 
+                <span class="text-4xl md:text-5xl inline-block my-2 ampersand">&</span> <br> 
+                Doris Johana
+            </h1>
+            <p class="font-serif text-charcoal text-lg mt-8 md:mt-12">Tenemos una noticia...</p>
+            <p class="font-serif text-charcoal text-xl font-bold mt-1">¡Toca el sello para abrir!</p>
+        </div>
+
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl h-[45vh] md:h-[50vh] pointer-events-none z-10">
+            <svg class="absolute bottom-0 w-full h-full drop-shadow-xl" preserveAspectRatio="none" viewBox="0 0 100 100">
+                <polygon points="0,0 35,55 0,100" fill="#fdfdfd" stroke="#e5e7eb" stroke-width="0.3"/>
+                <polygon points="100,0 65,55 100,100" fill="#fdfdfd" stroke="#e5e7eb" stroke-width="0.3"/>
+                <polygon points="0,100 50,45 100,100" fill="#f4f5f7" stroke="#d1d5db" stroke-width="0.4"/>
+            </svg>
+
+            <div id="envelope-top" class="absolute top-0 left-0 right-0 h-[65%] origin-top transition-transform duration-1000 z-20" style="transform-style: preserve-3d;">
+                <svg class="w-full h-full drop-shadow-md" preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <polygon points="0,0 100,0 50,100" fill="#ffffff" stroke="#e5e7eb" stroke-width="0.4"/>
+                </svg>
+
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 pointer-events-auto transition-all duration-700 ease-in-out" id="seal-container">
+                    <div id="wax-seal" onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación">
+                        <span class="wax-text z-10" style="font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 500; text-shadow: 1px 1px 2px rgba(0,0,0,0.2), -1px -1px 1px rgba(255,255,255,0.4); color: #fff;">C|D</span>
+                        <svg class="absolute inset-0 w-full h-full opacity-80" viewBox="0 0 100 100">
+                            <path d="M 25,75 C 15,55 20,35 38,20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M 25,75 L 20,68 M 22,60 L 15,58 M 18,48 L 12,42 M 22,35 L 20,28" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M 75,75 C 85,55 80,35 62,20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M 75,75 L 80,68 M 78,60 L 85,58 M 82,48 L 88,42 M 78,35 L 80,28" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                            <ellipse cx="20" cy="68" rx="3" ry="1.5" transform="rotate(45 20 68)" fill="#fff"/>
+                            <ellipse cx="15" cy="58" rx="3" ry="1.5" transform="rotate(20 15 58)" fill="#fff"/>
+                            <ellipse cx="12" cy="42" rx="3" ry="1.5" transform="rotate(60 12 42)" fill="#fff"/>
+                            <ellipse cx="20" cy="28" rx="3" ry="1.5" transform="rotate(75 20 28)" fill="#fff"/>
+                            <ellipse cx="80" cy="68" rx="3" ry="1.5" transform="rotate(-45 80 68)" fill="#fff"/>
+                            <ellipse cx="85" cy="58" rx="3" ry="1.5" transform="rotate(-20 85 58)" fill="#fff"/>
+                            <ellipse cx="88" cy="42" rx="3" ry="1.5" transform="rotate(-60 88 42)" fill="#fff"/>
+                            <ellipse cx="80" cy="28" rx="3" ry="1.5" transform="rotate(-75 80 28)" fill="#fff"/>
+                            <circle cx="28" cy="68" r="1.5" fill="#fff"/><circle cx="24" cy="50" r="1.5" fill="#fff"/><circle cx="32" cy="38" r="1.5" fill="#fff"/>
+                            <circle cx="72" cy="68" r="1.5" fill="#fff"/><circle cx="76" cy="50" r="1.5" fill="#fff"/><circle cx="68" cy="38" r="1.5" fill="#fff"/>
+                            <circle cx="40" cy="15" r="1.5" fill="#fff"/><circle cx="45" cy="13" r="1.5" fill="#fff"/><circle cx="50" cy="12" r="1.5" fill="#fff"/><circle cx="55" cy="13" r="1.5" fill="#fff"/><circle cx="60" cy="15" r="1.5" fill="#fff"/>
+                            <circle cx="38" cy="82" r="1.5" fill="#fff"/><circle cx="44" cy="85" r="1.5" fill="#fff"/><circle cx="50" cy="86" r="1.5" fill="#fff"/><circle cx="56" cy="85" r="1.5" fill="#fff"/><circle cx="62" cy="82" r="1.5" fill="#fff"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 bg-sand/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="font-script text-3xl text-olive">C <span class="ampersand">&</span> D</div>
+                <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-heading">
+                    <a href="#home" class="nav-link text-gray-600 hover:text-olive">Inicio</a>
+                    <a href="#details" class="nav-link text-gray-600 hover:text-olive">Ubicación</a>
+                    <a href="#dresscode" class="nav-link text-gray-600 hover:text-olive">Vestimenta</a>
+                    <a href="#gift" class="nav-link text-gray-600 hover:text-olive">Regalos</a>
+                    <a href="#rsvp" class="nav-link text-gray-600 hover:text-olive">Confirmar</a>
+                </div>
+                <div class="md:hidden"><button onclick="toggleMobileMenu()" class="text-olive"><i class="fas fa-bars text-2xl"></i></button></div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 p-4 text-center font-heading text-sm uppercase space-y-4 shadow-lg">
+            <a href="#home" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-olive">Inicio</a>
+            <a href="#details" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-olive">Ubicación</a>
+            <a href="#dresscode" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-olive">Vestimenta</a>
+            <a href="#gift" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-olive">Regalos</a>
+            <a href="#rsvp" onclick="toggleMobileMenu()" class="nav-link block text-gray-600 hover:text-olive">Confirmar</a>
+        </div>
+    </nav>
+
+    <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-olive rounded-full shadow-lg flex items-center justify-center border border-olive/20"><i class="fas fa-play ml-1" id="musicIcon"></i></button>
+    
+    <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+        <div class="absolute inset-0 z-0"><img src="img/portada.jpg" class="w-full h-full object-cover brightness-[0.65]"></div>
+        <div class="relative z-10 text-white fade-in-section">
+            <p class="text-sm uppercase tracking-[0.3em] mb-4">¡Nos casamos!</p>
+            <h1 class="font-script text-5xl md:text-7xl text-white leading-tight mb-8 drop-shadow-md">
+                Carlos Ricardo <br> 
+                <span class="text-4xl md:text-5xl inline-block my-2 ampersand">&</span> <br> 
+                Doris Johana
+            </h1>
+            <div class="flex flex-col items-center justify-center text-white my-6">
+                <span class="font-heading uppercase tracking-[0.3em] text-sm md:text-base mb-3 drop-shadow-sm">Junio</span>
+                <div class="flex items-center justify-center space-x-4 md:space-x-6">
+                    <div class="flex flex-col items-center w-24">
+                        <hr class="w-full border-t border-white/80 mb-2">
+                        <span class="font-heading uppercase tracking-widest text-xs drop-shadow-sm">Viernes</span>
+                        <hr class="w-full border-t border-white/80 mt-2">
+                    </div>
+                    <span class="font-script text-7xl md:text-8xl leading-none text-white mx-2 drop-shadow-md" style="transform: translateY(-5px);">05</span>
+                    <div class="flex flex-col items-center w-24">
+                        <hr class="w-full border-t border-white/80 mb-2">
+                        <span class="font-heading tracking-widest text-xs drop-shadow-sm">2026</span>
+                        <hr class="w-full border-t border-white/80 mt-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pt-20 pb-10 px-4 bg-sand text-center">
+        <div class="max-w-2xl mx-auto fade-in-section">
+            <i class="fas fa-heart text-olive text-2xl mb-6 animate-heartbeat"></i>
+            <h2 class="font-serif text-3xl italic text-charcoal mb-4">"Nuestra historia comenzó hace tiempo, pero el 05.06.2026 escribiremos el capítulo más importante ante Dios y nuestras familias."</h2>
+        </div>
+    </section>
+
+    <section class="pb-20 px-4 bg-sand">
+        <div class="max-w-7xl mx-auto fade-in-section">
+            <div id="galeria-contenedor" class="flex overflow-x-auto space-x-6 pb-12 pt-4 snap-x snap-mandatory no-scrollbar px-4" 
+                 onmouseenter="pausarCarrusel()" onmouseleave="iniciarCarrusel()" ontouchstart="pausarCarrusel()">
+            </div>
+            <p class="text-center text-xs text-gray-400 mt-2 font-heading tracking-widest opacity-60">Toca para abrir • Desliza para ver más</p>
+        </div>
+    </section>
+
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="cerrarSiFondo(event)" oncontextmenu="return false;">
+        <button onclick="closeLightbox(event)" class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none z-50">
+            <i class="fas fa-times"></i>
+        </button>
+        <button onclick="prevImage(event)" class="absolute left-2 md:left-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] polaroid-frame transition-transform duration-300 protected-img" ondragstart="return false;" oncontextmenu="return false;">
+        <button onclick="nextImage(event)" class="absolute right-2 md:right-10 text-white/50 hover:text-white text-4xl md:text-6xl focus:outline-none z-50 transition-colors p-4">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <section id="details" class="py-24 px-4 bg-white scroll-mt-20">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 fade-in-section">
+                <span class="text-olive uppercase tracking-[0.2em] text-xs font-bold">Ubicación</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-charcoal mt-2 mb-4">Dónde</h2>
+                <div class="w-20 h-1 bg-olive mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 text-center">
+                <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-olive/10">
+                    <i class="fas fa-church text-4xl text-olive mb-4"></i>
+                    <h3 class="font-heading text-xl mb-2">Ceremonia</h3>
+                    <p class="font-serif text-2xl text-olive mb-4">1:00 PM</p>
+                    <p class="text-gray-600 mb-6">Parroquia de la Asunsión de María<br>Irribarren Sierra 51, Sta. Maria, 70760 Santo Domingo Tehuantepec, Oax.</p>
+                    <button onclick="window.open('https://maps.app.goo.gl/EVPgQESHV9RtaKwz8','_blank')" class="text-xs font-bold uppercase text-olive border-b border-olive hover:text-olive-dark transition-colors">Ver Mapa</button>
+                </div>
+                <div class="fade-in-section bg-sand p-10 rounded-xl shadow-sm border border-olive/10">
+                    <i class="fas fa-glass-cheers text-4xl text-olive mb-4"></i>
+                    <h3 class="font-heading text-xl mb-2">Recepción</h3>
+                    <p class="font-serif text-2xl text-olive mb-4">3:00 PM</p>
+                    <p class="text-gray-600 mb-6">Salon los Pinos<br>C. Reoloteca 26, La Soledad, 70760 Santo Domingo Tehuantepec, Oax.</p>
+                    <button onclick="window.open('https://maps.app.goo.gl/d3AY6gjdNXA9y5Xs9','_blank')" class="text-xs font-bold uppercase text-olive border-b border-olive hover:text-olive-dark transition-colors">Ver Mapa</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20">
+        <div class="max-w-4xl mx-auto text-center fade-in-section">
+            <span class="text-olive uppercase tracking-[0.2em] text-xs font-bold">Información</span>
+            <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Código de Vestimenta</h2>
+            <p class="font-sans text-gray-600 text-lg mb-10 italic">Deseamos distinguir nuestro evento con la elegancia de nuestras tradiciones</p>
+            <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 md:gap-24">
+                <div class="text-center group w-64">
+                    <img src="img/traje.png" alt="Traje" class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <p class="font-heading text-sm mt-4 uppercase tracking-widest text-charcoal">Ellos</p>
+                    <p class="text-xs text-gray-500 mt-1 font-sans">Guayabera o filipina, y pantalón de vestir</p>
+                </div>
+                <div class="text-center group w-64">
+                    <img src="img/vestido.png" alt="Vestido" class="h-32 md:h-40 mx-auto drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <p class="font-heading text-sm mt-4 uppercase tracking-widest text-charcoal">Ellas</p>
+                    <p class="text-xs text-gray-500 mt-1 font-sans leading-relaxed">Traje regional en cualquiera de sus variantes (Traje de galón, coordinado, enagua de olán o rabona)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gift" class="py-20 px-4 bg-white scroll-mt-20">
+        <div class="max-w-4xl mx-auto text-center fade-in-section">
+            <i class="fas fa-envelope text-4xl text-olive mb-4"></i>
+            <h2 class="font-serif text-4xl text-charcoal mt-2 mb-6">Regalos</h2>
+            <div class="w-20 h-1 bg-olive mx-auto mb-8"></div>
+            <p class="font-sans text-gray-600 text-lg mb-10 italic max-w-2xl mx-auto leading-relaxed">
+                Su compañía en este día es lo mas importante para nosotros, pero si deseas contribuir al inicio de esta nueva etapa juntos, te lo agredeceremos de corazón.
+            </p>
+            <img src="img/regalo.png" alt="Mesa de Regalos" class="mx-auto mt-8 max-w-full w-64 md:w-80 h-auto object-contain rounded-lg shadow-sm hover:scale-105 transition-transform duration-300">
+        </div>
+    </section>
+
+    <section id="rsvp" class="py-24 px-4 bg-olive-light/20 scroll-mt-20">
+        <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
+            <div class="w-full text-center">
+                <div id="rsvp-header" class="mb-10">
+                    <span class="text-olive uppercase tracking-[0.2em] text-xs font-bold">RSVP</span>
+                    <h2 id="rsvp-title" class="font-serif text-4xl text-charcoal mt-2">Confirma tu Asistencia</h2>
+                    <p id="rsvp-limit-message" class="text-olive text-sm font-bold mt-2 hidden"></p>
+                </div>
+
+                <div id="rsvp-success-message" class="hidden py-10">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 animate-bounce"><i class="fas fa-check text-3xl"></i></div>
+                    <p id="final-confirmation-text" class="text-olive font-serif text-2xl mb-2 font-bold"></p>
+                    
+                    <p id="final-table-text" class="text-olive-dark font-sans text-lg mb-4 font-bold tracking-wide uppercase hidden"></p>
+                    
+                    <p class="text-gray-600 mb-6">Hemos registrado tu respuesta correctamente.</p>
+                    <p class="font-serif text-lg text-charcoal italic mb-6">"El amor es la razón de este día, y tu presencia lo hará aún más especial."</p>
+                    <p class="text-sm text-gray-400 uppercase tracking-widest">Nos vemos en la boda</p>
+                </div>
+
+                <form id="rsvpForm" class="space-y-6 text-left" name="submit-to-google-sheet">
+                    <input type="hidden" id="rsvp-mesa" name="mesa" value="">
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Nombre</label>
+                            <input type="text" id="rsvp-name" name="nombre" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-olive outline-none transition-colors" placeholder="Tu nombre">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Teléfono (10 dígitos)</label>
+                            <input type="tel" name="telefono" id="rsvp-phone" required class="w-full bg-sand p-4 rounded border border-transparent focus:border-olive outline-none" maxlength="10" placeholder="Ej. 5512345678">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">¿Asistirás?</label>
+                        <div class="flex space-x-6 mt-2">
+                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="Si" checked class="text-olive focus:ring-olive"><span>¡Sí!</span></label>
+                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="No" class="text-olive focus:ring-olive"><span>No podré</span></label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Personas</label>
+                        <select id="rsvp-guests" name="invitados" class="w-full bg-sand p-4 rounded outline-none cursor-pointer focus:border-olive">
+                            <option value="1">1 Persona</option>
+                        </select>
+                        <p id="guest-help-text" class="text-xs text-gray-400 mt-1 hidden">Puedes elegir menos lugares si alguien no puede asistir.</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Mensaje</label>
+                        <textarea name="mensaje" rows="2" class="w-full bg-sand p-4 rounded border border-transparent focus:border-olive outline-none transition-colors" placeholder="Déjale un mensaje a los novios..."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-olive text-white font-heading uppercase tracking-widest py-4 rounded hover:bg-olive-dark transition-colors">Enviar Confirmación</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-olive text-white text-center">
+        <div class="max-w-4xl mx-auto px-4 fade-in-section">
+            <h2 class="font-heading text-2xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
+            
+            <div class="flip-clock-container text-olive">
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="days">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-gray-300 mt-3 tracking-widest">Días</span>
+                </div>
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="hours">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-gray-300 mt-3 tracking-widest">Hs</span>
+                </div>
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="minutes">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-gray-300 mt-3 tracking-widest">Min</span>
+                </div>
+                <div class="flip-unit">
+                    <div class="flip-card" data-unit="seconds">
+                        <div class="top">00</div>
+                        <div class="bottom">00</div>
+                        <div class="top-flip">00</div>
+                        <div class="bottom-flip">00</div>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-gray-300 mt-3 tracking-widest">Seg</span>
+                </div>
+            </div>
+
+            <p class="mt-10 font-script text-3xl opacity-90">...el mejor día de nuestras vidas</p>
+        </div>
+    </section>
+
+    <footer class="bg-charcoal text-white py-12 text-center">
+        <h2 class="font-script text-5xl mb-6 text-olive-light">C <span class="ampersand">&</span> D</h2>
+        <div class="text-xs text-gray-400 tracking-wider">© 2026 Carlos Ricardo & Doris Johana.</div>
+    </footer>
+
+    <script>
+        // --- LLAVE SECRETA DE ENCRIPTACIÓN (Mantenla segura) ---
+        const SECRET_KEY = "BodaCD26"; 
+
+        // Función para desencriptar el código de 3 partes: Nombre | Pases | Mesa
+        function decodeGuest(encodedStr) {
+            try {
+                const text = atob(encodedStr);
+                let decoded = '';
+                for (let i = 0; i < text.length; i++) {
+                    decoded += String.fromCharCode(text.charCodeAt(i) ^ SECRET_KEY.charCodeAt(i % SECRET_KEY.length));
+                }
+                const parts = decoded.split('|');
+                if (parts.length >= 2) {
+                    return { 
+                        nombre: parts[0], 
+                        pases: parseInt(parts[1]),
+                        mesa: parts.length > 2 ? parts[2] : null // Por si usan enlaces viejos
+                    };
+                }
+            } catch(e) {}
+            return null;
+        }
+
+        // --- CÓDIGO INMEDIATO PARA PERSONALIZACIÓN (SIN RETARDOS) ---
+        const urlParamsImmediate = new URLSearchParams(window.location.search);
+        let secretCode = urlParamsImmediate.get('c');
+        
+        let guestInfo = null;
+
+        if (secretCode) {
+            // CORRECCIÓN: Los navegadores convierten '+' en espacio en las URL. 
+            secretCode = secretCode.replace(/ /g, '+');
+            
+            guestInfo = decodeGuest(secretCode);
+            if (guestInfo && guestInfo.nombre) {
+                const envelopeNamesElem = document.getElementById('envelope-names');
+                if (envelopeNamesElem) {
+                    envelopeNamesElem.innerHTML = `
+                        <span class="block text-xs md:text-sm uppercase tracking-[0.3em] text-gray-500 mb-6 font-heading">Especialmente para:</span>
+                        <span class="font-script text-5xl md:text-7xl text-olive leading-tight">${guestInfo.nombre}</span>
+                    `;
+                }
+            }
+        }
+
+        // --- PREVENIR SCROLL INICIAL ---
+        document.getElementById('welcome-overlay').addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        // --- ANIMACIÓN DE APERTURA ---
+        function enterSite() {
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            const overlay = document.getElementById('welcome-overlay');
+            const sealContainer = document.getElementById('seal-container');
+            const musicBtn = document.getElementById('musicToggle');
+            const body = document.getElementById('main-body');
+
+            sealContainer.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            sealContainer.style.opacity = '0';
+            overlay.classList.add('envelope-open');
+
+            setTimeout(() => {
+                overlay.classList.add('hidden-overlay');
+                musicBtn.classList.remove('hidden');
+                
+                body.style.position = 'relative';
+                body.style.overflow = 'auto';
+                body.style.height = 'auto';
+
+                lanzarConfeti();
+
+                audio.play().then(() => {
+                    document.getElementById('musicIcon').className = "fas fa-pause";
+                    musicBtn.classList.add('music-playing');
+                }).catch(e => console.log("Autoplay bloqueado por el navegador"));
+            }, 1200);
+        }
+
+        // --- GALERÍA ---
+        const totalFotos = 14; 
+        const arrayFotos = [];
+        let currentIndex = 0;
+        let autoScrollInterval;
+
+        for (let i = 1; i <= totalFotos; i++) {
+            arrayFotos.push(`galeria/foto${i}.jpg`);
+        }
+
+        function cargarGaleria() {
+            const contenedor = document.getElementById('galeria-contenedor');
+            arrayFotos.forEach((ruta, index) => {
+                const div = document.createElement('div');
+                div.className = 'flex-none snap-center';
+                div.innerHTML = `
+                    <img src="${ruta}" alt="Foto ${index + 1}" 
+                         onclick="openLightbox(${index})" 
+                         oncontextmenu="return false;" ondragstart="return false;"
+                         class="polaroid-frame h-64 w-48 md:h-80 md:w-60 object-cover cursor-pointer hover:scale-105 hover:-rotate-2 transition-transform duration-300 protected-img">
+                `;
+                contenedor.appendChild(div);
+            });
+            iniciarCarrusel(); 
+        }
+
+        function iniciarCarrusel() {
+            const contenedor = document.getElementById('galeria-contenedor');
+            autoScrollInterval = setInterval(() => {
+                if (contenedor.scrollLeft + contenedor.clientWidth >= contenedor.scrollWidth - 10) {
+                    contenedor.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    contenedor.scrollBy({ left: 250, behavior: 'smooth' });
+                }
+            }, 3000);
+        }
+
+        function pausarCarrusel() { clearInterval(autoScrollInterval); }
+
+        function openLightbox(index) {
+            currentIndex = index;
+            actualizarImagen();
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('hidden');
+            setTimeout(() => lb.classList.remove('opacity-0'), 10);
+            pausarCarrusel(); 
+        }
+
+        function actualizarImagen() {
+            const img = document.getElementById('lightbox-img');
+            img.style.opacity = 0; 
+            setTimeout(() => { img.src = arrayFotos[currentIndex]; img.style.opacity = 1; }, 150);
+        }
+
+        function nextImage(event) { if (event) event.stopPropagation(); currentIndex = (currentIndex + 1) % totalFotos; actualizarImagen(); }
+        function prevImage(event) { if (event) event.stopPropagation(); currentIndex = (currentIndex - 1 + totalFotos) % totalFotos; actualizarImagen(); }
+
+        function closeLightbox(event) {
+            if (event) event.stopPropagation();
+            const lb = document.getElementById('lightbox');
+            lb.classList.add('opacity-0');
+            setTimeout(() => lb.classList.add('hidden'), 300);
+            iniciarCarrusel(); 
+        }
+
+        function cerrarSiFondo(event) { if (event.target.id === 'lightbox') closeLightbox(); }
+
+        let touchstartX = 0; let touchendX = 0;
+        document.getElementById('lightbox').addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
+        document.getElementById('lightbox').addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            if (touchendX < touchstartX - 50) nextImage(); 
+            if (touchendX > touchstartX + 50) prevImage(); 
+        });
+
+        // --- MÚSICA Y CONFETI ---
+        const audio = document.getElementById('weddingMusic');
+        const musicBtn = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+
+        function lanzarConfeti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#6b7b62', '#b5c1af', '#ffffff'] }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#6b7b62', '#b5c1af', '#ffffff'] }));
+            }, 250);
+        }
+
+        function toggleMusic() {
+            if (audio.paused) { audio.play(); musicIcon.className = "fas fa-pause"; musicBtn.classList.add('music-playing'); }
+            else { audio.pause(); musicIcon.className = "fas fa-play ml-1"; musicBtn.classList.remove('music-playing'); }
+        }
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            document.querySelectorAll('section').forEach(s => { if (pageYOffset >= (s.offsetTop - 300)) current = s.getAttribute('id'); });
+            document.querySelectorAll('.nav-link').forEach(l => {
+                l.classList.remove('active');
+                if (current && l.getAttribute('href').includes(current)) l.classList.add('active');
+            });
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) { nav.classList.add('shadow-md', 'bg-white/95'); nav.classList.remove('bg-sand/90'); }
+            else { nav.classList.remove('shadow-md', 'bg-white/95'); nav.classList.add('bg-sand/90'); }
+        });
+
+        // --- LÓGICA DEL RELOJ ANIMADO ---
+        function updateFlipCard(unit, newValue) {
+            const card = document.querySelector(`.flip-card[data-unit="${unit}"]`);
+            if (!card) return;
+            const top = card.querySelector('.top');
+            const bottom = card.querySelector('.bottom');
+            const topFlip = card.querySelector('.top-flip');
+            const bottomFlip = card.querySelector('.bottom-flip');
+
+            const currentValue = top.innerText;
+            if (newValue === currentValue) return;
+
+            topFlip.innerText = currentValue;
+            bottomFlip.innerText = newValue;
+            card.classList.add('flipping');
+
+            setTimeout(() => {
+                top.innerText = newValue;
+                topFlip.innerText = newValue;
+                bottom.innerText = newValue;
+                bottomFlip.innerText = newValue;
+                card.classList.remove('flipping');
+            }, 500); 
+        }
+
+        const weddingDate = new Date("June 05, 2026 13:00:00").getTime();
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            if (distance < 0) { clearInterval(timer); return; }
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            updateFlipCard('days', d < 10 ? "0" + d : String(d));
+            updateFlipCard('hours', h < 10 ? "0" + h : String(h));
+            updateFlipCard('minutes', m < 10 ? "0" + m : String(m));
+            updateFlipCard('seconds', s < 10 ? "0" + s : String(s));
+        }, 1000);
+
+        // --- RSVP FORM ---
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxlk8DVe-RpZhkYEoAFNU2XqVxY_j-IHUaHFS9OrlRFshYwlLe9Q1bb77Pc7yF9EcG8/exec";
+        const form = document.forms['submit-to-google-sheet'];
+        
+        window.onload = () => {
+            cargarGaleria();
+            
+            // Usamos la información desencriptada del invitado
+            const nombre = guestInfo ? guestInfo.nombre : null;
+            const pases = guestInfo ? guestInfo.pases : null;
+            const mesaAsignada = guestInfo ? guestInfo.mesa : null;
+
+            // Llenamos el input oculto de la mesa para que se envíe al Excel
+            if (mesaAsignada) {
+                const mesaInput = document.getElementById('rsvp-mesa');
+                if (mesaInput) mesaInput.value = mesaAsignada;
+            }
+            
+            // NUEVO: Llave única vinculada directamente al código secreto del invitado
+            // Esto asegura que cada enlace cifrado tenga su propia memoria en el navegador.
+            const storageKey = 'rsvp_status_' + (secretCode ? encodeURIComponent(secretCode) : 'generic_link');
+            const stored = localStorage.getItem(storageKey);
+
+            // Si ya confirmaron antes (lee desde LocalStorage)
+            if (stored) {
+                const data = JSON.parse(stored);
+                form.classList.add('hidden');
+                document.getElementById('rsvp-title').classList.add('hidden');
+                document.getElementById('final-confirmation-text').innerText = "Ya has confirmado " + data.count + (data.count == 1 ? " lugar" : " lugares");
+                
+                // Muestra la mesa si existe
+                if (data.mesa) {
+                    document.getElementById('final-table-text').innerText = "Tienen asignada la mesa " + data.mesa;
+                    document.getElementById('final-table-text').classList.remove('hidden');
+                }
+
+                document.getElementById('rsvp-success-message').classList.remove('hidden');
+            } 
+            else {
+                if (nombre) {
+                    const nameInput = document.getElementById('rsvp-name');
+                    nameInput.value = nombre;
+                    nameInput.setAttribute('readonly', true);
+                }
+                if (pases) {
+                    const sel = document.getElementById('rsvp-guests');
+                    sel.innerHTML = '';
+                    for (let i = 1; i <= pases; i++) {
+                        sel.add(new Option(i + (i===1 ? " Persona" : " Personas"), i));
+                    }
+                    sel.value = pases;
+                    document.getElementById('guest-help-text').classList.remove('hidden');
+                    const limitMsg = document.getElementById('rsvp-limit-message');
+                    limitMsg.innerText = `Tienes un máximo de ${pases} lugares reservados.`;
+                    limitMsg.classList.remove('hidden');
+                }
+            }
+
+            // Al enviar confirmación nueva
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const phoneInput = form.querySelector('input[name="telefono"]');
+                const phoneVal = phoneInput.value.replace(/\D/g, ''); 
+                if (phoneVal.length !== 10) {
+                    alert("Por favor, ingresa un número de teléfono válido de 10 dígitos.");
+                    phoneInput.focus();
+                    return;
+                }
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn.innerText;
+                btn.innerText = "Enviando..."; 
+                btn.disabled = true;
+                
+                fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                    .then(() => {
+                        const guestsConfirmed = document.getElementById('rsvp-guests').value;
+                        
+                        // Guardamos localmente incluyendo la mesa
+                        localStorage.setItem(storageKey, JSON.stringify({
+                            confirmed: true, 
+                            count: guestsConfirmed,
+                            mesa: mesaAsignada
+                        }));
+                        
+                        form.classList.add('hidden');
+                        document.getElementById('rsvp-title').classList.add('hidden');
+                        document.getElementById('rsvp-limit-message').classList.add('hidden');
+                        document.getElementById('final-confirmation-text').innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
+                        
+                        // Mostramos el texto de la mesa si está disponible
+                        if (mesaAsignada) {
+                            document.getElementById('final-table-text').innerText = "Tienen asignada la mesa " + mesaAsignada;
+                            document.getElementById('final-table-text').classList.remove('hidden');
+                        }
+
+                        document.getElementById('rsvp-success-message').classList.remove('hidden');
+                        
+                        document.getElementById('rsvp-header').scrollIntoView({ behavior: 'smooth' });
+                    })
+                    .catch(error => {
+                        alert("Hubo un error al enviar. Por favor intenta de nuevo.");
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                    });
+            });
+        };
+
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { 
+                if (entry.isIntersecting) { 
+                    entry.target.classList.add('is-visible'); 
+                    observer.unobserve(entry.target); 
+                } 
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
+
+    </script>
+</body>
+</html>
+
+
+```
