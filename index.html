@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carlos Ricardo & Doris Johana | Nuestra Boda</title>
     
+    <!-- Meta etiquetas para compartir -->
     <meta property="og:title" content="Carlos Ricardo & Doris Johana | Nuestra Boda">
     <meta property="og:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
     <meta property="og:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
     <meta property="og:url" content="https://carloscjarquin.github.io/BodaCD/">
     <meta property="og:type" content="website">
     
+    <!-- Meta etiquetas para Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Carlos Ricardo & Doris Johana | Nuestra Boda">
     <meta name="twitter:description" content="¡Nos casamos! Acompáñanos a celebrar nuestro gran día el 05 de junio de 2026.">
     <meta name="twitter:image" content="https://carloscjarquin.github.io/BodaCD/miniatura.jpg?q=80&w=2070&auto=format&fit=crop">
 
+    <!-- Fuentes Locales -->
     <link rel="stylesheet" href="assets/css/fonts.css">
     
     <style>
@@ -23,10 +26,14 @@
         @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
     </style>
     
+    <!-- Tailwind CSS (Local) -->
     <script src="assets/js/tailwindcss.js"></script>
+    <!-- Font Awesome (Local) -->
     <link rel="stylesheet" href="assets/css/all.min.css">
+    <!-- Confetti JS (CDN para la animación) -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+    <!-- Configuración visual (Verde Olivo) -->
     <script>
         tailwind.config = {
             theme: {
@@ -185,10 +192,13 @@
 
 <body id="main-body" class="text-charcoal font-sans antialiased" style="overflow: hidden; height: 100vh; position: fixed; width: 100%; left: 0; top: 0;">
 
+    <!-- Audio -->
     <audio id="weddingMusic" loop preload="auto"><source src="cancion.mp3" type="audio/mpeg"></audio>
 
+    <!-- BIENVENIDA TIPO SOBRE HORIZONTAL -->
     <div id="welcome-overlay" class="fixed inset-0 z-[9999] bg-[#ffffff] overflow-hidden flex flex-col justify-between">
         
+        <!-- Textos Superiores Personalizados -->
         <div class="relative z-20 text-center mt-[10vh] md:mt-[15vh] fade-out-on-open px-4" id="envelope-text-container">
             <h1 id="envelope-names" class="font-script text-5xl md:text-7xl text-olive leading-tight">
                 Carlos Ricardo <br> 
@@ -199,6 +209,7 @@
             <p class="font-serif text-charcoal text-xl font-bold mt-1">¡Toca el sello para abrir!</p>
         </div>
 
+        <!-- Cuerpo del Sobre -->
         <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl h-[45vh] md:h-[50vh] pointer-events-none z-10">
             <svg class="absolute bottom-0 w-full h-full drop-shadow-xl" preserveAspectRatio="none" viewBox="0 0 100 100">
                 <polygon points="0,0 35,55 0,100" fill="#fdfdfd" stroke="#e5e7eb" stroke-width="0.3"/>
@@ -206,11 +217,13 @@
                 <polygon points="0,100 50,45 100,100" fill="#f4f5f7" stroke="#d1d5db" stroke-width="0.4"/>
             </svg>
 
+            <!-- Solapa Superior -->
             <div id="envelope-top" class="absolute top-0 left-0 right-0 h-[65%] origin-top transition-transform duration-1000 z-20" style="transform-style: preserve-3d;">
                 <svg class="w-full h-full drop-shadow-md" preserveAspectRatio="none" viewBox="0 0 100 100">
                     <polygon points="0,0 100,0 50,100" fill="#ffffff" stroke="#e5e7eb" stroke-width="0.4"/>
                 </svg>
 
+                <!-- Sello de Cera -->
                 <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 pointer-events-auto transition-all duration-700 ease-in-out" id="seal-container">
                     <div id="wax-seal" onclick="enterSite()" class="wax-seal-btn animate-pulse" title="Abrir Invitación">
                         <span class="wax-text z-10" style="font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 500; text-shadow: 1px 1px 2px rgba(0,0,0,0.2), -1px -1px 1px rgba(255,255,255,0.4); color: #fff;">C|D</span>
@@ -238,6 +251,7 @@
         </div>
     </div>
 
+    <!-- Navegación -->
     <nav class="fixed top-0 w-full z-50 bg-sand/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
@@ -261,8 +275,10 @@
         </div>
     </nav>
 
+    <!-- Música Flotante -->
     <button id="musicToggle" onclick="toggleMusic()" class="hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-white text-olive rounded-full shadow-lg flex items-center justify-center border border-olive/20"><i class="fas fa-play ml-1" id="musicIcon"></i></button>
     
+    <!-- Hero -->
     <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
         <div class="absolute inset-0 z-0"><img src="img/portada.jpg" class="w-full h-full object-cover brightness-[0.65]"></div>
         <div class="relative z-10 text-white fade-in-section">
@@ -291,6 +307,7 @@
         </div>
     </section>
 
+    <!-- Frase -->
     <section class="pt-20 pb-10 px-4 bg-sand text-center">
         <div class="max-w-2xl mx-auto fade-in-section">
             <i class="fas fa-heart text-olive text-2xl mb-6 animate-heartbeat"></i>
@@ -298,6 +315,7 @@
         </div>
     </section>
 
+    <!-- Galería Dinámica -->
     <section class="pb-20 px-4 bg-sand">
         <div class="max-w-7xl mx-auto fade-in-section">
             <div id="galeria-contenedor" class="flex overflow-x-auto space-x-6 pb-12 pt-4 snap-x snap-mandatory no-scrollbar px-4" 
@@ -307,6 +325,7 @@
         </div>
     </section>
 
+    <!-- Lightbox Protegido e Interactivo -->
     <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="cerrarSiFondo(event)" oncontextmenu="return false;">
         <button onclick="closeLightbox(event)" class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl focus:outline-none z-50">
             <i class="fas fa-times"></i>
@@ -320,6 +339,7 @@
         </button>
     </div>
 
+    <!-- Detalles -->
     <section id="details" class="py-24 px-4 bg-white scroll-mt-20">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16 fade-in-section">
@@ -348,6 +368,7 @@
         </div>
     </section>
 
+    <!-- Vestimenta -->
     <section id="dresscode" class="py-20 px-4 bg-sand scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <span class="text-olive uppercase tracking-[0.2em] text-xs font-bold">Información</span>
@@ -368,6 +389,7 @@
         </div>
     </section>
 
+    <!-- Regalo -->
     <section id="gift" class="py-20 px-4 bg-white scroll-mt-20">
         <div class="max-w-4xl mx-auto text-center fade-in-section">
             <i class="fas fa-envelope text-4xl text-olive mb-4"></i>
@@ -380,6 +402,7 @@
         </div>
     </section>
 
+    <!-- RSVP -->
     <section id="rsvp" class="py-24 px-4 bg-olive-light/20 scroll-mt-20">
         <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in-section min-h-[500px] flex items-center justify-center">
             <div class="w-full text-center">
@@ -389,18 +412,25 @@
                     <p id="rsvp-limit-message" class="text-olive text-sm font-bold mt-2 hidden"></p>
                 </div>
 
+                <!-- Mensaje de Respuesta (Éxito o Rechazo) -->
                 <div id="rsvp-success-message" class="hidden py-10">
-                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 animate-bounce"><i class="fas fa-check text-3xl"></i></div>
+                    <!-- Icono dinámico (check o X) -->
+                    <div id="rsvp-icon-container" class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 animate-bounce">
+                        <i id="rsvp-icon" class="fas fa-check text-3xl"></i>
+                    </div>
+                    
                     <p id="final-confirmation-text" class="text-olive font-serif text-2xl mb-2 font-bold"></p>
                     
+                    <!-- Mensaje dinámico de Mesa -->
                     <p id="final-table-text" class="text-olive-dark font-sans text-lg mb-4 font-bold tracking-wide uppercase hidden"></p>
                     
-                    <p class="text-gray-600 mb-6">Hemos registrado tu respuesta correctamente.</p>
-                    <p class="font-serif text-lg text-charcoal italic mb-6">"El amor es la razón de este día, y tu presencia lo hará aún más especial."</p>
-                    <p class="text-sm text-gray-400 uppercase tracking-widest">Nos vemos en la boda</p>
+                    <p id="final-subtext" class="text-gray-600 mb-6">Hemos registrado tu respuesta correctamente.</p>
+                    <p id="final-quote" class="font-serif text-lg text-charcoal italic mb-6">"El amor es la razón de este día, y tu presencia lo hará aún más especial."</p>
+                    <p id="final-footer" class="text-sm text-gray-400 uppercase tracking-widest">Nos vemos en la boda</p>
                 </div>
 
                 <form id="rsvpForm" class="space-y-6 text-left" name="submit-to-google-sheet">
+                    <!-- INPUT OCULTO PARA LA MESA -->
                     <input type="hidden" id="rsvp-mesa" name="mesa" value="">
 
                     <div class="grid md:grid-cols-2 gap-6">
@@ -416,11 +446,17 @@
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">¿Asistirás?</label>
                         <div class="flex space-x-6 mt-2">
-                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="Si" checked class="text-olive focus:ring-olive"><span>¡Sí!</span></label>
-                            <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="asistencia" value="No" class="text-olive focus:ring-olive"><span>No podré</span></label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="asistencia" value="Si" checked class="text-olive focus:ring-olive" onchange="toggleGuestSelect(true)">
+                                <span>¡Sí!</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="asistencia" value="No" class="text-olive focus:ring-olive" onchange="toggleGuestSelect(false)">
+                                <span>No podré</span>
+                            </label>
                         </div>
                     </div>
-                    <div>
+                    <div id="guest-select-container">
                         <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Personas</label>
                         <select id="rsvp-guests" name="invitados" class="w-full bg-sand p-4 rounded outline-none cursor-pointer focus:border-olive">
                             <option value="1">1 Persona</option>
@@ -439,6 +475,7 @@
         </div>
     </section>
 
+    <!-- CUENTA REGRESIVA ANIMADA (FLIP CLOCK) -->
     <section class="py-24 bg-olive text-white text-center">
         <div class="max-w-4xl mx-auto px-4 fade-in-section">
             <h2 class="font-heading text-2xl uppercase tracking-widest mb-10">Nos Vemos En...</h2>
@@ -508,7 +545,7 @@
                     return { 
                         nombre: parts[0], 
                         pases: parseInt(parts[1]),
-                        mesa: parts.length > 2 ? parts[2] : null // Por si usan enlaces viejos
+                        mesa: parts.length > 2 ? parts[2] : null
                     };
                 }
             } catch(e) {}
@@ -725,6 +762,68 @@
             updateFlipCard('seconds', s < 10 ? "0" + s : String(s));
         }, 1000);
 
+        // Ocultar select de invitados si eligen "No"
+        function toggleGuestSelect(isAttending) {
+            const container = document.getElementById('guest-select-container');
+            const select = document.getElementById('rsvp-guests');
+            if(isAttending) {
+                container.classList.remove('hidden');
+                select.required = true;
+            } else {
+                container.classList.add('hidden');
+                select.required = false;
+                select.value = "0"; // Enviamos 0 invitados al Excel
+            }
+        }
+
+        // Mostrar estado dependiendo si es Si o No
+        function displayRSVPStatus(isAttending, count, mesa) {
+            document.getElementById('rsvpForm').classList.add('hidden');
+            document.getElementById('rsvp-title').classList.add('hidden');
+            document.getElementById('rsvp-limit-message').classList.add('hidden');
+            
+            const iconContainer = document.getElementById('rsvp-icon-container');
+            const icon = document.getElementById('rsvp-icon');
+            const confText = document.getElementById('final-confirmation-text');
+            const tableText = document.getElementById('final-table-text');
+            const subText = document.getElementById('final-subtext');
+            const quote = document.getElementById('final-quote');
+            const footer = document.getElementById('final-footer');
+
+            if (isAttending === "Si" || isAttending === true) {
+                // Estado: ASISTIRÁ
+                iconContainer.className = "w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 animate-bounce";
+                icon.className = "fas fa-check text-3xl";
+                confText.innerText = "Has confirmado " + count + (count == 1 ? " lugar" : " lugares");
+                confText.classList.replace('text-red-600', 'text-olive');
+                
+                if (mesa) {
+                    tableText.innerText = "Tienen asignada la mesa " + mesa;
+                    tableText.classList.remove('hidden');
+                } else {
+                    tableText.classList.add('hidden');
+                }
+
+                subText.innerText = "Hemos registrado tu respuesta correctamente.";
+                quote.classList.remove('hidden');
+                footer.innerText = "Nos vemos en la boda";
+            } else {
+                // Estado: NO ASISTIRÁ
+                iconContainer.className = "w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6 text-red-500 animate-pulse";
+                icon.className = "fas fa-times text-3xl";
+                confText.innerText = "Asistencia Declinada";
+                confText.classList.replace('text-olive', 'text-red-600');
+                
+                tableText.classList.add('hidden'); // Ocultar mesa si no asiste
+                
+                subText.innerText = "Lamentamos mucho que no puedas asistir, ¡Esperamos vernos pronto para celebrar en otra ocasión!";
+                quote.classList.add('hidden');
+                footer.innerText = "Gracias por avisarnos";
+            }
+
+            document.getElementById('rsvp-success-message').classList.remove('hidden');
+        }
+
         // --- RSVP FORM ---
         const scriptURL = "https://script.google.com/macros/s/AKfycbxlk8DVe-RpZhkYEoAFNU2XqVxY_j-IHUaHFS9OrlRFshYwlLe9Q1bb77Pc7yF9EcG8/exec";
         const form = document.forms['submit-to-google-sheet'];
@@ -743,25 +842,14 @@
                 if (mesaInput) mesaInput.value = mesaAsignada;
             }
             
-            // NUEVO: Llave única vinculada directamente al código secreto del invitado
-            // Esto asegura que cada enlace cifrado tenga su propia memoria en el navegador.
+            // Llave única vinculada directamente al código secreto del invitado
             const storageKey = 'rsvp_status_' + (secretCode ? encodeURIComponent(secretCode) : 'generic_link');
             const stored = localStorage.getItem(storageKey);
 
             // Si ya confirmaron antes (lee desde LocalStorage)
             if (stored) {
                 const data = JSON.parse(stored);
-                form.classList.add('hidden');
-                document.getElementById('rsvp-title').classList.add('hidden');
-                document.getElementById('final-confirmation-text').innerText = "Ya has confirmado " + data.count + (data.count == 1 ? " lugar" : " lugares");
-                
-                // Muestra la mesa si existe
-                if (data.mesa) {
-                    document.getElementById('final-table-text').innerText = "Tienen asignada la mesa " + data.mesa;
-                    document.getElementById('final-table-text').classList.remove('hidden');
-                }
-
-                document.getElementById('rsvp-success-message').classList.remove('hidden');
+                displayRSVPStatus(data.asistencia, data.count, data.mesa);
             } 
             else {
                 if (nombre) {
@@ -797,31 +885,21 @@
                 const originalText = btn.innerText;
                 btn.innerText = "Enviando..."; 
                 btn.disabled = true;
+
+                const asistenciaVal = form.querySelector('input[name="asistencia"]:checked').value;
+                const guestsConfirmed = asistenciaVal === "Si" ? document.getElementById('rsvp-guests').value : "0";
                 
                 fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                     .then(() => {
-                        const guestsConfirmed = document.getElementById('rsvp-guests').value;
-                        
-                        // Guardamos localmente incluyendo la mesa
+                        // Guardamos localmente el estado de asistencia
                         localStorage.setItem(storageKey, JSON.stringify({
                             confirmed: true, 
+                            asistencia: asistenciaVal,
                             count: guestsConfirmed,
                             mesa: mesaAsignada
                         }));
                         
-                        form.classList.add('hidden');
-                        document.getElementById('rsvp-title').classList.add('hidden');
-                        document.getElementById('rsvp-limit-message').classList.add('hidden');
-                        document.getElementById('final-confirmation-text').innerText = "Has confirmado " + guestsConfirmed + (guestsConfirmed == 1 ? " lugar" : " lugares");
-                        
-                        // Mostramos el texto de la mesa si está disponible
-                        if (mesaAsignada) {
-                            document.getElementById('final-table-text').innerText = "Tienen asignada la mesa " + mesaAsignada;
-                            document.getElementById('final-table-text').classList.remove('hidden');
-                        }
-
-                        document.getElementById('rsvp-success-message').classList.remove('hidden');
-                        
+                        displayRSVPStatus(asistenciaVal, guestsConfirmed, mesaAsignada);
                         document.getElementById('rsvp-header').scrollIntoView({ behavior: 'smooth' });
                     })
                     .catch(error => {
